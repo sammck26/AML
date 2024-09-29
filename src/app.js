@@ -5,7 +5,7 @@ const app = express();
 app.set('view engine', 'ejs');
 
 // Define the views folder (this should be the folder, not a specific file)
-app.set('views', './views/user.js');
+app.set('views', './views');
 
 // Middleware for parsing JSON requests
 app.use(express.json());
