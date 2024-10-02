@@ -1,19 +1,19 @@
 const express = require('express');
 const app = express();
 
-// Set the view engine to ejs
+
 app.set('view engine', 'ejs');
 
-// Define the views folder (this should be the folder, not a specific file)
+// Set the views directory
 app.set('views', './views');
 
-// Middleware for parsing JSON requests
+// Middleware for json
 app.use(express.json());
 
-// Use routes (ensure the path is correct for your user routes file)
+// Use routes
 const userRoutes = require('./routes/user.js');
-app.use('/user', userRoutes);  // All user-related routes will now be prefixed with "/user"
+app.use('/user', userRoutes);  // puts user related routes under /user
 
 
 
-module.exports = app;  // Export the app so it can be used by server.js
+module.exports = app;  // Export the app setup
