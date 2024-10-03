@@ -7,3 +7,4 @@ const userController = require('../controllers/user.js');
 router.get('/dashboard', userController.getDashboard);  // URL: /user/dashboard
 
 module.exports = router;
+console.log('User routes loaded');
