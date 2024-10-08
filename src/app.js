@@ -8,7 +8,8 @@ app.set('view engine', 'ejs');
 // Set the views directory
 app.set('views', path.join(__dirname, 'views'));
 //console.log('Views directory set to:', app.get('views'));  // Debugging statement
-
+console.log('Static folder:', path.join(__dirname, '../styles'));
+app.use('/styles/style.css', express.static(path.join(__dirname, '../styles')));
 // Middleware for json
 app.use(express.json());
 

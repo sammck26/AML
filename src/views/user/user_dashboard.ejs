@@ -1,22 +1,16 @@
-<script>
-    console.log("REached the view file");
-</script>
-<!DOCTYPE html>
-<script>
-    console.log("Gooten past doctype");
-</script>
+
 <html>
 
 <h1>Welcome to your oard, username</h1>
 =======
  
-<p>Navbar with stuff</p>
-<form action="/" method="GET">
-    <button type="submit">Logout</button>
-    </form>
+<%- include('../layout.ejs', { navbar: 'usernavbar'}) %>
+
+
 <p>Profile info</p>
 <p>Your borrowed items:</p>
 <ul>
     <li>items borrowed</li>
 </ul>
 </html>
+

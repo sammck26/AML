@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Library System</title>
+ 
+  
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
+  
+</head>
+<body>
+    
+    <% if (user.role === 'admin') { %>
+        <%- include('partials/navbar_admin') %>
+      <% } else if (user.role === 'librarian') { %>
+        <%- include('partials/navbar_librarian') %>
+      <% } else if (user.role === 'user') { %>
+        <%- include('partials/usernavbar.ejs') %>
+      <% } %>
+    
+    
+  <div class="content">
+     
+  </div>
+</body>
+</html>

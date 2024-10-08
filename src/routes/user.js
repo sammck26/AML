@@ -8,4 +8,4 @@ router.get('/dashboard', userController.getDashboard);  // URL: /user/dashboard
 
 
 module.exports = router;
-console.log('User routes loaded');
+//console.log('User routes loaded');
