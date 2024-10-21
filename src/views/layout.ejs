@@ -4,16 +4,20 @@
   <title>Library System</title>
  
   
-  <link rel="stylesheet" type="text/css" href="/styles/style.css">
+  <link rel="stylesheet" type="text/css" href="/style.css">
   
 </head>
 <body>
+  
+    const user = <%- JSON.stringify (user) %>;
     
+
+
     <% if (user.role === 'admin') { %>
         <%- include('partials/navbar_admin') %>
       <% } else if (user.role === 'librarian') { %>
-        <%- include('partials/navbar_librarian') %>
-      <% } else if (user.role === 'user') { %>
+        <%- include('partials/librariannavbar.ejs') %>
+      <% } else if (user.role === 'customer') { %>
         <%- include('partials/usernavbar.ejs') %>
       <% } %>
     
