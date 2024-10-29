@@ -5,6 +5,8 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+  <%- include('../layout.ejs', { user}) %>
+
   <h1>Welcome to the Library System</h1>
   <p>Discover media, borrow and return easily.</p> 
   <form action="/user/dashboard" method="GET">
