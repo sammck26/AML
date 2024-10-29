@@ -33,11 +33,10 @@ app.use(express.json());
 const librarianRoutes = require('./routes/branch_librarian.js'); // Import librarian routes
 const landingRoutes = require('./routes/landingpage.js'); // Import landing page routes
 const userRoutes = require('./routes/user.js');
-app.use('/branch_librarian', librarianRoutes);  // puts librarian-related routes under /branch_librarian
 app.use('/', landingRoutes);
 app.use('/user', userRoutes);  // puts user-related routes under /user
+app.use('/branch_librarian', librarianRoutes);  // puts librarian-related routes under /branch_librarian
+
+
 
 module.exports = app;  // Export the app setup
-app.use('/user', userRoutes);  // puts user-related routes under /user
-
-module.exports = app;  // Export the app setup

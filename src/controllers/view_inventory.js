@@ -9,5 +9,5 @@ const inventoryData = [
 exports.viewInventory = (req, res) => {
     const userData = req.user;
 
-    res.render('user/show_media', { inventory: inventoryData, user: userData });
+    res.render('user/show_media', { inventory: inventoryData, user: userData, activePage: "inventory" });
 };

@@ -7,10 +7,11 @@
 
 </head>
 <body>
-    <p>Your role is: <%= user.role %></p>
+    
 <%- include('../layout.ejs', { user }) %>
 
 <main>
+    <p>Your role is: <%= user.role %></p>
     <h1>Welcome to your board, <%= user.name %>.</h1>
     <p>Your Library Page</p>
     <p>Your borrowed items:</p>
