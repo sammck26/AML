@@ -2,12 +2,24 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+// ... other middleware and routes
+
+// Middleware to attach user data to the request object
+app.use((req, res, next) => {
+    // Fetch or retrieve user data (e.g., from session, database, etc.)
+    const userData = {
+        role: 'customer' // Replace with actual user data
+    };
+    req.user = userData;
+    next();
+});
+
 // Set the view engine
 app.set('view engine', 'ejs');
 
 // Set the views directory
 app.set('views', path.join(__dirname, 'views'));
-//console.log('Views directory set to:', app.get('views'));  // Debugging statement
+//console.log('Views directory set to:', app.get('views'));  // Debugging statement
 
 console.log('Static folder:', path.join(__dirname, '../styles'));
 //app.use('/style.css', express.static(path.join(__dirname, '../styles')));
@@ -21,8 +33,9 @@ app.use(express.json());
 const librarianRoutes = require('./routes/branch_librarian.js'); // Import librarian routes
 const landingRoutes = require('./routes/landingpage.js'); // Import landing page routes
 const userRoutes = require('./routes/user.js');
-app.use('/branch_librarian', librarianRoutes);  // puts librarian-related routes under /branch_librarian
+app.use('/branch_librarian', librarianRoutes);  // puts librarian-related routes under /branch_librarian
 app.use('/', landingRoutes);
+<<<<<<< HEAD
 app.use('/user', userRoutes);  // puts user-related routes under /user
 // Middleware to set a default activePage
 app.use((req, res, next) => {
@@ -34,5 +47,8 @@ app.get('/', (req, res) => {
     res.locals.activePage = "landing"; // Set active page for landing
     res.render("landing");
 });
+=======
+app.use('/user', userRoutes);  // puts user-related routes under /user
+>>>>>>> Sam
 
-module.exports = app;  // Export the app setup
+module.exports = app;  // Export the app setup
