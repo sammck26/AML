@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://kit.fontawesome.com/dbca9b5a6b.js" crossorigin="anonymous"></script>
   <title>Library System</title>
  
   
@@ -8,10 +9,6 @@
   
 </head>
 <body>
-  
-    const user = <%- JSON.stringify (user) %>;
-    
-
 
     <% if (user.role === 'admin') { %>
         <%- include('partials/navbar_admin') %>
@@ -25,5 +22,6 @@
   <div class="content">
      
   </div>
+  
 </body>
 </html>
