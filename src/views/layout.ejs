@@ -10,8 +10,8 @@
 </head>
 <body>
 
-    <% if (user.role === 'admin') { %>
-        <%- include('partials/navbar_admin') %>
+    <% if (user.role === 'guest') { %>
+        <%- include('partials/guestnavbar.ejs') %>
       <% } else if (user.role === 'librarian') { %>
         <%- include('partials/librariannavbar.ejs') %>
       <% } else if (user.role === 'customer') { %>
