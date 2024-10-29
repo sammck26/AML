@@ -12,9 +12,9 @@ exports.getProfile = (req, res) => {
 };
 exports.getDashboard = (req, res) => { 
     //const userData = {};  // will fetch user dashboard data from database
-    const userData = req.user;
+    const userData = { name: "User", role: "customer" };
 
-    res.render('user/user_dashboard', { user: userData }); 
+  res.render('user/user_dashboard', {user: userData, activePage: "dashboard"}); 
     //console.log('User dashboard data sent');
     
   };
