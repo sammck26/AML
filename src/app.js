@@ -35,20 +35,6 @@ const landingRoutes = require('./routes/landingpage.js'); // Import landing page
 const userRoutes = require('./routes/user.js');
 app.use('/branch_librarian', librarianRoutes);  // puts librarian-related routes under /branch_librarian
 app.use('/', landingRoutes);
-<<<<<<< HEAD
-app.use('/user', userRoutes);  // puts user-related routes under /user
-// Middleware to set a default activePage
-app.use((req, res, next) => {
-    res.locals.activePage = ""; // Default to empty
-    next();
-});
-// Landing page route
-app.get('/', (req, res) => {
-    res.locals.activePage = "landing"; // Set active page for landing
-    res.render("landing");
-});
-=======
 app.use('/user', userRoutes);  // puts user-related routes under /user
->>>>>>> Sam
 
 module.exports = app;  // Export the app setup
