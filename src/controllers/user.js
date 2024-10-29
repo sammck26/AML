@@ -16,3 +16,6 @@ exports.getProfile = (req, res) => {
   res.render("user/view_profile", { user: userData });
   //console.log('User dashboard data sent');
 };
+
+
+
