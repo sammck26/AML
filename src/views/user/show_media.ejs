@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,10 +5,10 @@
     <title>Inventory</title>
 </head>
 <body>
+    
     <%- include('../layout.ejs', { user}) %>
-
+    <p>Your role is: <%= user.role %></p>
     <h1>Library Inventory</h1>
-
     <table>
         <thead>
             <tr>
