@@ -7,6 +7,7 @@ const inventoryData = [
 
 // hadnles viewing the inventory
 exports.viewInventory = (req, res) => {
-    
-    res.render('user/show_media', { inventory: inventoryData });
+    const userData = req.user;
+
+    res.render('user/show_media', { inventory: inventoryData, user: userData });
 };
