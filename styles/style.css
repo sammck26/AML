@@ -7,6 +7,7 @@
 
 body, html {
     height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     font-family: Arial, sans-serif;
@@ -18,6 +19,7 @@ body, html {
     overflow: hidden;
     position: relative;
     padding: 10px 0;
+    height: 60px; /* Define the height */
 }
 
 .navbar a {
@@ -42,6 +44,8 @@ body, html {
 
 main {
     flex: 1;
+    display: flex;
+    padding: 20px;
 }
 
 .content {
@@ -61,14 +65,43 @@ main {
     text-align: center;
 }
 
-/* Footer at the bottom */
+/* keep the footer at the bottom */
 footer {
     background-color: #b3b0b0;
     color: #fff;
-    text-align: center;
     padding: 10px;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
 }
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; 
+}
+
+.footer-number {
+    color: black;
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-links a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer-links a:nth-child(1) i { color: rgb(203, 67, 203); } /* Instagram */
+.footer-links a:nth-child(2) i { color: #3b5998; }           /* Facebook */
+.footer-links a:nth-child(3) i { color: black; }             /* X */
+
 
 .profile-circle {
     position: fixed;
@@ -137,4 +170,55 @@ button:hover {
     margin-top: 10px;
     font-weight: bold;
     color: #28a745;
+}
+
+/* Container for the sidebar and main profile content */
+.profile-page {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    height: 100vh;
+    padding-top: 60px; /* Adjust for header spacing if needed */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+.sidebar ul li a.active {
+    background-color: #04AA6D;
+    color: white;
+    font-weight: bold;
+}
+
+/* Profile content area */
+.profile-content {
+    margin-left: 220px; /* Offset by sidebar width */
+    padding: 20px;
+    background-color: #ffffff;
+    width: 100%; /* Fill remaining space */
 }
