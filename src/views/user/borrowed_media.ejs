@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wishlist</title>
+    <title>Borrowed Meda</title>
 </head>
 <body>
     <!-- Include layout (header or top navigation) -->
@@ -15,7 +15,7 @@
         
         <!-- Vertical Sidebar -->
         <nav class="sidebar">
-            <ul>
+          <ul>
                 <li><a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Update Details</a></li>
                 <li><a href="/user/wishlist" class="<%= (typeof activePage !== 'undefined' && activePage === 'wishlist') ? 'active' : '' %>">My wishlist</a></li>
                 <li><a href="/user/borrowed_media" class="<%= (typeof activePage !== 'undefined' && activePage === 'borrowed_media') ? 'active' : '' %>">Borrowed media</a></li>
