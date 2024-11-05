@@ -1,6 +1,6 @@
 <div class="navbar">
     <a href="/user/dashboard" class="<%= (typeof activePage !== 'undefined' && activePage === 'dashboard') ? 'active' : '' %>">Dashboard</a>
-    <a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Profile</a>
+    <a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile' || activePage === 'wishlist' || activePage === 'borrowed_media') ? 'active' : '' %>">Profile</a>
     <a href="/user/borrowed-items" class="<%= (typeof activePage !== 'undefined' && activePage === 'borrowed-items') ? 'active' : '' %>">Borrowed Items</a>
     <a href="/user/inventory" class="<%= (typeof activePage !== 'undefined' && activePage === 'inventory') ? 'active' : '' %>">All Media!</a>
     <a href="/" class="<%= (typeof activePage !== 'undefined' && activePage === 'landing') ? 'active' : '' %>">Logout</a>
