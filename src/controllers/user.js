@@ -12,4 +12,15 @@ exports.getDashboard = (req, res) => {
     
   };
 
+exports.getWishlist = (req, res, next) => {
+  const userData = { name: "User", role: "customer" }; 
+  req.userData = userData; // Pass data to next controller
+  next();
+};
 
+
+exports.getBorrowed = (req, res, next) => {
+  const userData = { name: "User", role: "customer" };
+  req.userData = userData; // Pass data to next controller
+  next();
+};
