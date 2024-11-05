@@ -6,6 +6,14 @@
 </head>
 <body>
     <%- include('../layout.ejs', { user}) %>
+      <nav class="sidebar">
+            <ul>
+                <li><a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Update Details</a></li>
+                <li><a href="/user/wishlist" class="<%= (typeof activePage !== 'undefined' && activePage === 'wishlist') ? 'active' : '' %>">My wishlist</a></li>
+                <li><a href="/user/borrowed_media" class="<%= (typeof activePage !== 'undefined' && activePage === 'borrowed_media') ? 'active' : '' %>">Borrowed media</a></li>
+                <li><a href="#billing">Manage Subscription</a></li>
+            </ul>
+        </nav>
    <main class="content">
         <!-- <p>Your role is: <%= user.role %></p> -->
         <table>
