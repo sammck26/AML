@@ -1,40 +1,40 @@
-const { Console } = require('console');
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-
-const MedaiSchema = new mongoose.Schema({ // create a schema for media
+const MediaSchema = new mongoose.Schema({
   media_title: { type: String, required: true },
   author: { type: String, required: true },
-  genre_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Genre' }, //uses the genre referance in media table to lookup genre type using mongoose
+  genre_id: { type: mongoose.Schema.Types.ObjectId, ref: "Genre" },
   quant: { type: Number, required: true },
 });
 
+const GenreSchema = new mongoose.Schema({
+  genre_description: { type: String, required: true }, // Changed type to String for description
+  genre_id: { type: Number, required: true, unique: true }, // genre_id as unique to avoid duplicates
+});
 
-const genreSchema = new mongoose.Schema({ // create a schema for genre
-    genre_description: { type: mongoose.Schema.Types.ObjectId, ref: 'Genre_Description'}, // so i can acess it in the media table
-    genre_id: {type: Number, required: true},
-  });
-  
-const Media = mongoose.model('Media', MedaiSchema); // creat models for media and genre
-const Genre = mongoose.model('Genre', genreSchema);
+const Media = mongoose.model("Media", MediaSchema);
+const Genre = mongoose.model("Genre", GenreSchema);
 
-//console.log("Media Model:", Media);
-//console.log("Media Schema:", MedaiSchema);
-
-MedaiSchema.methods.isAvailable = function () { // decide if media is available
-    if (this.quant > 0) {
-        return this.status === 'available';
-    } else {
-      return this.status === 'not availabel';
-    }
+MediaSchema.methods.isAvailable = function () {
+  return this.quant > 0 ? "available" : "not available";
 };
+
+// Updated query with correct population syntax
 Media.find()
-  .populate('Genre', Genre('Genre_Description')) // populate genre_id field with genre_description
-  .populate(quant, isAvailable) // populate quant field with isAvailable method
+  .populate({
+    path: "genre_id",
+    select: "genre_description", // populate genre_description from Genre
+  })
   .then((mediaItems) => {
-    console.log(mediaItems); // each media item will include genre_description adn isAvailable method
+    mediaItems.forEach((item) => {
+      console.log({
+        ...item.toObject(),
+        availability: item.isAvailable(), // include isAvailable status for each media item
+      });
+    });
   })
   .catch((error) => {
     console.error(error);
   });
-  module.exports = Media; // export the model
+
+module.exports = { Media, Genre }; // Export both models
