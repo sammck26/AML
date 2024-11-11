@@ -18,7 +18,8 @@ body, html {
     background-color: #333;
     overflow: hidden;
     position: relative;
-    height: 48px; /* Define the height */
+    height: 48px;
+    min-height: 48px; /* Define the height */
 }
 
 .navbar a {
@@ -50,12 +51,25 @@ main {
 .content {
     flex-grow: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: center;    
     padding: 20px;
     background-color: #ffffff;
+    align-items: center;
 }
 
 .form-container {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+.header-container {
+    margin-bottom: 20px; /* Add space between header and form */
+}
+
+.form-container-login {
     background-color: #fff;
     border-radius: 10px;
     width: 100%;
