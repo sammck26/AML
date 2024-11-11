@@ -28,8 +28,9 @@ MedaiSchema.methods.isAvailable = function () { // decide if media is available
       return this.status === 'not availabel';
     }
 };
+
 Media.find()
-  .populate('Genre', Genre('Genre_Description')) // populate genre_id field with genre_description
+  .populate(('Genre'), Genre('Genre_Description')) // populate genre_id field with genre_description
   .populate(quant, isAvailable) // populate quant field with isAvailable method
   .then((mediaItems) => {
     console.log(mediaItems); // each media item will include genre_description adn isAvailable method
