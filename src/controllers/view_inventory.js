@@ -1,16 +1,29 @@
+const {Media} = require('../../db/models/inventory.js');
+
+exports.showInventory = async (req, res) => {
+  try {
+    const inventoryItems = await Media.find(); // Fetch all items from the inventory
+    res.render('../views/user/show_media.js', { items: inventoryItems }); // Pass data to the view
+  } catch (error) {
+    console.error('Error fetching inventory:', error); //shows an error
+    res.status(500).send('Error fetching inventory');
+  }
+};
+
+
+// hadnles viewing the inventory
+/*exports.viewInventory = (req, res) => {
+    const userData = req.user;
+
+    res.render('user/show_media', { inventory: inventoryItems, user: userData, activePage: "inventory" });
+};
+
 //this is shitty mock data
-const inventoryData = [
+/*const inventoryData = [
     { title: "Book 1", author: "Author A", status: "Available" },
     { title: "Book 2", author: "Author B", status: "Unavailable" },
     { title: "Book 3", author: "Author C", status: "Available" }
-];
-
-// hadnles viewing the inventory
-exports.viewInventory = (req, res) => {
-    const userData = req.user;
-
-    res.render('user/show_media', { inventory: inventoryData, user: userData, activePage: "inventory" });
-};
+];*/
 
 exports.viewBorrowed = (req, res) => {
     const userData = req.userData;
@@ -41,3 +54,4 @@ exports.viewWishlist = (req, res) => {
     activePage: "wishlist",
   });
 };
+

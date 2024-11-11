@@ -1,27 +1,18 @@
-// db.js
-const mysql = require('mysql2');
-const dotenv = require('dotenv');
-
-dotenv.config(); 
-
-// creating a connection to the database
-const pool = mysql.createPool({
-  host: process.env.host, 
-  user: process.env.user, 
-  password: process.env.password, 
-  database: process.env.database, 
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+const mongoose = require('mongoose');
+const path = require('path');
+const dotenv = require('dotenv').config({
+  path: path.join(__dirname, '.env')
 });
-pool.query("SELECT * FROM customer"), (err, results, fields) => {
-  if(err) {
-    console.log("dsi bicth ain wokrin",err); 
-  }
-  else {
-    console.log(results); 
-  }
 
-}
-// Export the pool for use in other files
-module.exports = pool.promise();
+mongoose.set('debug', true);
+print(process.env.CHECKING);
+mongoose.connect(process.env.MONGO_URI, { //uses mongoose to connect for easier use
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  console.log("Connected to MongoDB Atlas with Mongoose");
+}).catch((err) => {
+  console.error("Failed to connect to MongoDB Atlas:", err);
+});
+
+module.exports = mongoose; // Export Mongoose to be used across other files

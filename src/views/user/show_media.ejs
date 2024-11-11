@@ -25,11 +25,12 @@
                 </tr>
             </thead>
             <tbody>
-                <% inventory.forEach(item => { %>
+                <% inventoryItems.forEach(item => { %>
                     <tr>
                         <td><%= item.title %></td>
                         <td><%= item.author %></td>
-                        <td><%= item.status %></td>
+                        <td><%= item.genre_id %></td>
+                        <td><%= item.quant %></td>
                     </tr>
                 <% }) %>
             </tbody>
