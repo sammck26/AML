@@ -6,9 +6,10 @@
     "express-ejs-layouts": "^2.5.1",
     "mongo": "^0.1.0",
     "mongodb": "^6.10.0",
-    "mongoose": "^8.7.0",
+    "mongoose": "^8.8.1",
     "mysql": "^2.18.1",
-    "mysql2": "^3.11.3"
+    "mysql2": "^3.11.3",
+    "node": "^22.11.0"
   },
   "devDependencies": {
     "@types/node": "^22.9.0"
