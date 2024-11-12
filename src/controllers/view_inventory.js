@@ -1,10 +1,11 @@
 const {Media} = require('../../db/models/inventory.js');
 
 exports.viewInventory = async (req, res) => {
+  const userData = { name: "User", role: "customer" };
   try {
     const inventoryItems = await Media.find(); // Fetch all items from the inventory
-    //console.log(inventoryItems);
-    res.render('../views/user/show_media.js', { items: inventoryItems }); // Pass data to the view
+    console.log(inventoryItems);
+    res.render('../views/user/show_media.ejs', { items: inventoryItems,user: userData, activePage: "show_media" }); // Pass data to the view
   } catch (error) {
     console.error('Error fetching inventory:', error); //shows an error
     res.status(500).send('Error fetching inventory');

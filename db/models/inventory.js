@@ -1,4 +1,17 @@
 const mongoose = require("mongoose");
+const path = require('path');
+const dotenv = require('dotenv').config({
+  path: path.join(__dirname, '.env')
+});
+
+mongoose.connect(process.env.MONGO_URI, { //uses mongoose to connect 
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }).then(() => {
+    console.log("Connected to MongoDB Atlas with Mongoose");
+  }).catch((err) => {
+    console.error("Failed to connect to MongoDB Atlas:", err);
+  });
 
 const MediaSchema = new mongoose.Schema({
   media_title: { type: String, required: true },
@@ -8,18 +21,18 @@ const MediaSchema = new mongoose.Schema({
 });
 
 const GenreSchema = new mongoose.Schema({
-  genre_description: { type: String, required: true }, // Changed type to String for description
-  genre_id: { type: Number, required: true, unique: true }, // genre_id as unique to avoid duplicates
+  genre_description: { type: String, required: true }, 
+  genre_id: { type: Number, required: true, unique: true }, 
 });
 
 const Media = mongoose.model("Media", MediaSchema);
 const Genre = mongoose.model("Genre", GenreSchema);
 
-MediaSchema.methods.isAvailable = function () {
+MediaSchema.methods.isAvailable = function () { // if the amount is more than zero media is available
   return this.quant > 0 ? "available" : "not available";
 };
 
-// Updated query with correct population syntax
+
 Media.find()
   .populate({
     path: "genre_id",
@@ -32,6 +45,7 @@ Media.find()
         availability: item.isAvailable(), // include isAvailable status for each media item
       });
     });
+    console.log(mediaItems);
   })
   .catch((error) => {
     console.error(error);
