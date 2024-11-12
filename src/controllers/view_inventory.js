@@ -1,17 +1,24 @@
-const {Media} = require('../../db/models/inventory.js');
+const { Media } = require("../../db/models/inventory.js");
 
 exports.viewInventory = async (req, res) => {
   const userData = { name: "User", role: "customer" };
+
   try {
-    const inventoryItems = await Media.find(); // Fetch all items from the inventory
-    console.log(inventoryItems);
-    res.render('../views/user/show_media.ejs', { items: inventoryItems,user: userData, activePage: "show_media" }); // Pass data to the view
+    const mediaItems = await Media.find().populate({
+      path: "genre_id",
+      select: "genre_description",
+    }); // Fetch and populate genre_id with genre_description
+
+    res.render("user/show_media.ejs", {
+      items: mediaItems,
+      user: userData,
+      activePage: "show_media",
+    }); // Render the view with populated items
   } catch (error) {
-    console.error('Error fetching inventory:', error); //shows an error
-    res.status(500).send('Error fetching inventory');
+    console.error("Error fetching media items:", error);
+    res.status(500).send("An error occurred while fetching inventory");
   }
 };
-
 
 // hadnles viewing the inventory
 /*exports.viewInventory = (req, res) => {
@@ -28,12 +35,12 @@ exports.viewInventory = async (req, res) => {
 ];*/
 
 exports.viewBorrowed = (req, res) => {
-    const userData = req.userData;
-    const borrowedData = [
-      { title: "Borrowed Book 1", author: "Author A", status: "Available" },
-      { title: "Borrowed Book 2", author: "Author B", status: "Unavailable" },
-      { title: "Borrowed Book 3", author: "Author C", status: "Available" },
-    ]; 
+  const userData = req.userData;
+  const borrowedData = [
+    { title: "Borrowed Book 1", author: "Author A", status: "Available" },
+    { title: "Borrowed Book 2", author: "Author B", status: "Unavailable" },
+    { title: "Borrowed Book 3", author: "Author C", status: "Available" },
+  ];
 
   res.render("user/borrowed_media", {
     inventory: borrowedData,
@@ -48,7 +55,7 @@ exports.viewWishlist = (req, res) => {
     { title: "Wishlist Book 1", author: "Author A", status: "Available" },
     { title: "Wishlist Book 2", author: "Author B", status: "Unavailable" },
     { title: "Wishlist Book 3", author: "Author C", status: "Available" },
-  ]; 
+  ];
 
   res.render("user/wishlist", {
     inventory: wishlistData,
@@ -56,4 +63,3 @@ exports.viewWishlist = (req, res) => {
     activePage: "wishlist",
   });
 };
-

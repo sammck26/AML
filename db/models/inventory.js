@@ -32,7 +32,6 @@ const MediaSchema = new mongoose.Schema({
 
 const GenreSchema = new mongoose.Schema({
   genre_description: { type: String, required: true }, 
-  //id: { type: mongoose.Schema.Types.ObjectId, ref: "Genre" },
 });
 
 const Media = mongoose.model("Media", MediaSchema);
@@ -42,24 +41,19 @@ MediaSchema.methods.isAvailable = function () { // if the amount is more than ze
   return this.quant > 0 ? "available" : "not available";
 };
 
+  /*async function seedData() {
+    await Genre.create({
+      genre_description: "Gore",
+    })
 
-Media.find()
-  .populate({ 
-    path: "genre_id", 
-    select: "genre_description", // populate genre_description from Genre
-  })
-  .then((mediaItems) => {
-    mediaItems.forEach((item) => {
-      console.log({
-        ...item.toObject(),
-        availability: item.isAvailable(), // include isAvailable status for each media item
-      });
+    await Media.create({
+      media_title: "Dune2",
+      author: "Frank Herbert",
+      genre_id: "673358a98c529a6a6ec66a65",
+      quant: 5,
     });
-    console.log("Media items", mediaItems);
-    console.log("genre_id", GenreSchema);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+  }
+
+  seedData().then(() => console.log("Sample data added"));*/
 
 module.exports = { Media, Genre }; // Export both models
