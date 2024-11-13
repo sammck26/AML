@@ -28,7 +28,7 @@
             <tbody>
                 <% items.forEach(item => { %>
                     <tr>
-                        <td><%= item.media_title %></td>
+                        <a href="/user/view_media"><%= item.media_title %></a>
                         <td><%= item.author %></td>
                         <td><%= item.genre_id.genre_description %></td>
                         <td><%= item.quant %></td>

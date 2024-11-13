@@ -12,6 +12,16 @@ exports.getDashboard = (req, res) => {
     
   };
 
+  
+exports.viewMedia = (req, res) => { 
+    //const userData = {};  // will fetch user dashboard data from database
+  const userData = { name: "User", role: "customer" };
+
+  res.render('user/view_media', {user: userData, activePage: "view_media"}); 
+    //console.log('User dashboard data sent');
+    
+  };
+
 exports.getWishlist = (req, res, next) => {
   const userData = { name: "User", role: "customer" }; 
   req.userData = userData; // Pass data to next controller

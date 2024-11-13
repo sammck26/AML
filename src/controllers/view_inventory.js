@@ -8,7 +8,7 @@ exports.viewInventory = async (req, res) => {
       path: "genre_id",
       select: "genre_description",
     }); // Fetch and populate genre_id with genre_description
-
+    
     res.render("user/show_media.ejs", {
       items: mediaItems,
       user: userData,
