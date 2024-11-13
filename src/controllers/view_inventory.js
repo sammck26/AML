@@ -1,7 +1,7 @@
 const { Media } = require("../../db/models/inventory.js");
 
 exports.viewInventory = async (req, res) => {
-  const userData = { name: "User", role: "customer" };
+  const userData = req.user;
 
   try {
     const mediaItems = await Media.find().populate({
@@ -10,6 +10,26 @@ exports.viewInventory = async (req, res) => {
     }); // Fetch and populate genre_id with genre_description
     
     res.render("user/show_media.ejs", {
+      items: mediaItems,
+      user: userData,
+      activePage: "show_media",
+    }); // Render the view with populated items
+  } catch (error) {
+    console.error("Error fetching media items:", error);
+    res.status(500).send("An error occurred while fetching inventory");
+  }
+};
+
+exports.viewLibrarianInventory = async (req, res) => {
+  const userData = { name: "Librarian", role: "librarian" }; ;
+
+  try {
+    const mediaItems = await Media.find().populate({
+      path: "genre_id",
+      select: "genre_description",
+    }); // Fetch and populate genre_id with genre_description
+
+    res.render("branch_librarian/show_media.ejs", {
       items: mediaItems,
       user: userData,
       activePage: "show_media",

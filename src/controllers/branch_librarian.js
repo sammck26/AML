@@ -1,7 +1,69 @@
+const { Media, Genre } = require("../../db/models/inventory.js");
+
+// Hardcoded user data for now; should ideally come from session or authentication middleware
+const userData = {
+  role: "librarian",
+};
+
 exports.getLibrarianDashboard = (req, res) => {
-    const userData = {
-        role: 'librarian',  // Hardcoded for now, but in a real app, you would get this from the logged-in user session or database
-      };
-    res.render('branch_librarian/librarian_dashboard', { user: userData});  // Assuming you pass librarian user data
-    console.log('Librarian dashboard data sent');
+  res.render("branch_librarian/librarian_dashboard", { user: userData });
+  console.log("Librarian dashboard data sent");
+};
+
+// Show form to add a new book
+exports.showAddForm = async (req, res) => {
+  const activePage = "add_book";
+  try {
+    const genres = await Genre.find(); // Fetch all genres from the database
+    res.render("branch_librarian/add_book", {
+      user: userData,
+      activePage,
+      genres,
+    }); // Pass genres and activePage to the view
+  } catch (error) {
+    console.error("Error fetching genres:", error);
+    res.status(500).send("An error occurred while fetching genres");
+  }
+};
+
+// Show form to update a book
+exports.showUpdateForm = async (req, res) => {
+  const user = req.user || { name: "Jimmy", role: "librarian" };
+  const activePage = "update_book";
+  try {
+    const mediaItem = await Media.findById(req.params.id).populate("genre_id");
+    res.render("inventory/update_book", { item: mediaItem, user, activePage });
+  } catch (error) {
+    console.error("Error fetching media item:", error);
+    res.status(500).send("Error fetching item for update");
+  }
+};
+
+// Handle adding a new book
+exports.addBook = async (req, res) => {
+  try {
+    const { media_title, author, genre_id, quant } = req.body;
+    await Media.create({ media_title, author, genre_id, quant });
+    res.redirect("/inventory");
+  } catch (error) {
+    console.error("Error adding book:", error);
+    res.status(500).send("Error adding book");
+  }
+};
+
+// Handle updating a book
+exports.updateBook = async (req, res) => {
+  try {
+    const { media_title, author, genre_id, quant } = req.body;
+    await Media.findByIdAndUpdate(req.params.id, {
+      media_title,
+      author,
+      genre_id,
+      quant,
+    });
+    res.redirect("/inventory");
+  } catch (error) {
+    console.error("Error updating book:", error);
+    res.status(500).send("Error updating book");
+  }
 };
