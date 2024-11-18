@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Inventory</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
     <%- include('../layout.ejs', { user}) %>
+    <div class = "show_media">
       <nav class="sidebar">
             <ul>
                 <li><a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Update Details</a></li>
@@ -14,29 +16,30 @@
                 <li><a href="#billing">Manage Subscription</a></li>
             </ul>
         </nav>
-   <main class="content">
-        <!-- <p>Your role is: <%= user.role %></p> -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Genre</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% items.forEach(item => { %>
+        <main class="content">
+            <!-- <p>Your role is: <%= user.role %></p> -->
+            <table>
+                <thead>
                     <tr>
-                        <a href="/user/view_media"><%= item.media_title %></a>
-                        <td><%= item.author %></td>
-                        <td><%= item.genre_id.genre_description %></td>
-                        <td><%= item.quant %></td>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                        <th>Status</th>
                     </tr>
-                <% }) %>
-            </tbody>
-        </table>
-    </main>
+                </thead>
+                <tbody>
+                    <% items.forEach(item => { %>
+                        <tr>
+                            <td><a href="/user/view_media/<%= item._id %>"><%= item.media_title %></a></td> <!-- should send media id to show media -->
+                            <td><%= item.author %></td>
+                            <td><%= item.genre_id.genre_description %></td>
+                            <td><%= item.quant %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </main>
+    </div>
     <footer>
         <div class="footer-content">
             <p class="footer-number">07477045595</p>

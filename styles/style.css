@@ -191,6 +191,17 @@ button:hover {
     width: 100%;
 }
 
+.show_media {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.view-media {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
 /* Sidebar styling */
 .sidebar {
     width: 200px;

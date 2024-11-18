@@ -1,3 +1,4 @@
+const {Media} = require("../../db/models/inventory.js");
 exports.getProfile = (req, res) => {
   const userData = { name: "User", role: "customer" }; // Sample data
   res.render("user/view_profile", { user: userData, activePage: "profile" });
@@ -13,11 +14,22 @@ exports.getDashboard = (req, res) => {
   };
 
   
-exports.viewMedia = (req, res) => { 
+exports.viewMedia = async(req, res) => { 
     //const userData = {};  // will fetch user dashboard data from database
-  const userData = { name: "User", role: "customer" };
-
-  res.render('user/view_media', {user: userData, activePage: "view_media"}); 
+    const userData = { name: "User", role: "customer" };
+    try {
+      const mediaItem = await Media.findById(req.params.id); // Fetch the media item by ID
+  
+      if (!mediaItem) {
+        return res.status(404).send("Media not found");
+      }
+  
+      // Render the view with media item data
+      res.render('user/view_media', { mediaItem, user: userData, activePage: "view_media" });
+    } catch (error) {
+      console.error("Error fetching media item:", error);
+      res.status(500).send("Error retrieving media item");
+    }  
     //console.log('User dashboard data sent');
     
   };
