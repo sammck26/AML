@@ -1,6 +1,6 @@
-const connectDB = require("./db.js"); // Import the connection promise
 const mongoose = require("mongoose");
 
+// Customer Schema
 const CustomerSchema = new mongoose.Schema({
   branch_id: { type: Number, required: true },
   first_name: { type: String, required: true },
@@ -15,31 +15,11 @@ const CustomerSchema = new mongoose.Schema({
 
 const Customer = mongoose.model("Customer", CustomerSchema);
 
-(async () => {
-  try {
-    const db = await connectDB; // Wait for the connection to be ready
-    const collections = await db.connection.db.listCollections().toArray();
-    const customerCollection = collections.find((c) => c.name === "customers");
-
-    if (customerCollection) {
-      console.log("Customer collection found:", customerCollection.name);
-    } else {
-      console.log("Customer collection not found.");
-    }
-
-    // Fetch all customers
-    const customers = await Customer.find();
-    console.log("Customers:", customers);
-  } catch (error) {
-    console.error("Error while accessing customer collection:", error);
-  }
-})();
-
-// Customer Schema
-
+// Role Schema
 const RoleSchema = new mongoose.Schema({
   role_description: { type: String, required: true },
 });
+
 const Role = mongoose.model("Role", RoleSchema);
 
 module.exports = { Customer, Role };
