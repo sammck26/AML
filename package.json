@@ -13,5 +13,15 @@
   },
   "devDependencies": {
     "@types/node": "^22.9.0"
-  }
+  },
+  "name": "aml",
+  "version": "1.0.0",
+  "description": "��M\u0000y\u0000 \u0000A\u0000M\u0000L\u0000 \u0000P\u0000r\u0000o\u0000j\u0000e\u0000c\u0000t\u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
