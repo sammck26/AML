@@ -13,15 +13,10 @@
     <% if (user.role === 'guest') { %>
         <%- include('partials/guestnavbar.ejs', {activePage}) %>
       <% } else if (user.role === 'librarian') { %>
-        <%- include('partials/librariannavbar.ejs' , {activePage}) %>
+        <%- include('partials/librariannavbar.ejs') %>
       <% } else if (user.role === 'customer') { %>
         <%- include('partials/usernavbar.ejs' , {activePage}) %>
       <% } %>
-    
-    
-  <div class="content">
-     
-  </div>
   
 </body>
 </html>
