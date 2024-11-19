@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Inventory</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
     <%- include('../layout.ejs', { user}) %>
+    <div class = "show_media">
       <nav class="sidebar">
             <ul>
                 <li><a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Update Details</a></li>
@@ -15,8 +17,20 @@
             </ul>
         </nav>
    <main class="content">
+        <div class="search-bar">
+        <form action="/search" method="GET">
+            <input 
+                type="text" 
+                name="query" 
+                placeholder="Search for media..." 
+                class="search-input"
+                value="<%= typeof query !== 'undefined' ? query : '' %>" />
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+
         <!-- <p>Your role is: <%= user.role %></p> -->
-        <table>
+        <!-- <table>
             <thead>
                 <tr>
                     <th>Title</th>
@@ -35,7 +49,18 @@
                     </tr>
                 <% }) %>
             </tbody>
-        </table>
+        </table> -->
+
+        <div class="card-grid">
+            <% items.forEach(item => { %>
+                <div class="card">
+                    <a href="/user/view_media/<%= item._id %>"><h2 class="media-title">Title: <%= item.media_title %></h2></a>
+                    <h3>Author: <%= item.author %></h3>
+                    <h3>Genre: <%= item.genre_id.genre_description %></h3>
+                    <h3>Status: <%= item.quant %></h3>
+                </div>
+            <% }) %>
+        </div>
     </main>
     <footer>
         <div class="footer-content">

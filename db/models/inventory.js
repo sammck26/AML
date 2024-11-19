@@ -7,13 +7,24 @@ const dotenv = require('dotenv').config({
 mongoose.connect(process.env.MONGO_URI, { //uses mongoose to connect 
     useNewUrlParser: true,
     useUnifiedTopology: true
-  }).then(() => {
+  }).then(async() => {
     console.log("Connected to MongoDB Atlas with Mongoose");
-  }).catch((err) => {
-    console.error("Failed to connect to MongoDB Atlas:", err);
-  });
+    const collections = await mongoose.connection.db.listCollections().toArray();
+    const mediaCollection = collections.find((c) => c.name === "media");
+
+    if (mediaCollection) {
+      console.log("Media collection found:", mediaCollection.name);
+    } else {
+      console.log("Media collection not found.");
+    }
+  })
+    .catch((err) => {
+        console.error("Failed to connect to MongoDB Atlas:", err);
+    });
+
 
 const MediaSchema = new mongoose.Schema({
+  //_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, dayum u dont need theys
   media_title: { type: String, required: true },
   author: { type: String, required: true },
   genre_id: { type: mongoose.Schema.Types.ObjectId, ref: "Genre" },
@@ -27,9 +38,7 @@ const GenreSchema = new mongoose.Schema({
 const Media = mongoose.model("Media", MediaSchema);
 const Genre = mongoose.model("Genre", GenreSchema);
 
-MediaSchema.methods.isAvailable = function () { // if the amount is more than zero media is available
-  return this.quant > 0 ? "available" : "not available";
-};
+
 
   /*async function seedData() {
     await Genre.create({

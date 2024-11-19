@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+     </head>
+<body>
+    <%- include('../layout.ejs', { user }) %>
+    
+    <div class="profile-page">
+        
+        <!-- Vertical Sidebar -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Update Details</a></li>
+                <li><a href="/user/wishlist" class="<%= (typeof activePage !== 'undefined' && activePage === 'wishlist') ? 'active' : '' %>">My wishlist</a></li>
+                <li><a href="/user/borrowed_media" class="<%= (typeof activePage !== 'undefined' && activePage === 'borrowed_media') ? 'active' : '' %>">Borrowed media</a></li>
+                <li><a href="#billing">Manage Subscription</a></li>
+            </ul>
+        </nav>
+        <!-- Main Content Area -->  
+        <main class ="content">
+            <h1><%= mediaItem.media_title %></h1>
+            <div class="container">
+                <div class="header">
+                    <input type="text" placeholder="Search bar">
+                    <button>Filter</button>
+                    <button>Filter</button>
+                </div>
+                <div class="media-section">
+                    <div class="media-image">
+                        <h1>HERE WILL BE IMAGE OF MEDAI MAYBE??</h1>
+                    </div>
+                    <div class="media-details">
+                        <h2>MEDIA DESC</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,   
+        no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna   
+        aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna   
+        aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,   
+        no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                        </p>
+                        <div class="genre-tags">
+                            <span class="tag">Genre 1</span>
+                            <%= mediaItem.genre_id.genre_description %>
+                            </div>
+                        <div class="buttons">
+                            <button>Add to wishlist</button>
+                            <form action="/user/borrow_media" method="POST">
+                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
+                                <button type="submit">Borrow Media</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <button class="back-button">Back</button>
+            </div>
+        </main>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p class="footer-number">07477045595</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

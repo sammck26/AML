@@ -49,6 +49,7 @@ main {
 }
 
 .content {
+    margin-left: 200px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -191,6 +192,17 @@ button:hover {
     width: 100%;
 }
 
+.show_media {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.view-media {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
 /* Sidebar styling */
 .sidebar {
     width: 200px;
@@ -234,3 +246,57 @@ button:hover {
     background-color: #ffffff;
     width: 100%; /* Fill remaining space */
 }
+
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    grid-template-rows: repeat(2, auto);  /* 2 rows */
+    gap: 20px; /* Adjust spacing between cards */
+    padding-left: 200px
+}
+
+.card {
+    border: 1px solid #ccc; /* Add a border around each card */
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #f9f9f9; /* Light background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: left;
+}
+
+.search-bar {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.search-bar form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+
