@@ -6,31 +6,40 @@ exports.getProfile = (req, res) => {
   res.render("user/view_profile", { user: userData, activePage: "profile" });
 };
 
-exports.getDashboard = async(req, res) => { 
-    //const userData = {};  // will fetch user dashboard data from database
-    //res.render('user/user_dashboard', {user: userData, activePage: "dashboard"}); 
-    try {
-      const customerinfo = await Customer.find().populate({
-        path: "role_id",
-        select: "role_description",
-      }); 
-      const userId = req.query.user_id; // Retrieve the user_id from the query parameters
+exports.getDashboard = async (req, res) => {
+  try {
+    // Retrieve user_id from query parameters
+    const userId = req.query.user_id;
+    if (!userId) {
+      return res.status(400).send("Missing user_id in query parameters");
+    }
 
-      // Fetch the user from the database
-    const user = await Customer.findOne({ user_id: userId });
+    // Fetch the customer data from the database, populating the role description
+    const user = await Customer.findOne({ user_id: userId }).populate({
+      path: "role_id", // This should match the field in your schema
+      select: "role_description", // Only fetch the role description
+    });
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Attach the user object to the request (if needed)
     req.user = user;
 
-      // Render the dashboard and pass the user data
-    res.render('user/user_dashboard', { user});
-    console.log('User dashboard data sent');
-     // Set the role to customer
-    
-    }
-    catch (error) {
-      console.error("Error fetching media items:", error);
-      res.status(500).send("An error occurred while fetching inventory");
-    }
-  };
+    // Render the dashboard with the user data
+    res.render("user/user_dashboard", {
+      user,
+      activePage: "dashboard", // Pass the active page for the view
+    });
+
+    console.log("User dashboard data sent:", user);
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    res.status(500).send("An error occurred while fetching user data");
+  }
+};
+
   
     //console.log('User dashboard data sent');
     
