@@ -37,9 +37,14 @@ const CustomerSchema = new mongoose.Schema({
   active: { type: Boolean, default: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  role_id: {type: mongoose.Schema.Types.ObjectId, ref: "Role"},
 });
 
+const RoleSchema = new mongoose.Schema({
+  role_description: { type: String, required: true }, 
+});
 
 // Export Customer model
 const Customer = mongoose.model("Customer", CustomerSchema);
-module.exports = Customer;
+const Role = mongoose.model("Role", RoleSchema);
+module.exports = Customer,Role;

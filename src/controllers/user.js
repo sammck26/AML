@@ -9,21 +9,28 @@ exports.getProfile = (req, res) => {
 exports.getDashboard = async(req, res) => { 
     //const userData = {};  // will fetch user dashboard data from database
     //res.render('user/user_dashboard', {user: userData, activePage: "dashboard"}); 
-    
-     // Set the role to customer
-    const userId = req.query.user_id; // Retrieve the user_id from the query parameters
+    try {
+      const customerinfo = await Customer.find().populate({
+        path: "role_id",
+        select: "role_description",
+      }); 
+      const userId = req.query.user_id; // Retrieve the user_id from the query parameters
 
-  // Fetch the user from the database
-    //user.role = "customer";
-    const user = await Customer.findOne({ user_id: userId }, role);
-   
+      // Fetch the user from the database
+    const user = await Customer.findOne({ user_id: userId });
     req.user = user;
 
       // Render the dashboard and pass the user data
     res.render('user/user_dashboard', { user});
     console.log('User dashboard data sent');
+     // Set the role to customer
+    
+    }
+    catch (error) {
+      console.error("Error fetching media items:", error);
+      res.status(500).send("An error occurred while fetching inventory");
+    }
   };
-
   
     //console.log('User dashboard data sent');
     

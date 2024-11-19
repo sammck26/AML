@@ -5,14 +5,6 @@ const app = express();
 // ... other middleware and routes
 
 // Middleware to attach user data to the request object
-app.use((req, res, next) => {
-    // Fetch or retrieve user data (e.g., from session, database, etc.)
-    const userData = {
-        role: 'customer' // Replace with actual user data
-    };
-    req.user = userData;
-    next();
-});
 
 // Set the view engine
 app.set('view engine', 'ejs');
