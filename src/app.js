@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+//const Customer = require('./models/customer'); // Import the Customer model
 const app = express();
 
 // ... other middleware and routes

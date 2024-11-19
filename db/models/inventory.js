@@ -32,7 +32,7 @@ const Genre = mongoose.model("Genre", GenreSchema);
       path: "genre_id",
       select: "genre_description",
     });
-    console.log("Media Items:", mediaItems);
+    //console.log("Media Items:", mediaItems);
   } catch (error) {
     console.error("Error while fetching media inventory:", error);
   }

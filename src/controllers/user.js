@@ -1,6 +1,7 @@
 const {Media} = require("../../db/models/inventory.js");
 const Borrowed = require('../../db/models/borrowed.js');
 const {Customer} = require('../../db/models/customer.js');
+console.log("Customer Model:", Customer);
 
 exports.getProfile = (req, res) => {
   const userData = { name: "User", role: "customer" }; // Sample data
@@ -9,20 +10,25 @@ exports.getProfile = (req, res) => {
 
 exports.getDashboard = async (req, res) => {
   try {
-    const userId = req.query._id; // Retrieve the user ID from the query parameters
+    const userId = req.query._id;
+    if (!userId) {
+      return res.status(400).send("Missing user_id in query parameters");
+    }
 
-    // Fetch the user from the database with the role_id populated
     const user = await Customer.findOne({ _id: userId }).populate({
       path: "role_id",
-      select: "role_description", // Fetch only the role_description field from the Role collection
+      select: "role_description",
     });
 
     if (!user) {
       return res.status(404).send("User not found");
     }
 
-    // Render the dashboard and pass the user data
-    res.render("user/user_dashboard", { user });
+    res.render("user/user_dashboard", {
+      user,
+      activePage: "dashboard",
+    });
+
     console.log("User dashboard data sent:", user);
   } catch (error) {
     console.error("Error fetching user data:", error);
