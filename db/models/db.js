@@ -6,7 +6,7 @@ const dotenv = require('dotenv').config({
 
 mongoose.set('debug', true);
 
-mongoose.connect(process.env.MONGO_URI, { //uses mongoose to connect for easier use
+mongoose.connect(process.env.MONGO_URI, { //uses mongoose to connect 
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
