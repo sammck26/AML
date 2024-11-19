@@ -6,6 +6,7 @@ const app = express();
 
 // Middleware to attach user data to the request object
 
+
 // Set the view engine
 app.set('view engine', 'ejs');
 

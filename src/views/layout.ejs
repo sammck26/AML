@@ -10,11 +10,11 @@
 </head>
 <body>
 
-    <% if (user.role === 'guest') { %>
+    <% if (user.role_id.role_description === 'guest') { %>
         <%- include('partials/guestnavbar.ejs', {activePage}) %>
-      <% } else if (user.role === 'librarian') { %>
+      <% } else if (user.role_id.role_description === 'librarian') { %>
         <%- include('partials/librariannavbar.ejs') %>
-      <% } else if (user.role === 'customer') { %>
+      <% } else if (user.role_id.role_description === 'customer') { %>
         <%- include('partials/usernavbar.ejs' , {activePage}) %>
       <% } %>
   

@@ -13,8 +13,8 @@ mongoose
   .then(() => {
     console.log("Connected to MongoDB Atlas with Mongoose");
     return mongoose.connection.db.listCollections().toArray();
-})
-.then((collections) => {
+  })
+  .then((collections) => {
     const customerCollection = collections.find((c) => c.name === "Customer");
     if (customerCollection) {
         console.log("Customer collection found:", customerCollection.name);
@@ -28,7 +28,7 @@ mongoose
 
 // Customer Schema
 const CustomerSchema = new mongoose.Schema({
-  user_id: { type: Number, required: true, unique: true }, // Unique identifier for the user
+  //_id: { type: mongoose.Schema.Types.ObjectId,}, // Unique identifier for the user
   branch_id: { type: Number, required: true }, // Branch the customer belongs to
   first_name: { type: String, required: true },
   last_name: { type: String, required: true },

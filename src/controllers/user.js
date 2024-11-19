@@ -14,14 +14,15 @@ exports.getDashboard = async(req, res) => {
         path: "role_id",
         select: "role_description",
       }); 
-      const userId = req.query.user_id; // Retrieve the user_id from the query parameters
+      const userId = req.query._id; // Retrieve the user_id from the query parameters
+      //const role = req.query.role; // Retrieve the role from the query parameters
 
       // Fetch the user from the database
-    const user = await Customer.findOne({ user_id: userId });
+    const user = await Customer.findOne({ _id: userId});
     req.user = user;
 
       // Render the dashboard and pass the user data
-    res.render('user/user_dashboard', { user});
+    res.render('user/user_dashboard', { user, customerinfo });
     console.log('User dashboard data sent');
      // Set the role to customer
     
