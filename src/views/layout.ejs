@@ -10,13 +10,16 @@
 </head>
 <body>
 
-    <% if (user.role === 'guest') { %>
-        <%- include('partials/guestnavbar.ejs', {activePage}) %>
-      <% } else if (user.role === 'librarian') { %>
-        <%- include('partials/librariannavbar.ejs') %>
-      <% } else if (user.role_id.role_description === 'customer') { %>
-        <%- include('partials/usernavbar.ejs' , {activePage}) %>
-      <% } %>
+   <% if (user && user.role_id && user.role_id.role_description === 'guest') { %>
+  <%- include('partials/guestnavbar.ejs', { activePage }) %>
+<% } else if (user && user.role_id && user.role_id.role_description === 'librarian') { %>
+  <%- include('partials/librariannavbar.ejs', { activePage }) %>
+<% } else if (user && user.role_id && user.role_id.role_description === 'customer') { %>
+  <%- include('partials/usernavbar.ejs', { activePage }) %>
+<% } else { %>
+  <p>Error: User role is not defined</p>
+<% } %>
+
   
 </body>
 </html>

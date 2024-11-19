@@ -1,7 +1,20 @@
 const { Media } = require("../../db/models/inventory.js");
+const { Customer } = require("../../db/models/customer.js");
 
 exports.viewInventory = async (req, res) => {
-  const userData = req.user;
+  const userId = req.query._id;
+  if (!userId) {
+    return res.status(400).send("Missing user_id in query parameters");
+  }
+
+  const user = await Customer.findOne({ _id: userId }).populate({
+    path: "role_id",
+    select: "role_description",
+  });
+
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
 
   try {
     const mediaItems = await Media.find().populate({
@@ -11,7 +24,7 @@ exports.viewInventory = async (req, res) => {
     
     res.render("user/show_media.ejs", {
       items: mediaItems,
-      user: userData,
+      user,
       activePage: "show_media",
     }); // Render the view with populated items
   } catch (error) {
