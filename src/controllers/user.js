@@ -1,17 +1,32 @@
 const {Media} = require("../../db/models/inventory.js");
+const Borrowed = require('../../db/models/borrowed.js');
+const Customer = require('../../db/models/customer.js');
 exports.getProfile = (req, res) => {
   const userData = { name: "User", role: "customer" }; // Sample data
   res.render("user/view_profile", { user: userData, activePage: "profile" });
 };
 
-exports.getDashboard = (req, res) => { 
+exports.getDashboard = async(req, res) => { 
     //const userData = {};  // will fetch user dashboard data from database
-    const userData = { name: "User", role: "customer" };
+    //res.render('user/user_dashboard', {user: userData, activePage: "dashboard"}); 
+    
+     // Set the role to customer
+    const userId = req.query.user_id; // Retrieve the user_id from the query parameters
 
-  res.render('user/user_dashboard', {user: userData, activePage: "dashboard"}); 
+      // Fetch the user from the database
+    const user = await Customer.findOne({ user_id: userId }, role);
+    user.role = "customer";
+    req.user = user;
+
+      // Render the dashboard and pass the user data
+    res.render('user/user_dashboard', { user});
+    console.log('User dashboard data sent');
+  };
+
+  
     //console.log('User dashboard data sent');
     
-  };
+  
 
   
 exports.viewMedia = async(req, res) => { 
@@ -45,4 +60,19 @@ exports.getBorrowed = (req, res, next) => {
   const userData = { name: "User", role: "customer" };
   req.userData = userData; // Pass data to next controller
   next();
+};
+
+exports.borrow_media = async (req, res) => {
+  const { media_id } = req.body;
+  const user_id = req.user._id; 
+
+  try {
+      // Call the model's borrowMedia method
+      await Borrowed.borrowMedia(media_id, user_id);
+
+      res.status(200).json({ success: true, message: 'Media borrowed successfully!' });
+  } catch (error) {
+      console.error("Error borrowing media in controller:", error);
+      res.status(500).json({ success: false, message: 'Failed to borrow media.' });
+  }
 };

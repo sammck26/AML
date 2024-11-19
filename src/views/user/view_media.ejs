@@ -4,12 +4,14 @@
     <link rel="stylesheet" href="/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title><%= mediaItem.media_title %></title> <!-- displasys the actual title!!! -->
+   
      </head>
 <body>
     <%- include('../layout.ejs', { user }) %>
-    <!-- Vertical Sidebar -->
-    <dive class="view-media">
+    
+    <div class="profile-page">
+        
+        <!-- Vertical Sidebar -->
         <nav class="sidebar">
             <ul>
                 <li><a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Update Details</a></li>
@@ -19,7 +21,8 @@
             </ul>
         </nav>
         <!-- Main Content Area -->  
-        <main class = "content">
+        <main class ="content">
+            <h1><%= mediaItem.media_title %></h1>
             <div class="container">
                 <div class="header">
                     <input type="text" placeholder="Search bar">
@@ -45,7 +48,10 @@
                             </div>
                         <div class="buttons">
                             <button>Add to wishlist</button>
-                            <button>Borrow Media</button>
+                            <form action="/user/borrow_media" method="POST">
+                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
+                                <button type="submit">Borrow Media</button>
+                            </form>
                         </div>
                     </div>
                 </div>
