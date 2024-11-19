@@ -54,7 +54,7 @@
         <div class="card-grid">
             <% items.forEach(item => { %>
                 <div class="card">
-                    <h2 class="media-title">Title: <%= item.media_title %></h2>
+                    <a href="/user/view_media/<%= item._id %>"><h2 class="media-title">Title: <%= item.media_title %></h2></a>
                     <h3>Author: <%= item.author %></h3>
                     <h3>Genre: <%= item.genre_id.genre_description %></h3>
                     <h3>Status: <%= item.quant %></h3>

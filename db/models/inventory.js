@@ -1,30 +1,7 @@
+const connectDB = require("./db.js"); // Import the connection promise
 const mongoose = require("mongoose");
-const path = require('path');
-const dotenv = require('dotenv').config({
-  path: path.join(__dirname, '.env')
-});
-
-mongoose.connect(process.env.MONGO_URI, { //uses mongoose to connect 
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }).then(async() => {
-    console.log("Connected to MongoDB Atlas with Mongoose");
-    const collections = await mongoose.connection.db.listCollections().toArray();
-    const mediaCollection = collections.find((c) => c.name === "media");
-
-    if (mediaCollection) {
-      console.log("Media collection found:", mediaCollection.name);
-    } else {
-      console.log("Media collection not found.");
-    }
-  })
-    .catch((err) => {
-        console.error("Failed to connect to MongoDB Atlas:", err);
-    });
-
 
 const MediaSchema = new mongoose.Schema({
-  //_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, dayum u dont need theys
   media_title: { type: String, required: true },
   author: { type: String, required: true },
   genre_id: { type: mongoose.Schema.Types.ObjectId, ref: "Genre" },
@@ -32,15 +9,42 @@ const MediaSchema = new mongoose.Schema({
 });
 
 const GenreSchema = new mongoose.Schema({
-  genre_description: { type: String, required: true }, 
+  genre_description: { type: String, required: true },
 });
 
 const Media = mongoose.model("Media", MediaSchema);
 const Genre = mongoose.model("Genre", GenreSchema);
 
+(async () => {
+  try {
+    const db = await connectDB; // Wait for the connection to be ready
+    const collections = await db.connection.db.listCollections().toArray();
+    const mediaCollection = collections.find((c) => c.name === "media");
+
+    if (mediaCollection) {
+      console.log("Media collection found:", mediaCollection.name);
+    } else {
+      console.log("Media collection not found.");
+    }
+
+    // Fetch all media items
+    const mediaItems = await Media.find().populate({
+      path: "genre_id",
+      select: "genre_description",
+    });
+    console.log("Media Items:", mediaItems);
+  } catch (error) {
+    console.error("Error while fetching media inventory:", error);
+  }
+})();
 
 
-  /*async function seedData() {
+
+
+
+
+
+/*async function seedData() {
     await Genre.create({
       genre_description: "Gore",
     })
