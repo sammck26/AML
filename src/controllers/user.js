@@ -13,9 +13,10 @@ exports.getDashboard = async(req, res) => {
      // Set the role to customer
     const userId = req.query.user_id; // Retrieve the user_id from the query parameters
 
-      // Fetch the user from the database
+  // Fetch the user from the database
+    //user.role = "customer";
     const user = await Customer.findOne({ user_id: userId }, role);
-    user.role = "customer";
+   
     req.user = user;
 
       // Render the dashboard and pass the user data
