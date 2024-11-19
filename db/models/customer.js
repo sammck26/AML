@@ -13,7 +13,7 @@ const CustomerSchema = new mongoose.Schema({
   role_id: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
 });
 
-const Customer = mongoose.model("Customer", CustomerSchema);
+const Customer = mongoose.model("customers", CustomerSchema);
 
 (async () => {
   try {

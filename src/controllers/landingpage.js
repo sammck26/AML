@@ -3,10 +3,12 @@
 
 exports.getLandingPage = (req, res) => {
     // Render the landing.ejs template inside the landingpage folder
-    const userData = {
-      role: 'guest',  // Hardcoded for now, but in real app, you would get this from the logged-in user session or database
-    };
-  res.render("landingpage/landing", { user: userData, activePage: "landing" }); 
+    const defaultUser = {
+      role_id: {
+          role_description: 'guest',
+      },
+  };
+  res.render('landingpage/landing', { user: defaultUser, activePage: 'home' });
     //console.log('Landing page rendered');
 };
 

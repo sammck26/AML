@@ -5,26 +5,17 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <%- include('../layout.ejs', { user }) %>
+  <%- include('../layout.ejs', { user}) %>
 
   <h1>Welcome to the Library System</h1>
   <p>Discover media, borrow and return easily.</p> 
-
-  <!-- Form for User Dashboard -->
   <form action="/user/dashboard" method="GET">
-    <!-- Dynamically pass user_id if it exists -->
-    <input 
-      type="hidden" 
-      name="user_id" 
-      value="<%= user && user.user_id ? user.user_id : '54327' %>"> 
+    <input type="hidden" name="_id" value="672a90e2211aef12e04c0067"> 
     <button type="submit">Go to Dashboard</button>
   </form>
+      <form action="/branch_librarian/dashboard" method="GET">
+    <button type="submit">Go to Librarina Dashboard</button>
+    </form>
 
-  <!-- Form for Librarian Dashboard -->
-  <form action="/branch_librarian/dashboard" method="GET">
-    <button type="submit">Go to Librarian Dashboard</button>
-  </form>
 </body>
-
-
 </html>

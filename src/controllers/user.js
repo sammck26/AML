@@ -1,43 +1,36 @@
 const {Media} = require("../../db/models/inventory.js");
 const Borrowed = require('../../db/models/borrowed.js');
-const Customer = require('../../db/models/customer.js');
+const {Customer} = require('../../db/models/customer.js');
+
 exports.getProfile = (req, res) => {
   const userData = { name: "User", role: "customer" }; // Sample data
   res.render("user/view_profile", { user: userData, activePage: "profile" });
 };
 
-exports.getDashboard = async(req, res) => { 
-    //const userData = {};  // will fetch user dashboard data from database
-    //res.render('user/user_dashboard', {user: userData, activePage: "dashboard"}); 
-    try {
-      const customerinfo = await Customer.find().populate({
-        path: "role_id",
-        select: "role_description",
-      }); 
-      const userId = req.query._id; // Retrieve the user_id from the query parameters
-      //const role = req.query.role; // Retrieve the role from the query parameters
+exports.getDashboard = async (req, res) => {
+  try {
+    const userId = req.query._id; // Retrieve the user ID from the query parameters
 
-      // Fetch the user from the database
-    const user = await Customer.findOne({ _id: userId});
-    req.user = user;
+    // Fetch the user from the database with the role_id populated
+    const user = await Customer.findOne({ _id: userId }).populate({
+      path: "role_id",
+      select: "role_description", // Fetch only the role_description field from the Role collection
+    });
 
-      // Render the dashboard and pass the user data
-    res.render('user/user_dashboard', { user, customerinfo });
-    console.log('User dashboard data sent');
-     // Set the role to customer
-    
+    if (!user) {
+      return res.status(404).send("User not found");
     }
-    catch (error) {
-      console.error("Error fetching media items:", error);
-      res.status(500).send("An error occurred while fetching inventory");
-    }
-  };
+
+    // Render the dashboard and pass the user data
+    res.render("user/user_dashboard", { user });
+    console.log("User dashboard data sent:", user);
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    res.status(500).send("An error occurred while fetching the user data");
+  }
+};
   
     //console.log('User dashboard data sent');
-    
-  
-
-  
 exports.viewMedia = async(req, res) => { 
     //const userData = {};  // will fetch user dashboard data from database
     const userData = { name: "User", role: "customer" };
