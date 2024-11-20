@@ -1,4 +1,5 @@
 const { Media } = require("../../db/models/inventory.js");
+const { Customer } = require("../../db/models/customer.js");
 
 exports.viewInventory = async (req, res) => {
   //const userData = req.user;
@@ -12,7 +13,7 @@ exports.viewInventory = async (req, res) => {
     res.render("user/show_media.ejs", {
       items: mediaItems,
       user,
-      activePage: "show_media",
+      activePage: 'inventory',
     }); // Render the view with populated items
   } catch (error) {
     console.error("Error fetching media items:", error);
@@ -32,7 +33,7 @@ exports.viewLibrarianInventory = async (req, res) => {
     res.render("branch_librarian/show_media.ejs", {
       items: mediaItems,
       user: userData,
-      activePage: "show_media",
+      activePage: 'inventory',
     }); // Render the view with populated items
   } catch (error) {
     console.error("Error fetching media items:", error);
@@ -70,16 +71,33 @@ exports.viewBorrowed = (req, res) => {
 };
 
 exports.viewWishlist = (req, res) => {
-  user = req.user;
+  const user = req.user;
   const wishlistData = [
     { title: "Wishlist Book 1", author: "Author A", status: "Available" },
     { title: "Wishlist Book 2", author: "Author B", status: "Unavailable" },
     { title: "Wishlist Book 3", author: "Author C", status: "Available" },
   ];
 
-  res.render("user/wishlist", {
+  res.render("user/wishlist.ejs", {
     inventory: wishlistData,
     user,
     activePage: "wishlist",
   });
+};
+
+exports.searchMedia = async (req, res) => {
+  try {
+    const query = req.query.query; // Get the search query from the request
+    const user = req.user;
+    const mediaResults = await Media.find({
+      $or: [
+        { media_title: { $regex: query, $options: "i" } }, // Case-insensitive match for title
+        { genre_description: { $regex: query, $options: "i" } }, // Case-insensitive match for genre
+      ],
+    });
+    res.render("user/search_results.ejs", { mediaResults, query, activePage: 'inventory', user}); // Pass the results and query to the view
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
 };

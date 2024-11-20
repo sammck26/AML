@@ -3,7 +3,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const { Customer } = require('../db/models/customer'); // Import the Customer model
 const app = express();
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // means we can pass shit through fomrs
 // Middleware: Fetch User with Role
 const fetchUserWithRole = async (req, res, next) => {
   try {

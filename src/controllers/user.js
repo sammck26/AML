@@ -73,17 +73,20 @@ exports.getBorrowed = (req, res, next) => {
   next();
 };
 
-exports.borrow_media = async (req, res) => {
-  const { media_id } = req.body;
-  const user_id = req.user._id; 
-
+exports.borrowMedia = async (req, res) => {
+  const { media_id  } = req.body; 
+  const user_id = req.user; 
   try {
-      // Call the model's borrowMedia method
-      await Borrowed.borrowMedia(media_id, user_id);
-
+    console.log("Request body:", req.body); 
+      // Logic to handle borrowing media
+      const borrowedMedia = await Borrowed.borrowMedia(media_id, user_id);
+      if (!borrowedMedia) {
+          return res.status(400).json({ success: false, message: 'Media not available for borrowing.' });
+      }
       res.status(200).json({ success: true, message: 'Media borrowed successfully!' });
   } catch (error) {
-      console.error("Error borrowing media in controller:", error);
+      console.error("Error borrowing media:", error);
       res.status(500).json({ success: false, message: 'Failed to borrow media.' });
   }
 };
+

@@ -24,14 +24,9 @@
         <main class ="content">
             <h1><%= mediaItem.media_title %></h1>
             <div class="container">
-                <div class="header">
-                    <input type="text" placeholder="Search bar">
-                    <button>Filter</button>
-                    <button>Filter</button>
-                </div>
                 <div class="media-section">
                     <div class="media-image">
-                        <h1>HERE WILL BE IMAGE OF MEDAI MAYBE??</h1>
+                        <h1>HERE WILL BE IMAGE OF MEDIA MAYBE??</h1>
                     </div>
                     <div class="media-details">
                         <h2>MEDIA DESC</h2>
@@ -43,19 +38,25 @@
         no sea takimata sanctus est Lorem ipsum dolor sit amet.
                         </p>
                         <div class="genre-tags">
-                            <span class="tag">Genre 1</span>
+                            <span class="tag">Genr</span>
                             <%= mediaItem.genre_id.genre_description %>
                             </div>
                         <div class="buttons">
                             <button>Add to wishlist</button>
-                            <form action="/user/borrow_media" method="POST">
-                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>?_id=<%= user._id %>">
+                            <form action="/user/borrow_media?_id=<%= user._id %>" method="POST">
+                                <!--remember need 2 seperate the hidden inputs-->
+                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
+                                
+                                <!--<input type="hidden" name="user_id" value="<%= user._id %>"> -->
+                                
                                 <button type="submit">Borrow Media</button>
                             </form>
                         </div>
                     </div>
                 </div>
-                <button class="back-button">Back</button>
+                <button class="back-button" onclick="window.location.href='/user/inventory?_id=<%= user._id %>'">Back</button>
+
+
             </div>
         </main>
     </div>

@@ -12,6 +12,7 @@ const CustomerSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role_id: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
+  borrowed: [{ type: mongoose.Schema.Types.ObjectId, ref: "Borrowed" }],
 });
 
 const Customer = mongoose.model("customers", CustomerSchema);
@@ -23,4 +24,4 @@ const RoleSchema = new mongoose.Schema({
 
 const Role = mongoose.model("Role", RoleSchema);
 
-module.exports = { Customer, Role };
+module.exports = {Customer, Role };
