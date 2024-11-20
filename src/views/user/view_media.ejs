@@ -8,6 +8,29 @@
      </head>
 <body>
     <%- include('../layout.ejs', { user }) %>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const message = urlParams.get('message');
+
+            if (status && message) {
+            showPopup(message, status === 'success' ? 'green' : 'red');
+            }
+        });
+
+        function showPopup(message, color) {
+            const popup = document.getElementById('popup');
+            popup.textContent = message;
+            popup.style.backgroundColor = color;
+            popup.style.display = 'block';
+
+            setTimeout(() => {
+            popup.style.display = 'none';
+            }, 3000); // Hide after 3 seconds
+        }
+    </script>
+
     
     <div class="profile-page">
         
@@ -22,6 +45,8 @@
         </nav>
         <!-- Main Content Area -->  
         <main class ="content">
+            <div id="popup" style="display: none; position: fixed; top: 70px; right: 20px; padding: 10px; border-radius: 5px; color: white;"></div>
+
             <h1><%= mediaItem.media_title %></h1>
             <div class="container">
                 <div class="media-section">
