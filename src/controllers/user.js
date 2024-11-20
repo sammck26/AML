@@ -10,94 +10,38 @@ exports.getProfile = (req, res) => {
 
 exports.getDashboard = async (req, res) => {
   try {
-    const userId = req.query._id;
-    if (!userId) {
-      return res.status(400).send("Missing user_id in query parameters");
-    }
-
-    const user = await Customer.findOne({ _id: userId }).populate({
-      path: "role_id",
-      select: "role_description",
-    });
-
-    if (!user) {
-      return res.status(404).send("User not found");
-    }
-
+    const user = req.user; // User is already fetched by middleware
     res.render("user/user_dashboard", {
       user,
       activePage: "dashboard",
     });
-
     console.log("User dashboard data sent:", user);
   } catch (error) {
-    console.error("Error fetching user data:", error);
-    res.status(500).send("An error occurred while fetching user data");
+    console.error("Error rendering dashboard:", error);
+    res.status(500).send("An error occurred while rendering the dashboard");
   }
 };
-
+    //console.log('User dashboard data sent');
+exports.viewMedia = async(req, res) => { 
+  const user = req.user;
+    //const userData = {};  // will fetch user dashboard data from database
+    //const userData = { name: "User", role: "customer" };
+    try {
+      const mediaItem = await Media.findById(req.params.id); // Fetch the media item by ID
   
+      if (!mediaItem) {
+        return res.status(404).send("Media not found");
+      }
+  
+      // Render the view with media item data
+      res.render('user/view_media', { mediaItem, user, activePage: "view_media" });
+    } catch (error) {
+      console.error("Error fetching media item:", error);
+      res.status(500).send("Error retrieving media item");
+    }  
     //console.log('User dashboard data sent');
     
-  
-
-  
-exports.viewMedia = async (req, res) => {
-  console.log("View Media function triggered"); // Log at the start
-  const userId = req.query._id;
-
-  // Check if userId is provided
-  if (!userId) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Missing user_id in query parameters" });
-  }
-
-  let user;
-  try {
-    // Fetch the user and populate role_id
-    user = await Customer.findOne({ _id: userId }).populate({
-      path: "role_id",
-      select: "role_description",
-    });
-
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
-    }
-  } catch (error) {
-    console.error("Error fetching user:", error.message);
-    return res
-      .status(500)
-      .json({ success: false, message: "Error fetching user" });
-  }
-
-  try {
-    // Fetch the media item by ID
-    const mediaItem = await Media.findById(req.params.id);
-
-    if (!mediaItem) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Media not found" });
-    }
-    console.log("User being passed to EJS:", user);
-    // Render the view with media item and user data
-    res.render("user/view_media", {
-      mediaItem,
-      user,
-      activePage: "view_media",
-    });
-  } catch (error) {
-    console.error("Error fetching media item:", error.message);
-    res
-      .status(500)
-      .json({ success: false, message: "Error retrieving media item" });
-  }
-};
-
-
+  };
 
 exports.getWishlist = (req, res, next) => {
   const userData = { name: "User", role: "customer" }; 

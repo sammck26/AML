@@ -3,23 +3,17 @@
 <head>
   <script src="https://kit.fontawesome.com/dbca9b5a6b.js" crossorigin="anonymous"></script>
   <title>Library System</title>
- 
-  
   <link rel="stylesheet" type="text/css" href="/style.css">
-  
 </head>
 <body>
 
-   <% if (user && user.role_id && user.role_id.role_description === 'guest') { %>
-  <%- include('partials/guestnavbar.ejs', { activePage }) %>
-<% } else if (user && user.role_id && user.role_id.role_description === 'librarian') { %>
-  <%- include('partials/librariannavbar.ejs', { activePage }) %>
-<% } else if (user && user.role_id && user.role_id.role_description === 'customer') { %>
-  <%- include('partials/usernavbar.ejs', { activePage }) %>
-<% } else { %>
-  <p>Error: User role is not defined</p>
-<% } %>
+    <% if (user.role_id.role_description === 'guest') { %>
+        <%- include('partials/guestnavbar.ejs', { activePage, user }) %>
+    <% } else if (user.role_id.role_description === 'librarian') { %>
+        <%- include('partials/librariannavbar.ejs', { activePage, user }) %>
+    <% } else if (user.role_id.role_description === 'customer') { %>
+        <%- include('partials/usernavbar.ejs', { activePage, user }) %>
+    <% } %>
 
-  
 </body>
 </html>

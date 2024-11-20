@@ -7,8 +7,14 @@ const defaultUser = {
 };
 
 exports.getLandingPage = (req, res) => {
-  res.render("landingpage/landing", { user: defaultUser, activePage: "home" });
-  //console.log('Landing page rendered');
+    // Render the landing.ejs template inside the landingpage folder
+    const defaultUser = {
+      role_id: {
+          role_description: 'guest',
+      },
+  };
+  res.render('landingpage/landing', { user: defaultUser, activePage: 'home' });
+    //console.log('Landing page rendered');
 };
 
 exports.getLoginPage = (req, res) => { // Sample data
