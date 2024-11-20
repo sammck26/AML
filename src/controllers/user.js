@@ -51,20 +51,20 @@ exports.viewMedia = async(req, res) => {
     
   };
 
-exports.getWishlist = (req, res) => {
-  //const userData = { name: "User", role: "customer" }; 
-  try{
-  const user = req.user;
-  res.render("user/view_wishlist", { user, activePage: "wishlist" });
-  }
-  catch (error) {
-    console.error("Error fetching wishlist:", error);
-    res.status(500).send("An error occurred while fetching the wishlist");
-  }
+// exports.getWishlist = (req, res) => {
+//   //const userData = { name: "User", role: "customer" }; 
+//   try{
+//   const user = req.user;
+//   res.render("user/wishlist", { user, activePage: "wishlist" });
+//   }
+//   catch (error) {
+//     console.error("Error fetching wishlist:", error);
+//     res.status(500).send("An error occurred while fetching the wishlist");
+//   }
   
 
   
-};
+// };
 
 
 exports.getBorrowed = (req, res, next) => {
