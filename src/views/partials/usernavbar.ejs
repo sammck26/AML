@@ -1,7 +1,7 @@
 <div class="navbar">
-    <a href="/user/dashboard" class="<%= (typeof activePage !== 'undefined' && activePage === 'dashboard') ? 'active' : '' %>">Dashboard</a>
-    <a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile' || activePage === 'wishlist') ? 'active' : '' %>">Profile</a>
-    <a href="/user/borrowed_media" class="<%= (typeof activePage !== 'undefined' && activePage === 'borrowed_media') ? 'active' : '' %>">Borrowed Media</a>
-    <a href="/user/inventory" class="<%= (typeof activePage !== 'undefined' && activePage === 'inventory') ? 'active' : '' %>">All Media!</a>
+    <a href="/user/dashboard?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'dashboard') ? 'active' : '' %>">Dashboard</a>
+    <a href="/user/profile?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Profile</a>
+    <a href="/user/borrowed_media?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'borrowed_media') ? 'active' : '' %>">Borrowed Media</a>
+    <a href="/user/inventory?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'inventory') ? 'active' : '' %>">All Media!</a>
     <a href="/" class="<%= (typeof activePage !== 'undefined' && activePage === 'landing') ? 'active' : '' %>">Logout</a>
 </div>

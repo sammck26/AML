@@ -1,3 +1,4 @@
+const connectDB = require("./db.js");
 const mongoose = require("mongoose");
 
 // Customer Schema
