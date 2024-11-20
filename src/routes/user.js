@@ -12,10 +12,7 @@ router.get('/inventory', viewInventoryController.viewInventory, viewInventoryCon
 router.get('/wishlist', viewInventoryController.viewWishlist);
 router.get('/borrowed_media', userController.getBorrowed, viewInventoryController.viewBorrowed);
 router.get('/view_media/:id', userController.viewMedia); // bulit to pass the id of the media item to the view_media page
-router.post('/borrow_media', (req, res, next) => {
-    console.log('Borrow media POST route hit');
-    next();
-}, userController.borrowMedia);
+router.post('/borrow_media', userController.borrowMedia);
 router.get('/search', viewInventoryController.searchMedia);
 
 module.exports = router;
