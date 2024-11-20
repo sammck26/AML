@@ -10,9 +10,9 @@
     <div class = "show_media">
       <nav class="sidebar">
             <ul>
-                <li><a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Update Details</a></li>
-                <li><a href="/user/wishlist/<%_id= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'wishlist') ? 'active' : '' %>">My wishlist</a></li>
-                <li><a href="/user/borrowed_media" class="<%= (typeof activePage !== 'undefined' && activePage === 'borrowed_media') ? 'active' : '' %>">Borrowed media</a></li>
+                <li><a href="/user/profile/?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Update Details</a></li>
+                <li><a href="/user/wishlist/?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'wishlist') ? 'active' : '' %>">My wishlist</a></li>
+                <li><a href="/user/borrowed_media/?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'borrowed_media') ? 'active' : '' %>">Borrowed media</a></li>
                 <li><a href="#billing">Manage Subscription</a></li>
             </ul>
         </nav>

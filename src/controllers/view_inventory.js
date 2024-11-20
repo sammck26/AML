@@ -71,16 +71,16 @@ exports.viewBorrowed = (req, res) => {
 };
 
 exports.viewWishlist = (req, res) => {
-  const userData = req.userData;
+  const user = req.user;
   const wishlistData = [
     { title: "Wishlist Book 1", author: "Author A", status: "Available" },
     { title: "Wishlist Book 2", author: "Author B", status: "Unavailable" },
     { title: "Wishlist Book 3", author: "Author C", status: "Available" },
   ];
 
-  res.render("user/wishlist", {
+  res.render("user/wishlist.ejs", {
     inventory: wishlistData,
-    user: userData,
+    user,
     activePage: "wishlist",
   });
 };
