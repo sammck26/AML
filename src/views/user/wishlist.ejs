@@ -23,26 +23,25 @@
             </ul>
         </nav>
 
-        <!-- Main Content Area -->
+        <!-- display wishlist, no items displayed if array is empty -->
         <main class="content">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% inventory.forEach(item => { %>
-                        <tr>
-                            <td><%= item.title %></td>
-                            <td><%= item.author %></td>
-                            <td><%= item.status %></td>
-                        </tr>
+            <div class="card-grid">
+                <% if (items && items.length > 0) { %>
+                    <% items.forEach(item => { %>
+                        <div class="card">
+                        <a href="/user/view_media/<%= item._id %>?_id=<%= user._id %>">
+                            <h2 class="media-title">Title: <%= item.media_title %></h2>
+                        </a>
+                        <h3>Author: <%= item.author %></h3>
+                        <h3>Genre: <%= item.genre_id ? item.genre_id.genre_description : 'Unknown' %></h3>
+                        <h3>Status: <%= item.quant %></h3>
+                        </div>
                     <% }) %>
-                </tbody>
-            </table>
+                <% } else { %>
+                    <p>No items in your wishlist.</p>
+                <% } %>
+            </div>
+
         </main>
     </div>
     

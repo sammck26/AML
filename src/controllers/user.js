@@ -51,20 +51,40 @@ exports.viewMedia = async(req, res) => {
     
   };
 
-// exports.getWishlist = (req, res) => {
-//   //const userData = { name: "User", role: "customer" }; 
-//   try{
-//   const user = req.user;
-//   res.render("user/wishlist", { user, activePage: "wishlist" });
-//   }
-//   catch (error) {
-//     console.error("Error fetching wishlist:", error);
-//     res.status(500).send("An error occurred while fetching the wishlist");
-//   }
-  
+// controllers/user.js
+exports.addToWishlist = async (req, res) => {
+  const { media_id } = req.body;
 
-  
-// };
+  try {
+    const user = req.user;
+
+    if (!user) {
+      return res.redirect(
+        `/user/view_media/${media_id}?_id=${user._id}&status=error&message=User not found`
+      );
+    }
+
+    // Check if the media item is already in the wishlist
+    if (user.wishlist.includes(media_id)) {
+      return res.redirect(
+        `/user/view_media/${media_id}?_id=${user._id}&status=error&message=Media item already in wishlist`
+      );
+    }
+
+    // Add the media item to the wishlist
+    user.wishlist.push(media_id);
+    await user.save();
+
+    return res.redirect(
+      `/user/view_media/${media_id}?_id=${user._id}&status=success&message=Item added to wishlist`
+    );
+  } catch (error) {
+    console.error("Error adding to wishlist:", error);
+    return res.redirect(
+      `/user/view_media/${media_id}?_id=${user._id}&status=error&message=An error occurred`
+    );
+  }
+};
 
 
 exports.getBorrowed = (req, res, next) => {

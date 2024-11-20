@@ -3,7 +3,7 @@ const { Customer } = require("../../db/models/customer.js");
 
 exports.viewInventory = async (req, res) => {
   //const userData = req.user;
-  const user =req.user;
+  const user = req.user;
   try {
     const mediaItems = await Media.find().populate({
       path: "genre_id",
@@ -70,20 +70,35 @@ exports.viewBorrowed = (req, res) => {
   });
 };
 
-exports.viewWishlist = (req, res) => {
+exports.viewWishlist = async (req, res) => {
   const user = req.user;
-  const wishlistData = [
-    { title: "Wishlist Book 1", author: "Author A", status: "Available" },
-    { title: "Wishlist Book 2", author: "Author B", status: "Unavailable" },
-    { title: "Wishlist Book 3", author: "Author C", status: "Available" },
-  ];
 
-  res.render("user/wishlist.ejs", {
-    inventory: wishlistData,
-    user,
-    activePage: "wishlist",
-  });
+  try {
+    // Populate the user's wishlist with media items and their genres
+    console.log(user.wishlist);
+    await user.populate({
+      path: "wishlist",
+      populate: {
+        path: "genre_id",
+        select: "genre_description",
+      },
+    });
+    
+    const wishlistItems = user.wishlist;
+    
+
+    res.render("user/wishlist.ejs", {
+      items: wishlistItems,
+      user,
+      activePage: "wishlist",
+    });
+  } catch (error) {
+    console.error("Error fetching wishlist items:", error);
+    res.status(500).send("An error occurred while fetching the wishlist");
+  }
 };
+
+
 
 exports.searchMedia = async (req, res) => {
   try {

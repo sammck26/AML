@@ -8,6 +8,29 @@
      </head>
 <body>
     <%- include('../layout.ejs', { user }) %>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const message = urlParams.get('message');
+
+            if (status && message) {
+            showPopup(message, status === 'success' ? 'green' : 'red');
+            }
+        });
+
+        function showPopup(message, color) {
+            const popup = document.getElementById('popup');
+            popup.textContent = message;
+            popup.style.backgroundColor = color;
+            popup.style.display = 'block';
+
+            setTimeout(() => {
+            popup.style.display = 'none';
+            }, 3000); // hide popups after 3 seconds
+        }
+    </script>
+
     
     <div class="profile-page">
         
@@ -22,6 +45,8 @@
         </nav>
         <!-- Main Content Area -->  
         <main class ="content">
+            <div id="popup" style="display: none; position: fixed; top: 70px; right: 20px; padding: 10px; border-radius: 5px; color: white;"></div>
+
             <h1><%= mediaItem.media_title %></h1>
             <div class="container">
                 <div class="media-section">
@@ -42,7 +67,10 @@
                             <%= mediaItem.genre_id.genre_description %>
                             </div>
                         <div class="buttons">
-                            <button>Add to wishlist</button>
+                            <form action="/user/add_to_wishlist?_id=<%= user._id %>" method="POST"></form>
+                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
+                                <button type="submit">Add to Wishlist</button>
+                            </form>
                             <form action="/user/borrow_media?_id=<%= user._id %>" method="POST">
                                 <!--remember need 2 seperate the hidden inputs-->
                                 <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
@@ -51,6 +79,7 @@
                                 
                                 <button type="submit">Borrow Media</button>
                             </form>
+                            
                         </div>
                     </div>
                 </div>
