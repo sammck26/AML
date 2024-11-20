@@ -42,9 +42,13 @@
                             <%= mediaItem.genre_id.genre_description %>
                             </div>
                         <div class="buttons">
-                            <button>Add to wishlist</button>
+                            <form action="/user/add_to_wishlist?_id=<%= user._id %>" method="POST">
+                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
+                                <button type="submit">Add to Wishlist</button>
+                            </form>
                             <form action="/user/borrow_media" method="POST">
-                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>?_id=<%= user._id %>">
+                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
+                                <input type="hidden" name="user_id" value="<%= user._id %>">
                                 <button type="submit">Borrow Media</button>
                             </form>
                         </div>

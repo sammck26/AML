@@ -12,6 +12,7 @@ const CustomerSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role_id: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
+  wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Media" }],
 });
 
 const Customer = mongoose.model("customers", CustomerSchema);

@@ -47,6 +47,7 @@ const landingRoutes = require('./routes/landingpage.js');
 const userRoutes = require('./routes/user.js');
 
 // Use routes
+app.use(express.urlencoded({ extended: true }));
 app.use('/', landingRoutes);
 app.use('/user', fetchUserWithRole, userRoutes); // Apply middleware for all /user routes
 app.use('/branch_librarian', librarianRoutes);

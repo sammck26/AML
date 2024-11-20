@@ -14,5 +14,6 @@ router.get('/borrowed_media', userController.getBorrowed, viewInventoryControlle
 router.get('/view_media/:id', userController.viewMedia); // bulit to pass the id of the media item to the view_media page
 router.post('/borrow_media/:id', userController.borrow_media); // built to handle the borrowing of media items
 router.get('/search', viewInventoryController.searchMedia);
+router.post('/add_to_wishlist', userController.addToWishlist);
 
 module.exports = router;
