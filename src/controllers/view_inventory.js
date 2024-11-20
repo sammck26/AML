@@ -25,7 +25,7 @@ exports.viewInventory = async (req, res) => {
     res.render("user/show_media.ejs", {
       items: mediaItems,
       user,
-      activePage: "show_media",
+      activePage: 'inventory',
     }); // Render the view with populated items
   } catch (error) {
     console.error("Error fetching media items:", error);
@@ -45,7 +45,7 @@ exports.viewLibrarianInventory = async (req, res) => {
     res.render("branch_librarian/show_media.ejs", {
       items: mediaItems,
       user: userData,
-      activePage: "show_media",
+      activePage: 'inventory',
     }); // Render the view with populated items
   } catch (error) {
     console.error("Error fetching media items:", error);
@@ -95,4 +95,21 @@ exports.viewWishlist = (req, res) => {
     user: userData,
     activePage: "wishlist",
   });
+};
+
+exports.searchMedia = async (req, res) => {
+  try {
+    const query = req.query.query; // Get the search query from the request
+    const user = req.user;
+    const mediaResults = await Media.find({
+      $or: [
+        { media_title: { $regex: query, $options: "i" } }, // Case-insensitive match for title
+        { genre_description: { $regex: query, $options: "i" } }, // Case-insensitive match for genre
+      ],
+    });
+    res.render("user/search_results.ejs", { mediaResults, query, activePage: 'inventory', user}); // Pass the results and query to the view
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
 };

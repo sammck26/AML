@@ -253,7 +253,7 @@ button:hover {
     grid-template-columns: repeat(5, 1fr); /* 5 columns */
     grid-template-rows: repeat(2, auto);  /* 2 rows */
     gap: 20px; /* Adjust spacing between cards */
-    padding-left: 200px
+    padding: 30px;
 }
 
 .card {

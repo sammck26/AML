@@ -24,11 +24,6 @@
         <main class ="content">
             <h1><%= mediaItem.media_title %></h1>
             <div class="container">
-                <div class="header">
-                    <input type="text" placeholder="Search bar">
-                    <button>Filter</button>
-                    <button>Filter</button>
-                </div>
                 <div class="media-section">
                     <div class="media-image">
                         <h1>HERE WILL BE IMAGE OF MEDIA MAYBE??</h1>
@@ -55,7 +50,9 @@
                         </div>
                     </div>
                 </div>
-                <button class="back-button">Back</button>
+                <button class="back-button" onclick="window.location.href='/user/inventory?_id=<%= user._id %>'">Back</button>
+
+
             </div>
         </main>
     </div>

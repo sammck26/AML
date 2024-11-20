@@ -18,16 +18,17 @@
         </nav>
    <main class="content">
         <div class="search-bar">
-        <form action="/search" method="GET">
-            <input 
-                type="text" 
-                name="query" 
-                placeholder="Search for media..." 
-                class="search-input"
-                value="<%= typeof query !== 'undefined' ? query : '' %>" />
-            <button type="submit" class="search-button">Search</button>
-        </form>
-    </div>
+            <form action="/user/search" method="GET">
+                <input 
+                    type="text" 
+                    name="query" 
+                    placeholder="Search for media..." 
+                    class="search-input" 
+                    value="<%= typeof query !== 'undefined' ? query : '' %>" />
+                <input type="hidden" name="_id" value="<%= user._id %>">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
 
         <div class="card-grid">
             <% items.forEach(item => { %>
@@ -40,6 +41,7 @@
             <% }) %>
         </div>
     </main>
+</div>
     <footer>
         <div class="footer-content">
             <p class="footer-number">07477045595</p>

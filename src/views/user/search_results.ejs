@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <%- include('../layout.ejs', {user}) %>
+    <div class="search-bar">
+        <form action="/user/search" method="GET">
+            <input 
+                type="text" 
+                name="query" 
+                placeholder="Search for media..." 
+                class="search-input" 
+                value="<%= query %>" />
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+
+    <main class="content">
+        <h1>Search Results for "<%= query %>"</h1>
+
+        <% if (mediaResults.length > 0) { %>
+            <div class="media-list">
+                <% mediaResults.forEach(media => { %>
+                    <div class="media-item">
+                        <h2><%= media.media_title %></h2>
+                        <p><%= media.genre_description %></p>
+                        <a href="/user/view_media/<%= media._id %>?_id=<%= user._id %>">View Details</a>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <p>No results found for "<%= query %>".</p>
+        <% } %>
+    </main>
+</body>
+</html>

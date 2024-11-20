@@ -8,10 +8,11 @@ const app = require('../app.js');
 console.log("entered routes")
 router.get('/dashboard', userController.getDashboard);  // URL: /user/dashboard
 router.get('/profile', userController.getProfile);      // URL: /user/profile
-router.get('/inventory', viewInventoryController.viewInventory);
+router.get('/inventory', viewInventoryController.viewInventory, viewInventoryController.searchMedia);
 router.get('/wishlist', userController.getWishlist, viewInventoryController.viewWishlist);
 router.get('/borrowed_media', userController.getBorrowed, viewInventoryController.viewBorrowed);
 router.get('/view_media/:id', userController.viewMedia); // bulit to pass the id of the media item to the view_media page
 router.post('/borrow_media/:id', userController.borrow_media); // built to handle the borrowing of media items
+router.get('/search', viewInventoryController.searchMedia);
 
 module.exports = router;
