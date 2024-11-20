@@ -49,7 +49,7 @@
                         <div class="buttons">
                             <button>Add to wishlist</button>
                             <form action="/user/borrow_media" method="POST">
-                                <input type="hidden" name="media_id" value="<%= mediaItem._id %> ?_id=<%= user._id %>">
+                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>?_id=<%= user._id %>">
                                 <button type="submit">Borrow Media</button>
                             </form>
                         </div>

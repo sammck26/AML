@@ -1,11 +1,19 @@
 const {Media} = require("../../db/models/inventory.js");
 const Borrowed = require('../../db/models/borrowed.js');
 const {Customer} = require('../../db/models/customer.js');
-console.log("Customer Model:", Customer);
+//console.log("Customer Model:", Customer);
 
 exports.getProfile = (req, res) => {
-  const userData = { name: "User", role: "customer" }; // Sample data
-  res.render("user/view_profile", { user: userData, activePage: "profile" });
+  //const userData = { name: "User", role: "customer" }; // Sample data
+  try{
+  //const userId = req.params.id;
+  const user = req.user;
+  res.render("user/view_profile", { user, activePage: "profile" });
+  } 
+  catch (error) {
+    console.error("Error rendering profile:", error);
+    res.status(500).send("An error occurred while rendering the profile");
+  }
 };
 
 exports.getDashboard = async (req, res) => {
@@ -43,10 +51,19 @@ exports.viewMedia = async(req, res) => {
     
   };
 
-exports.getWishlist = (req, res, next) => {
-  const userData = { name: "User", role: "customer" }; 
-  req.userData = userData; // Pass data to next controller
-  next();
+exports.getWishlist = (req, res) => {
+  //const userData = { name: "User", role: "customer" }; 
+  try{
+  const user = req.user;
+  res.render("user/view_wishlist", { user, activePage: "wishlist" });
+  }
+  catch (error) {
+    console.error("Error fetching wishlist:", error);
+    res.status(500).send("An error occurred while fetching the wishlist");
+  }
+  
+
+  
 };
 
 

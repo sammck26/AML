@@ -1,8 +1,8 @@
 const { Media } = require("../../db/models/inventory.js");
 
 exports.viewInventory = async (req, res) => {
-  const userData = req.user;
-
+  //const userData = req.user;
+  const user =req.user;
   try {
     const mediaItems = await Media.find().populate({
       path: "genre_id",
@@ -11,7 +11,7 @@ exports.viewInventory = async (req, res) => {
     
     res.render("user/show_media.ejs", {
       items: mediaItems,
-      user: userData,
+      user,
       activePage: "show_media",
     }); // Render the view with populated items
   } catch (error) {
