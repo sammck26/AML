@@ -67,7 +67,7 @@
                             <%= mediaItem.genre_id.genre_description %>
                             </div>
                         <div class="buttons">
-                            <form action="/user/add_to_wishlist?_id=<%= user._id %>" method="POST"></form>
+                            <form action="/user/add_to_wishlist?_id=<%= user._id %>" method="POST">
                                 <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
                                 <button type="submit">Add to Wishlist</button>
                             </form>

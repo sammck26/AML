@@ -54,7 +54,8 @@ exports.viewMedia = async(req, res) => {
 // controllers/user.js
 exports.addToWishlist = async (req, res) => {
   const { media_id } = req.body;
-
+  
+  console.log("Request body:", req.body);
   try {
     const user = req.user;
 
