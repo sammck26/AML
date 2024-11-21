@@ -267,7 +267,7 @@ button:hover {
     
     .card:hover {
         background-color: #a2a2a2;
-        padding: 32px;
+        
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow */
     
 }

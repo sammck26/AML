@@ -34,7 +34,7 @@ BorrowedSchema.statics.borrowMedia = async function (media_id, user_id) {
         await Customer.findByIdAndUpdate(user_id, {
             $push: { borrowed: savedBorrowed._id }, 
         });
-
+        
         // Decrease the quantity of the media (just by one for now)
         const updatedMedia = await Media.findByIdAndUpdate(media_id, { $inc: { quant: -1 } });
         

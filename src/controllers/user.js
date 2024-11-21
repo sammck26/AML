@@ -88,24 +88,38 @@ exports.addToWishlist = async (req, res) => {
 };
 
 
-exports.getBorrowed = (req, res, next) => {
-  const userData = { name: "User", role: "customer" };
-  req.userData = userData; // Pass data to next controller
-  next();
-};
+// exports.getBorrowed = (req, res, next) => {
+//   user = req.user;
+//   req.userData = userData; // Pass data to next controller
+//   next();
+// };
 
 exports.borrowMedia = async (req, res) => {
-  const { media_id  } = req.body; 
-  const user_id = req.user; 
+  const { media_id } = req.body; 
+  const user = req.user; // `req.user` contains the user fetched by middleware
+
   try {
     console.log("Request body:", req.body); 
-      // Logic to handle borrowing media
-      const borrowedMedia = await Borrowed.borrowMedia(media_id, user_id);
-      
-      res.status(200).json({ success: true, message: 'Media borrowed successfully!' });
+
+    
+    const borrowedMedia = await Borrowed.borrowMedia(media_id, user._id);
+
+    // if theres no media
+    if (!borrowedMedia) {
+      return res.redirect(
+        `/user/view_media/${media_id}?_id=${user._id}&status=error&message=Unable to borrow media`
+      );
+    }
+
+    // go abck to same page with a success message
+    return res.redirect(
+      `/user/view_media/${media_id}?_id=${user._id}&status=success&message=Media borrowed successfully`
+    );
   } catch (error) {
-      console.error("Error borrowing media:", error);
-      res.status(500).json({ success: false, message: 'Failed to borrow media.' });
+    console.error("Error borrowing media:", error);
+    return res.redirect(
+      `/user/view_media/${media_id}?_id=${user._id}&status=error&message=An error occurred while borrowing media`
+    );
   }
 };
 
