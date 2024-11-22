@@ -9,34 +9,35 @@
 <body>
     <!-- Include layout (header or top navigation) -->
     <%- include('../layout.ejs', { user }) %>
+    <%- include('../partials/librarianSideBar.ejs', {user}) %>
 
     <!-- Profile Page Container with Sidebar and Main Content -->
     <div class="profile-page">
         <!-- Main Content Area -->
         <main class="content">
             <div class="header-container">
-                <h1>Login</h1>
+                <h1>Add Media</h1>
             </div>
             <div class="form-container-login">
-                <form action="/inventory/new" method="post">
-    <label>Title:</label>
-    <input type="text" name="media_title" required>
-    
-    <label>Author:</label>
-    <input type="text" name="author" required>
-    
-    <label>Genre:</label>
-    <select name="genre_id">
-        <% genres.forEach(genre => { %>
-            <option value="<%= genre._id %>"><%= genre.genre_description %></option>
-        <% }) %>
-    </select>
-    
-    <label>Quantity:</label>
-    <input type="number" name="quant" required>
-    
-    <button type="submit">Add Book</button>
-</form>
+                <form action="/branch_librarian/inventory/new?_id=<%= user._id %>" method="POST">
+                    <label>Title:</label>
+                    <input type="text" name="media_title" required>
+                    
+                    <label>Author:</label>
+                    <input type="text" name="author" required>
+                    
+                    <label>Genre:</label>
+                    <select name="genre_id">
+                        <% genres.forEach(genre => { %>
+                            <option value="<%= genre._id %>"><%= genre.genre_description %></option>
+                        <% }) %>
+                    </select>
+                    
+                    <label>Quantity:</label>
+                    <input type="number" name="quant" required>
+                    
+                    <button type="submit">Add Book</button>
+                </form>
 
                 <div id="confirmationMessage"></div>
             </div>

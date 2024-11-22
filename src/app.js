@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const { Customer, Staff } = require('../db/models/customer'); // Import the Customer model
+const { Media } = require("../db/models/inventory.js");
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // means we can pass shit through fomrs
