@@ -19,6 +19,7 @@
 
   <!-- Form for Librarian Dashboard -->
   <form action="/branch_librarian/dashboard" method="GET">
+    <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6740af5225991e256b9bcdc2' %>">
     <button type="submit">Go to Librarian Dashboard</button>
   </form>
 </body>

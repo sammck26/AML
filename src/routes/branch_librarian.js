@@ -3,6 +3,7 @@ const router = express.Router();
 const librarianController = require('../controllers/branch_librarian.js');
 const viewInventoryController = require("../controllers/view_inventory.js");
 const branch_librarianController = require("../controllers/branch_librarian");
+const app = require('../app.js');
 
 // Librarian dashboard route
 router.get('/dashboard', librarianController.getLibrarianDashboard);

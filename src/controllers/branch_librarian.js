@@ -1,4 +1,7 @@
 const { Media, Genre } = require("../../db/models/inventory.js");
+const {Customer, Staff} = require('../../db/models/customer.js');
+const Borrowed = require('../../db/models/borrowed.js');
+
 
 // Hardcoded user data for now; should ideally come from session or authentication middleware
 const userData = {
@@ -6,8 +9,17 @@ const userData = {
 };
 
 exports.getLibrarianDashboard = (req, res) => {
-  res.render("branch_librarian/librarian_dashboard", { user: userData });
-  console.log("Librarian dashboard data sent");
+  try {
+    const user = req.user; // User is already fetched by middleware
+    res.render("branch_librarian/librarian_dashboard", {
+      user,
+      activePage: "dashboard",
+    });
+    console.log("User dashboard data sent:", user);
+  } catch (error) {
+    console.error("Error rendering dashboard:", error);
+    res.status(500).send("An error occurred while rendering the dashboard");
+  }
 };
 
 // Show form to add a new book
