@@ -33,7 +33,7 @@
                         <a href="/user/view_media/<%= media._id %>?_id=<%= user._id %>"><h2 class="media-title">Title: <%= media.media_title %></h2></a>
                         <h3>Author: <%= media.author %></h3>
                         <h3>Genre: <%= media.genre_id.genre_description %></h3>
-                        <h3>Status: <%= media.quant %></h3>
+                        <h3>Status: <%= media.quant > 0 ? 'Available' : 'Not Available' %></h3>
                     </div>
                 <% }); %>
             </div>

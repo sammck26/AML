@@ -50,7 +50,7 @@
                         </a>
                         <h3>Author: <%= item.author %></h3>
                         <h3>Genre: <%= item.genre_id ? item.genre_id.genre_description : 'Unknown' %></h3>
-                        <h3>Status: <%= item.quant %></h3>
+                        <h3>Status: <%= item.quant > 0 ? 'Available' : 'Not Available' %></h3>
                          <!-- Remove button -->
                          <form action="/user/remove_from_wishlist?_id=<%= user._id %>" method="POST" class="remove-form">
                             <input type="hidden" name="item_id" value="<%= item._id %>">

@@ -22,7 +22,7 @@ exports.viewInventory = async (req, res) => {
 };
 
 exports.viewLibrarianInventory = async (req, res) => {
-  const userData = { name: "Librarian", role: "librarian" }; ;
+  const user = req.user;
 
   try {
     const mediaItems = await Media.find().populate({
@@ -32,7 +32,7 @@ exports.viewLibrarianInventory = async (req, res) => {
 
     res.render("branch_librarian/show_media.ejs", {
       items: mediaItems,
-      user: userData,
+      user,
       activePage: 'inventory',
     }); // Render the view with populated items
   } catch (error) {

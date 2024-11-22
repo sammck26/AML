@@ -19,14 +19,14 @@
     <!-- Button to add a new book -->
     <button onclick="location.href='/branch_librarian/inventory/new'">Add New Book</button>
 
-    <table>
+    <table class="styled-table">
         <thead>
             <tr>
-                <th>Title</th>
+                <th>Media Title</th>
                 <th>Author</th>
                 <th>Genre</th>
-                <th>Status</th>
-                <th>Update</th>
+                <th>Availability</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +36,6 @@
                     <td><%= item.author %></td>
                     <td><%= item.genre_id ? item.genre_id.genre_description : 'No Genre' %></td>
                     <td><%= item.quant > 0 ? 'Available' : 'Not Available' %></td>
-                    <!-- Button to update existing book -->
                     <td>
                         <form action="/branch_librarian/inventory/update/<%= item._id %>" method="get">
                             <button type="submit">Update</button>
@@ -46,6 +45,7 @@
             <% }) %>
         </tbody>
     </table>
+    
 </main>
 
     <footer>
