@@ -7,39 +7,42 @@
 <body>
     <%- include('../layout.ejs', { user}) %>
     <%- include('../partials/librarianSideBar.ejs', {user}) %>
-   <main class="content">
-    <h2>Inventory</h2>
-    <!-- Button to add a new book -->
-    <button onclick="location.href='/branch_librarian/inventory/new?_id=<%= user._id %>'">Add New Book</button>
-
-    <table class="styled-table">
-        <thead>
-            <tr>
-                <th>Media Title</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Quantity</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% items.forEach(item => { %>
-                <tr>
-                    <td><%= item.media_title %></td>
-                    <td><%= item.author %></td>
-                    <td><%= item.genre_id ? item.genre_id.genre_description : 'No Genre' %></td>
-                    <td><%= item.quant %></td>
-                    <td>
-                        <form action="/branch_librarian/inventory/update/<%= item._id %>" method="get">
-                            <button type="submit">Update</button>
-                        </form>
-                    </td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
+    <main class="content">
+        <h2>Inventory</h2>
+        <!-- Button to add a new book -->
+        <button onclick="location.href='/branch_librarian/inventory/new?_id=<%= user._id %>'">Add New Book</button>
     
-</main>
+        <!-- Scrollable Table Container -->
+        <div class="table-container-2">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Media Title</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% items.forEach(item => { %>
+                        <tr>
+                            <td><%= item.media_title %></td>
+                            <td><%= item.author %></td>
+                            <td><%= item.genre_id ? item.genre_id.genre_description : 'No Genre' %></td>
+                            <td><%= item.quant %></td>
+                            <td>
+                                <form action="/branch_librarian/inventory/update/<%= item._id %>" method="get">
+                                    <button type="submit">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
 
     <footer>
         <div class="footer-content">

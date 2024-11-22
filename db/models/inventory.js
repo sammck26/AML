@@ -32,31 +32,31 @@ const Genre = mongoose.model("Genre", GenreSchema);
       path: "genre_id",
       select: "genre_description",
     });
-    //console.log("Media Items:", mediaItems);
+    // console.log("Media Items:", mediaItems);
   } catch (error) {
     console.error("Error while fetching media inventory:", error);
   }
 })();
 
+/* async function seedData() {
+  const genres = [
+    { genre_description: "Fantasy" },
+    { genre_description: "Romance" },
+    { genre_description: "Mystery" },
+    { genre_description: "Thriller" },
+    { genre_description: "Non-Fiction" },
+    { genre_description: "Historical Fiction" },
+    { genre_description: "Young Adult" },
+  ];
 
-
-
-
-
-
-/*async function seedData() {
-    await Genre.create({
-      genre_description: "Gore",
-    })
-
-    await Media.create({
-      media_title: "Dune2",
-      author: "Frank Herbert",
-      genre_id: "673358a98c529a6a6ec66a65",
-      quant: 5,
-    });
+  try {
+    await Genre.insertMany(genres);
+    console.log("Sample genres added!");
+  } catch (error) {
+    console.error("Error adding sample genres:", error);
   }
+}
 
-  seedData().then(() => console.log("Sample data added"));*/
+seedData();*/
 
 module.exports = { Media, Genre }; // Export both models

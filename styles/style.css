@@ -252,22 +252,22 @@ button:hover {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 5 columns */
     grid-template-rows: repeat(2, auto);  /* 2 rows */
-    gap: 20px; /* Adjust spacing between cards */
+    gap: 20px; /* card spacing */
     padding: 30px;
 }
 
 .card {
-    border: 1px solid #ccc; /* Add a border around each card */
+    border: 1px solid #ccc; /* card border */
     border-radius: 8px;
     padding: 16px;
-    background-color: #f9f9f9; /* Light background */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #f9f9f9; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     text-align: left;
     }
     
     .card:hover {
         background-color: #a2a2a2;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     
 }
 
@@ -338,6 +338,14 @@ button:hover {
     font-weight: bold;
 }
 
+.styled-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #009879;
+    color: white;
+    z-index: 1; /*keeps header above content */
+}
+
 .styled-table th, .styled-table td {
     border: 1px solid #dddddd;
     padding: 12px 15px;
@@ -357,4 +365,19 @@ button:hover {
 
 .styled-table tbody tr:hover {
     background-color: #f1f1f1;
+}
+
+/* Scrollable Table Container */
+.table-container-2 {
+    flex-grow: 1;
+    overflow-y: auto; 
+    margin-top: 20px;
+    width: 100%;
+}
+
+main.content {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    padding: 20px;
 }
