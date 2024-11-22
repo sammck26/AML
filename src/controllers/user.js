@@ -136,15 +136,6 @@ exports.deleteFromWishlist = async (req, res) => {
   }
 };
 
-
-
-
-exports.getBorrowed = (req, res, next) => {
-  const userData = { name: "User", role: "customer" };
-  req.userData = userData; // Pass data to next controller
-  next();
-};
-
 exports.borrowMedia = async (req, res) => {
   const { media_id  } = req.body; 
   const user_id = req.user; 

@@ -14,14 +14,7 @@
     <div class="profile-page">
         
         <!-- Vertical Sidebar -->
-        <nav class="sidebar">
-            <ul>
-                <li><a href="/user/profile" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Update Details</a></li>
-                <li><a href="/user/wishlist" class="<%= (typeof activePage !== 'undefined' && activePage === 'wishlist') ? 'active' : '' %>">My wishlist</a></li>
-                <li><a href="/user/borrowed_media" class="<%= (typeof activePage !== 'undefined' && activePage === 'borrowed_media') ? 'active' : '' %>">Borrowed media</a></li>
-                <li><a href="#billing">Manage Subscription</a></li>
-            </ul>
-        </nav>
+        <%- include('../partials/userSideBar.ejs', {user}) %>
 
         <!-- Main Content Area -->
         <main class="content">

@@ -56,7 +56,7 @@ exports.viewLibrarianInventory = async (req, res) => {
 ];*/
 
 exports.viewBorrowed = (req, res) => {
-  const userData = req.userData;
+  const user = req.user;
   const borrowedData = [
     { title: "Borrowed Book 1", author: "Author A", status: "Available" },
     { title: "Borrowed Book 2", author: "Author B", status: "Unavailable" },
@@ -65,7 +65,7 @@ exports.viewBorrowed = (req, res) => {
 
   res.render("user/borrowed_media", {
     inventory: borrowedData,
-    user: userData,
+    user,
     activePage: "borrowed_media",
   });
 };

@@ -8,28 +8,32 @@
 </head>
 <body>
     <%- include('../layout.ejs', {user}) %>
-    <div class="search-bar">
-        <form action="/user/search" method="GET">
-            <input 
-                type="text" 
-                name="query" 
-                placeholder="Search for media..." 
-                class="search-input" 
-                value="<%= query %>" />
-            <button type="submit" class="search-button">Search</button>
-        </form>
-    </div>
+    <%- include('../partials/userSideBar.ejs', {user}) %>
+ 
 
     <main class="content">
+        <div class="search-bar">
+            <form action="/user/search" method="GET">
+                <input 
+                    type="text" 
+                    name="query" 
+                    placeholder="Search for media..." 
+                    class="search-input" 
+                    value="<%= typeof query !== 'undefined' ? query : '' %>" />
+                <input type="hidden" name="_id" value="<%= user._id %>">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
         <h1>Search Results for "<%= query %>"</h1>
 
         <% if (mediaResults.length > 0) { %>
-            <div class="media-list">
+            <div class="card-grid">
                 <% mediaResults.forEach(media => { %>
-                    <div class="media-item">
-                        <h2><%= media.media_title %></h2>
-                        <p><%= media.genre_description %></p>
-                        <a href="/user/view_media/<%= media._id %>?_id=<%= user._id %>">View Details</a>
+                    <div class="card">
+                        <a href="/user/view_media/<%= media._id %>?_id=<%= user._id %>"><h2 class="media-title">Title: <%= media.media_title %></h2></a>
+                        <h3>Author: <%= media.author %></h3>
+                        <h3>Genre: <%= media.genre_id.genre_description %></h3>
+                        <h3>Status: <%= media.quant %></h3>
                     </div>
                 <% }); %>
             </div>
