@@ -267,7 +267,6 @@ button:hover {
     
     .card:hover {
         background-color: #a2a2a2;
-        padding: 32px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow */
     
 }
@@ -306,4 +305,18 @@ button:hover {
     background-color: #0056b3;
 }
 
+.remove-btn {
+    background-color: #ee5050;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    right: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 12px;
+    transition: background-color 0.3s;
+}
 
+.remove-btn:hover {
+    background-color: #ff1a1a;
+}

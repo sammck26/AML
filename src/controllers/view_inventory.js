@@ -75,7 +75,7 @@ exports.viewWishlist = async (req, res) => {
 
   try {
     // Populate the user's wishlist with media items and their genres
-    console.log(user.wishlist);
+    //console.log(user.wishlist);
     await user.populate({
       path: "wishlist",
       populate: {
