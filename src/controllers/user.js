@@ -86,7 +86,34 @@ exports.addToWishlist = async (req, res) => {
     );
   }
 };
+exports.markAsReturned = async (req, res) => {
+  const borrowedId = req.params.id; // Borrowed item ID from the URL
+  const userId = req.user._id; // User ID from the logged-in user
 
+  try {
+    // Update the borrowed item's date_returned field
+    const updatedBorrowed = await Borrowed.findByIdAndUpdate(
+      borrowedId,
+      { date_returned: new Date() },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedBorrowed) {
+      return res.status(404).send("Borrowed item not found");
+    }
+
+    // Remove the borrowed item from the customer's borrowed array
+    await Customer.findByIdAndUpdate(userId, {
+      $pull: { borrowed: borrowedId },
+    });
+
+    // Optionally, redirect or send a success message
+    res.redirect(`/user/borrowed_media?_id=${userId}`);
+  } catch (error) {
+    console.error("Error marking as returned:", error);
+    res.status(500).send("An error occurred while marking the media as returned");
+  }
+};
 
 // exports.getBorrowed = (req, res, next) => {
 //   user = req.user;

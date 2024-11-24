@@ -306,4 +306,21 @@ button:hover {
     background-color: #0056b3;
 }
 
-
+/* Styling for the retunr or not returned buttons */
+.return-form button {
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  
+  .return-form .returned-button {
+    background-color: green;
+  }
+  
+  
+  .return-form .not-returned-button {
+    background-color: red;
+  }
+  

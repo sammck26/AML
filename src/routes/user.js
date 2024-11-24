@@ -10,10 +10,11 @@ router.get('/dashboard', userController.getDashboard);  // URL: /user/dashboard
 router.get('/profile', userController.getProfile);      // URL: /user/profile
 router.get('/inventory', viewInventoryController.viewInventory, viewInventoryController.searchMedia);
 router.get('/wishlist', viewInventoryController.viewWishlist);
-router.get('/borrowed_media', userController.getBorrowed, viewInventoryController.viewBorrowed);
+router.get('/borrowed_media', viewInventoryController.viewBorrowed);
 router.get('/view_media/:id', userController.viewMedia); // bulit to pass the id of the media item to the view_media page
 router.post('/borrow_media', userController.borrowMedia);
 router.get('/search', viewInventoryController.searchMedia);
 router.post('/add_to_wishlist', userController.addToWishlist);
+router.post('/mark_returned/:id', userController.markAsReturned);
 
 module.exports = router;
