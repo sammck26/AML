@@ -8,14 +8,7 @@
 <body>
     <%- include('../layout.ejs', {user}) %>
     <div class = "show_media">
-      <nav class="sidebar">
-            <ul>
-                <li><a href="/user/profile/?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'profile') ? 'active' : '' %>">Update Details</a></li>
-                <li><a href="/user/wishlist/?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'wishlist') ? 'active' : '' %>">My wishlist</a></li>
-                <li><a href="/user/borrowed_media/?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'borrowed_media') ? 'active' : '' %>">Borrowed media</a></li>
-                <li><a href="#billing">Manage Subscription</a></li>
-            </ul>
-        </nav>
+        <%- include('../partials/userSideBar.ejs', {user}) %>
    <main class="content">
         <div class="search-bar">
             <form action="/user/search" method="GET">
@@ -36,7 +29,7 @@
                     <a href="/user/view_media/<%= item._id %>?_id=<%= user._id %>"><h2 class="media-title">Title: <%= item.media_title %></h2></a>
                     <h3>Author: <%= item.author %></h3>
                     <h3>Genre: <%= item.genre_id.genre_description %></h3>
-                    <h3>Status: <%= item.quant %></h3>
+                    <h3>Status: <%= item.quant > 0 ? 'Available' : 'Not Available' %></h3>
                 </div>
             <% }) %>
         </div>

@@ -1,11 +1,13 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const { Customer } = require('../db/models/customer'); // Import the Customer model
+const { Customer, Staff } = require('../db/models/customer'); // Import the Customer model
+const { Media } = require("../db/models/inventory.js");
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // means we can pass shit through fomrs
 // Middleware: Fetch User with Role
+
 const fetchUserWithRole = async (req, res, next) => {
   try {
     const userId = req.query._id;
@@ -13,22 +15,33 @@ const fetchUserWithRole = async (req, res, next) => {
       return res.status(400).send("Missing user_id in query parameters");
     }
 
-    const user = await Customer.findOne({ _id: userId }).populate({
+    //try to find user within customoer
+    let user = await Customer.findOne({ _id: userId }).populate({
       path: "role_id",
       select: "role_description",
     });
 
+    //search staff if user isn't a customer
     if (!user) {
-      return res.status(404).send("User not found");
+      user = await Staff.findOne({ _id: userId }).populate({
+        path: "role_id",
+        select: "role_description",
+      });
     }
 
-    req.user = user; // Attach user to the request object
+    //if no user matches, display error
+    if (!user) {
+      return res.status(404).send("User not found in Customer or Staff collections");
+    }
+    req.user = user;
+    console.log("Populated User:", user);
     next();
   } catch (error) {
     console.error("Error fetching user:", error);
     res.status(500).send("An error occurred while fetching the user");
   }
 };
+
 
 // Set the view engine
 app.set('view engine', 'ejs');
@@ -51,6 +64,6 @@ const userRoutes = require('./routes/user.js');
 app.use(express.urlencoded({ extended: true }));
 app.use('/', landingRoutes);
 app.use('/user', fetchUserWithRole, userRoutes); // Apply middleware for all /user routes
-app.use('/branch_librarian', librarianRoutes);
+app.use('/branch_librarian', fetchUserWithRole, librarianRoutes);
 
 module.exports = app; // Export the app setup

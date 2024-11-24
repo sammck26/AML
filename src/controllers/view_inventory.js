@@ -23,7 +23,7 @@ exports.viewInventory = async (req, res) => {
 };
 
 exports.viewLibrarianInventory = async (req, res) => {
-  const userData = { name: "Librarian", role: "librarian" }; ;
+  const user = req.user;
 
   try {
     const mediaItems = await Media.find().populate({
@@ -33,7 +33,7 @@ exports.viewLibrarianInventory = async (req, res) => {
 
     res.render("branch_librarian/show_media.ejs", {
       items: mediaItems,
-      user: userData,
+      user,
       activePage: 'inventory',
     }); // Render the view with populated items
   } catch (error) {
@@ -91,7 +91,7 @@ exports.viewWishlist = async (req, res) => {
 
   try {
     // Populate the user's wishlist with media items and their genres
-    console.log(user.wishlist);
+    //console.log(user.wishlist);
     await user.populate({
       path: "wishlist",
       populate: {

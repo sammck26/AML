@@ -55,7 +55,7 @@ exports.viewMedia = async(req, res) => {
 exports.addToWishlist = async (req, res) => {
   const { media_id } = req.body;
   
-  console.log("Request body:", req.body);
+  //console.log("Request body:", req.body);
   try {
     const user = req.user;
 
@@ -120,6 +120,55 @@ exports.markAsReturned = async (req, res) => {
 //   req.userData = userData; // Pass data to next controller
 //   next();
 // };
+
+exports.deleteFromWishlist = async (req, res) => {
+  const userId = req.user?._id || req.query._id; // Retrieve user ID
+  const { item_id: mediaId } = req.body; // Retrieve media ID from form body
+
+  try {
+    if (!userId || !mediaId) {
+      return res.status(400).redirect(
+        `/user/wishlist?status=error&message=Invalid user or media ID`
+      );
+    }
+
+    const user = req.user;
+
+    if (!user) {
+      return res.status(404).redirect(
+        `/user/wishlist?status=error&message=User not found`
+      );
+    }
+
+    //console.log("User's wishlist before:", user.wishlist);
+
+    // Check if media ID exists in wishlist
+    if (!user.wishlist.some((id) => id.toString() === mediaId.toString())) {
+      return res.status(400).redirect(
+        `/user/wishlist?_id=${user._id}&status=error&message=Item not in wishlist`
+      );
+    }
+
+    // Remove the media ID from wishlist
+    user.wishlist = user.wishlist.filter(
+      (id) => id.toString() !== mediaId.toString()
+    );
+
+    //console.log("User's wishlist after:", user.wishlist);
+
+    await user.save();
+
+    // Redirect with success message
+    return res.redirect(
+      `/user/wishlist?_id=${user._id}&status=success&message=Item removed from wishlist`
+    );
+  } catch (error) {
+    console.error("Error removing from wishlist:", error);
+    return res.status(500).redirect(
+      `/user/wishlist?status=error&message=An error occurred`
+    );
+  }
+};
 
 exports.borrowMedia = async (req, res) => {
   const { media_id } = req.body; 
