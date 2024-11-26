@@ -3,39 +3,43 @@ const { Customer } = require("../../db/models/customer.js");
 const Borrowed = require("../../db/models/borrowed.js");
 
 exports.viewInventory = async (req, res) => {
-  //const userData = req.user;
-  const user = req.user;
+  const user = req.user; // Get the logged-in user's data from middleware
+
   try {
-    const mediaItems = await Media.find().populate({
-      path: "genre_id",
-      select: "genre_description",
-    }); // Fetch and populate genre_id with genre_description
-    
-    res.render("user/show_media.ejs", {
-      items: mediaItems,
+    // now we fetching only the medai that is in theusers branch
+    const mediaItems = await Media.find({ branch: user.branch })
+      .populate({
+        path: "genre_id",
+        select: "genre_description",
+      }); // Populate genre_id with genre_description
+
+    res.render("user/show_media.ejs", { //showving all that to the view
+      items: mediaItems, 
       user,
       activePage: 'inventory',
-    }); // Render the view with populated items
+    });
   } catch (error) {
     console.error("Error fetching media items:", error);
     res.status(500).send("An error occurred while fetching inventory");
   }
 };
 
+
 exports.viewLibrarianInventory = async (req, res) => {
   const user = req.user;
 
   try {
-    const mediaItems = await Media.find().populate({
+    // Fetch media items for the staff member's branch
+    const mediaItems = await Media.find({ branch: user.branch }).populate({
       path: "genre_id",
       select: "genre_description",
-    }); // Fetch and populate genre_id with genre_description
+    });
 
     res.render("branch_librarian/show_media.ejs", {
       items: mediaItems,
       user,
       activePage: 'inventory',
-    }); // Render the view with populated items
+    });
   } catch (error) {
     console.error("Error fetching media items:", error);
     res.status(500).send("An error occurred while fetching inventory");

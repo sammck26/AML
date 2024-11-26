@@ -23,7 +23,7 @@ BorrowedSchema.statics.borrowMedia = async function (media_id, user_id) {
             user_id,
             date_rented: new Date(),
             date_returned: null,
-            quant: 1,
+           // quant: 1,
         });
 
         // hetting the obj id

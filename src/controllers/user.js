@@ -91,29 +91,45 @@ exports.markAsReturned = async (req, res) => {
   const userId = req.user._id; // User ID from the logged-in user
 
   try {
+    // Fetch the borrowed document to get the media_id
+    const borrowedItem = await Borrowed.findById(borrowedId);
+
+    if (!borrowedItem) {
+      return res.status(404).send("Borrowed item not found");
+    }
+
     // Update the borrowed item's date_returned field
-    const updatedBorrowed = await Borrowed.findByIdAndUpdate(
-      borrowedId,
-      { date_returned: new Date() },
+    borrowedItem.date_returned = new Date();
+    await borrowedItem.save();
+
+    // Update the media's quantity (increase by 1)
+    const updatedMedia = await Media.findByIdAndUpdate(
+      borrowedItem.media_id, // Use the media_id from the borrowed document
+      { $inc: { quant: 1 } }, // Increment quantity by 1
       { new: true } // Return the updated document
     );
 
-    if (!updatedBorrowed) {
-      return res.status(404).send("Borrowed item not found");
+    if (!updatedMedia) {
+      return res.status(404).send("Associated media not found.");
     }
+
+    console.log("Media quantity increased:", updatedMedia);
 
     // Remove the borrowed item from the customer's borrowed array
     await Customer.findByIdAndUpdate(userId, {
       $pull: { borrowed: borrowedId },
     });
 
-    // Optionally, redirect or send a success message
-    res.redirect(`/user/borrowed_media?_id=${userId}`);
+    console.log("Borrowed item removed from customer's list");
+
+    // Redirect to the borrowed media page with a success message
+    res.redirect(`/user/borrowed_media?_id=${userId}&status=success&message=Media returned successfully`);
   } catch (error) {
     console.error("Error marking as returned:", error);
     res.status(500).send("An error occurred while marking the media as returned");
   }
 };
+
 
 // exports.getBorrowed = (req, res, next) => {
 //   user = req.user;

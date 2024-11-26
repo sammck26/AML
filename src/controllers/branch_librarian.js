@@ -4,9 +4,9 @@ const Borrowed = require('../../db/models/borrowed.js');
 
 
 // Hardcoded user data for now; should ideally come from session or authentication middleware
-const userData = {
-  role: "librarian",
-};
+// const userData = {
+//   role: "librarian",
+// };
 
 exports.getLibrarianDashboard = (req, res) => {
   try {
@@ -67,6 +67,7 @@ exports.addBook = async (req, res) => {
             author: author,
             genre_id: genre_id,
             quant: quant,
+            branch: user.branch,
         });
 
         // Save the media object to the database

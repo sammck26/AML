@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wishlist</title>
+    
 </head>
 <body>
     <!-- Include layout (header or top navigation) -->
@@ -40,6 +40,7 @@
 
         <!-- display wishlist, no items displayed if array is empty -->
         <main class="content">
+            <h1>Your Wishlist</h1>
             <div id="popup" style="display: none; position: fixed; top: 70px; right: 20px; padding: 10px; border-radius: 5px; color: white;"></div>
             <div class="card-grid">
                 <% if (items && items.length > 0) { %>
