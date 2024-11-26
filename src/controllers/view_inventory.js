@@ -13,7 +13,7 @@ exports.viewInventory = async (req, res) => {
         select: "genre_description",
       }); // Populate genre_id with genre_description
 
-    res.render("user/show_media.ejs", { //showving all that to the view
+    res.render("user/show_media.ejs", { //shoving all that to the view
       items: mediaItems, 
       user,
       activePage: 'inventory',
@@ -70,7 +70,7 @@ exports.viewBorrowed = async(req, res) => {
     const borrowedItems = await Borrowed.find({ user_id: user._id })
       .populate({
         path: "media_id",
-        select: "media_title author genre_id quant", // Populate relevant fields from Media
+        select: "media_title author genre_id quant", 
         populate: {
           path: "genre_id",
           select: "genre_description", // Populate genre details

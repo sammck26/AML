@@ -1,4 +1,4 @@
-const connectDB = require("./db.js"); // Import the connection promise
+const connectDB = require("./db.js"); // Import the connection function
 const mongoose = require("mongoose");
 
 const MediaSchema = new mongoose.Schema({
@@ -18,7 +18,7 @@ const Genre = mongoose.model("Genre", GenreSchema);
 
 (async () => {
   try {
-    const db = await connectDB; // Wait for the connection to be ready
+    const db = await connectDB; 
     const collections = await db.connection.db.listCollections().toArray();
     const mediaCollection = collections.find((c) => c.name === "media");
 

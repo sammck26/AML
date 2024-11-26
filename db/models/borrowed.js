@@ -28,8 +28,8 @@ BorrowedSchema.statics.borrowMedia = async function (media_id, user_id) {
 
         // hetting the obj id
         const savedBorrowed = await borrowedMedia.save({ session });
-        console.log("Customer Model:", Customer);
-        console.log("Customer.findByIdAndUpdate:", typeof Customer.findByIdAndUpdate);
+        // console.log("Customer Model:", Customer);
+        // console.log("Customer.findByIdAndUpdate:", typeof Customer.findByIdAndUpdate);
         // Add the borrowed media's ObjectId to the customer's borrowed array
         await Customer.findByIdAndUpdate(user_id, {
             $push: { borrowed: savedBorrowed._id }, 
