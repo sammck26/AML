@@ -24,7 +24,7 @@
               <% if (items && items.length > 0) { %>
                 <% items.forEach(item => { %>
                   <div class="card">
-                    <h2 class="media-title">Title: <%= item.media_id.media_title %></h2>
+                    <h2 class="media-title">Title: <%= item.media_id.media_title%></h2>
                     <h3>Author: <%= item.media_id.author %></h3>
                     <h3>Genre: <%= item.media_id.genre_id ? item.media_id.genre_id.genre_description : 'Unknown' %></h3>
                     <h3>Date Borrowed: <%= item.date_rented.toDateString() %></h3>

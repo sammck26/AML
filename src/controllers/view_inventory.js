@@ -1,4 +1,4 @@
-const { Media } = require("../../db/models/inventory.js");
+const  {Media}  = require("../../db/models/inventory.js");
 const { Customer } = require("../../db/models/customer.js");
 const Borrowed = require("../../db/models/borrowed.js");
 
@@ -60,24 +60,25 @@ exports.viewLibrarianInventory = async (req, res) => {
     { title: "Book 3", author: "Author C", status: "Available" }
 ];*/
 
-exports.viewBorrowed = async(req, res) => {
-
- 
+exports.viewBorrowed = async (req, res) => {
   const user = req.user;
-  
+
   try {
-      // Fetch all borrowed media for the current user
+    // Fetch all borrowed media for the current user
     const borrowedItems = await Borrowed.find({ user_id: user._id })
       .populate({
-        path: "media_id",
-        select: "media_title author genre_id quant", 
+        path: "media_id", // Populate the media_id reference
+        select: "media_title author genre_id", // Select required fields from Media
         populate: {
-          path: "genre_id",
-          select: "genre_description", // Populate genre details
+          path: "genre_id", // Populate the genre_id reference
+          select: "genre_description", // Select genre description
         },
       })
       .exec();
-  
+
+    console.log("Borrowed Items:", borrowedItems); // Debugging output
+
+    // Render the borrowed_media view
     res.render("user/borrowed_media.ejs", {
       items: borrowedItems,
       user,
@@ -87,8 +88,8 @@ exports.viewBorrowed = async(req, res) => {
     console.error("Error fetching borrowed items:", error);
     res.status(500).send("An error occurred while fetching borrowed media");
   }
-  
 };
+
 
 exports.viewWishlist = async (req, res) => {
   const user = req.user;
