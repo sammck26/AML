@@ -1,6 +1,7 @@
 const {Media} = require("../../db/models/inventory.js");
 const Borrowed = require('../../db/models/borrowed.js');
-const {Customer} = require('../../db/models/customer.js');
+const { Customer } = require('../../db/models/customer.js');
+const bcrypt = require("bcrypt");
 //console.log("Customer Model:", Customer);
 
 exports.getProfile = (req, res) => {
@@ -151,3 +152,63 @@ exports.borrowMedia = async (req, res) => {
   }
 };
 
+exports.registerCustomer = async (req, res) => {
+  const {
+    branch_id,
+    first_name,
+    last_name,
+    date_of_birth,
+    phone_no,
+    email,
+    password,
+    role_id,
+  } = req.body;
+
+  try {
+    // Validate the input fields (you can add more complex validation if needed)
+    if (
+      !branch_id ||
+      !first_name ||
+      !last_name ||
+      !date_of_birth ||
+      !phone_no ||
+      !email ||
+      !password ||
+      !role_id
+    ) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
+    //check if user is already in the database
+    const existingCustomer = await Customer.findOne({ email });
+    if (existingCustomer) {
+      return res.status(400).json({ message: "Email already in use." });
+    }
+
+    //hash pass for security
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    //create customer
+    const newCustomer = new Customer({
+      branch_id,
+      first_name,
+      last_name,
+      date_of_birth,
+      phone_no,
+      email,
+      password: hashedPassword,
+      role_id, // Assign the role (this should be an ObjectId from the Role model)
+      wishlist: [], //initialise empty array
+      borrowed: [], 
+    });
+
+    await newCustomer.save();
+
+    res.status(201).json({ message: "Customer registered successfully!" });
+  } catch (error) {
+    console.error("Error registering customer:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while registering the customer." });
+  }
+};
