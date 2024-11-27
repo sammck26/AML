@@ -4,25 +4,40 @@ const Borrowed = require("../../db/models/borrowed.js");
 
 exports.viewInventory = async (req, res) => {
   const user = req.user; // Get the logged-in user's data from middleware
+  const { page = 1, limit = 10 } = req.query; // Default page is 1, and default limit is 10 items per page
 
   try {
-    // now we fetching only the medai that is in theusers branch
+    // Fetch total count of media items for the user's branch
+    const totalItems = await Media.countDocuments({ branch: user.branch_id });
+
+    // Fetch media items for the current page
     const mediaItems = await Media.find({ branch: user.branch_id })
       .populate({
         path: "genre_id",
         select: "genre_description",
-      }); // Populate genre_id with genre_description
+      })
+      .skip((page - 1) * limit) // Skip items for previous pages
+      .limit(parseInt(limit)); // Limit to the number of items per page
 
-    res.render("user/show_media.ejs", { //shoving all that to the view
-      items: mediaItems, 
+    // Calculate total number of pages
+    const totalPages = Math.ceil(totalItems / limit);
+
+    res.render("user/show_media.ejs", {
+      // Render the media items with pagination details
+      items: mediaItems,
       user,
-      activePage: 'inventory',
+      activePage: "inventory",
+      currentPage: parseInt(page), // Current page number
+      totalPages, // Total number of pages
+      limit: parseInt(limit), // Pass limit to the view
     });
   } catch (error) {
     console.error("Error fetching media items:", error);
     res.status(500).send("An error occurred while fetching inventory");
   }
 };
+
+
 
 
 exports.viewLibrarianInventory = async (req, res) => {

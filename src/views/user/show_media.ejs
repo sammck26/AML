@@ -7,6 +7,7 @@
 </head>
 <body>
     <%- include('../layout.ejs', {user}) %>
+    
     <div class = "show_media">
         <%- include('../partials/userSideBar.ejs', {user}) %>
    <main class="content">
@@ -24,6 +25,7 @@
         </div>
 
         <div class="card-grid">
+            
             <% items.forEach(item => { %>
               <div class="card">
                 <a href="/user/view_media/<%= item._id %>?_id=<%= user._id %>">
@@ -35,7 +37,22 @@
               </div>
             <% }) %>
           </div>
-          
+          <div class="pagination">
+                <% if (currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>&_id=<%= user._id %>">Previous</a>
+                <% } %>
+
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <a href="?page=<%= i %>&limit=<%= limit %>&_id=<%= user._id %>" 
+                    class="<%= i === currentPage ? 'active' : '' %>">
+                    <%= i %>
+                    </a>
+                <% } %>
+
+                <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&_id=<%= user._id %>">Next</a>
+                <% } %>
+           </div>
     </main>
 </div>
     <footer>
