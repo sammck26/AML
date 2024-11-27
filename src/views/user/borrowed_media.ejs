@@ -34,15 +34,18 @@
                       <h3>Date Returned: Not Returned</h3>
                     <% } %>
       
-                    <!-- Return Status Button -->
+                    <!-- Return  Button -->
                     <form action="/user/mark_returned/<%= item._id %>?_id=<%= user._id %>" method="POST" class="return-form">
-                      <button
-                        type="submit"
-                        class="<%= item.date_returned ? 'returned-button' : 'not-returned-button' %>"
-                      >
-                        <%= item.date_returned ? 'Returned' : 'Mark as Returned' %>
-                      </button>
-                    </form>
+                        <button
+                          type="submit"
+                          class="<%= item.date_returned ? 'returned-button' : 'not-returned-button' %>"
+                          <% if (item.date_returned) { %> // if item is returned, disable button
+                            disabled style="background-color: green;"
+                          <% } %>
+                        >
+                          <%= item.date_returned ? 'Returned' : 'Mark as Returned' %>
+                        </button>
+                      </form>
                   </div>
                 <% }) %>
               <% } else { %>
