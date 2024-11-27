@@ -165,7 +165,7 @@ exports.registerCustomer = async (req, res) => {
   } = req.body;
 
   try {
-    // Validate the input fields (you can add more complex validation if needed)
+    //require inputs
     if (
       !branch_id ||
       !first_name ||
@@ -199,12 +199,14 @@ exports.registerCustomer = async (req, res) => {
       password: hashedPassword,
       role_id, // Assign the role (this should be an ObjectId from the Role model)
       wishlist: [], //initialise empty array
-      borrowed: [], 
+      borrowed: [],
     });
 
     await newCustomer.save();
-
-    res.status(201).json({ message: "Customer registered successfully!" });
+    // Redirect to login
+    return res.redirect(
+      `/landingpage/login`
+    );
   } catch (error) {
     console.error("Error registering customer:", error);
     res
