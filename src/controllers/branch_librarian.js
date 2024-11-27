@@ -14,7 +14,7 @@ exports.getLibrarianDashboard = (req, res) => {
     res.render("branch_librarian/librarian_dashboard", {
       user,
       activePage: "dashboard",
-    });
+    }); 
     console.log("User dashboard data sent:", user);
   } catch (error) {
     console.error("Error rendering dashboard:", error);
@@ -52,7 +52,6 @@ exports.showUpdateForm = async (req, res) => {
   }
 };
 
-// Handle adding a new book
 exports.addBook = async (req, res) => {
   const user = req.user;
     try {
@@ -61,7 +60,7 @@ exports.addBook = async (req, res) => {
 
         //Console.log( media_title, author, genre_id, quant)
 
-        // Create a new media object
+        //new media object
         const newMedia = new Media({
             media_title: media_title,
             author: author,
@@ -70,31 +69,65 @@ exports.addBook = async (req, res) => {
             branch: user.branch,
         });
 
-        // Save the media object to the database
         await newMedia.save();
 
-        // Redirect or send a success response
-        
-        res.redirect(`/branch_librarian/inventory/new?_id=${user._id}`);// Redirect to the inventory page or a confirmation page
+        res.redirect(`/branch_librarian/librarianInventory?_id=${user._id}`);//redirect to inventory page
     } catch (error) {
         console.error('Error creating media:', error);
         res.status(500).send('An error occurred while adding the media.');
     }
 };
 
-// Handle updating a book
-exports.updateBook = async (req, res) => {
+exports.deleteMedia = async (req, res) => {
+  const mediaId = req.params.id;
+  const user = req.user;
   try {
-    const { media_title, author, genre_id, quant } = req.body;
-    await Media.findByIdAndUpdate(req.params.id, {
-      media_title,
-      author,
-      genre_id,
-      quant,
-    });
-    res.redirect("/inventory");
+    const deletedMedia = await Media.findByIdAndDelete(mediaId);
+
+    if (!deletedMedia) {
+      return res.status(404).send("Media not found.");
+    }
+
+    console.log(`Media with ID ${mediaId} has been deleted.`);
+
+    res.redirect(`/branch_librarian/librarianInventory?_id=${user._id}`); // Redirect to the inventory page
   } catch (error) {
-    console.error("Error updating book:", error);
-    res.status(500).send("Error updating book");
+    console.error("Error deleting media:", error);
+    res.status(500).send("An error occurred while deleting the media.");
   }
 };
+
+
+// Handle updating a book
+exports.updateMediaQuantity = async (req, res) => {
+  const mediaId = req.params.id; // Media ID passed in the URL
+  const { newQuantity } = req.body; // New quantity from the form input
+  const user = req.user;
+
+  try {
+    // Validate the new quantity
+    if (isNaN(newQuantity) || newQuantity < 0) {
+      return res.status(400).send("Invalid quantity value.");
+    }
+
+    // Update the media quantity in the database
+    const updatedMedia = await Media.findByIdAndUpdate(
+      mediaId,
+      { quant: newQuantity },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedMedia) {
+      return res.status(404).send("Media not found.");
+    }
+
+    console.log(`Media quantity updated: ${updatedMedia}`);
+    res.redirect(`/branch_librarian/librarianInventory?_id=${user._id}`); // Redirect back to inventory
+  } catch (error) {
+    console.error("Error updating media quantity:", error);
+    res
+      .status(500)
+      .send("An error occurred while updating the media quantity.");
+  }
+};
+

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 // Customer Schema
 const CustomerSchema = new mongoose.Schema({
-  branch_id: { type: Number, required: true },
+  branch_id: { type: mongoose.Schema.Types.ObjectId, ref: "Branch", required: true},
   first_name: { type: String, required: true },
   last_name: { type: String, required: true },
   date_of_birth: { type: Date, required: true },
