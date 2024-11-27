@@ -7,7 +7,7 @@ exports.viewInventory = async (req, res) => {
 
   try {
     // now we fetching only the medai that is in theusers branch
-    const mediaItems = await Media.find({ branch: user.branch })
+    const mediaItems = await Media.find({ branch: user.branch_id })
       .populate({
         path: "genre_id",
         select: "genre_description",
