@@ -7,7 +7,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // means we can pass shit through fomrs
 // Middleware: Fetch User with Role
-
+const bodyParser = require("body-parser");
+// Parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+// Parse application/json
+app.use(bodyParser.json());
 const fetchUserWithRole = async (req, res, next) => {
   try {
     const userId = req.query._id;
