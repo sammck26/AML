@@ -324,7 +324,7 @@ button:hover {
     background-color: red;
   }
   
-  remove-btn {
+  .remove-btn {
     background-color: #ee5050;
     color: white;
     border: none;
