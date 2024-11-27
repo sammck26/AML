@@ -11,6 +11,7 @@
 <%- include('../layout.ejs', { user }) %>
 
 <main class="content">
+    <%- include('../partials/userSideBar.ejs', {user}) %>
     <!--<p>Your role is: <%= user.role %></p> -->
     <h1>Welcome, <%= user.first_name %>!</h1>
     <p>Your email is: <%= user.email %></p>

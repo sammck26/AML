@@ -1,40 +1,60 @@
-const { Media } = require("../../db/models/inventory.js");
+const  {Media}  = require("../../db/models/inventory.js");
 const { Customer } = require("../../db/models/customer.js");
+const Borrowed = require("../../db/models/borrowed.js");
 
 exports.viewInventory = async (req, res) => {
-  //const userData = req.user;
-  const user = req.user;
+  const user = req.user; // Get the logged-in user's data from middleware
+  const { page = 1, limit = 10 } = req.query; // Default page is 1, and default limit is 10 items per page
+
   try {
-    const mediaItems = await Media.find().populate({
-      path: "genre_id",
-      select: "genre_description",
-    }); // Fetch and populate genre_id with genre_description
-    
+    // Fetch total count of media items for the user's branch
+    const totalItems = await Media.countDocuments({ branch: user.branch_id });
+
+    // Fetch media items for the current page
+    const mediaItems = await Media.find({ branch: user.branch_id })
+      .populate({
+        path: "genre_id",
+        select: "genre_description",
+      })
+      .skip((page - 1) * limit) // Skip items for previous pages
+      .limit(parseInt(limit)); // Limit to the number of items per page
+
+    // Calculate total number of pages
+    const totalPages = Math.ceil(totalItems / limit);
+
     res.render("user/show_media.ejs", {
+      // Render the media items with pagination details
       items: mediaItems,
       user,
-      activePage: 'inventory',
-    }); // Render the view with populated items
+      activePage: "inventory",
+      currentPage: parseInt(page), // Current page number
+      totalPages, // Total number of pages
+      limit: parseInt(limit), // Pass limit to the view
+    });
   } catch (error) {
     console.error("Error fetching media items:", error);
     res.status(500).send("An error occurred while fetching inventory");
   }
 };
 
+
+
+
 exports.viewLibrarianInventory = async (req, res) => {
   const user = req.user;
 
   try {
-    const mediaItems = await Media.find().populate({
+    // Fetch media items for the staff member's branch
+    const mediaItems = await Media.find({ branch: user.branch }).populate({
       path: "genre_id",
       select: "genre_description",
-    }); // Fetch and populate genre_id with genre_description
+    });
 
     res.render("branch_librarian/show_media.ejs", {
       items: mediaItems,
       user,
       activePage: 'inventory',
-    }); // Render the view with populated items
+    });
   } catch (error) {
     console.error("Error fetching media items:", error);
     res.status(500).send("An error occurred while fetching inventory");
@@ -55,20 +75,36 @@ exports.viewLibrarianInventory = async (req, res) => {
     { title: "Book 3", author: "Author C", status: "Available" }
 ];*/
 
-exports.viewBorrowed = (req, res) => {
+exports.viewBorrowed = async (req, res) => {
   const user = req.user;
-  const borrowedData = [
-    { title: "Borrowed Book 1", author: "Author A", status: "Available" },
-    { title: "Borrowed Book 2", author: "Author B", status: "Unavailable" },
-    { title: "Borrowed Book 3", author: "Author C", status: "Available" },
-  ];
 
-  res.render("user/borrowed_media", {
-    inventory: borrowedData,
-    user,
-    activePage: "borrowed_media",
-  });
+  try {
+    // Fetch all borrowed media for the current user
+    const borrowedItems = await Borrowed.find({ user_id: user._id })
+      .populate({
+        path: "media_id", // Populate the media_id reference
+        select: "media_title author genre_id", // Select required fields from Media
+        populate: {
+          path: "genre_id", // Populate the genre_id reference
+          select: "genre_description", // Select genre description
+        },
+      })
+      .exec();
+
+    console.log("Borrowed Items:", borrowedItems); // Debugging output
+
+    // Render the borrowed_media view
+    res.render("user/borrowed_media.ejs", {
+      items: borrowedItems,
+      user,
+      activePage: "borrowed_media",
+    });
+  } catch (error) {
+    console.error("Error fetching borrowed items:", error);
+    res.status(500).send("An error occurred while fetching borrowed media");
+  }
 };
+
 
 exports.viewWishlist = async (req, res) => {
   const user = req.user;

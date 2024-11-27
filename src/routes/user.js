@@ -15,6 +15,7 @@ router.get('/view_media/:id', userController.viewMedia); // bulit to pass the id
 router.post('/borrow_media', userController.borrowMedia);
 router.get('/search', viewInventoryController.searchMedia);
 router.post('/add_to_wishlist', userController.addToWishlist);
+router.post('/mark_returned/:id', userController.markAsReturned);
 router.post('/remove_from_wishlist', userController.deleteFromWishlist);
 
 // Route to render the profile update form

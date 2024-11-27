@@ -11,7 +11,7 @@ body, html {
     display: flex;
     flex-direction: column;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #ffffff;
 }
 
 .navbar {
@@ -253,7 +253,6 @@ button:hover {
     grid-template-columns: repeat(5, 1fr); /* 5 columns */
     grid-template-rows: repeat(2, auto);  /* 2 rows */
     gap: 20px; /* card spacing */
-    padding: 30px;
 }
 
 .card {
@@ -268,6 +267,8 @@ button:hover {
     .card:hover {
         background-color: #a2a2a2;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow */
     
 }
 
@@ -305,7 +306,25 @@ button:hover {
     background-color: #0056b3;
 }
 
-.remove-btn {
+/* Styling for the retunr or not returned buttons */
+.return-form button {
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  
+  .return-form .returned-button {
+    background-color: green;
+  }
+  
+  
+  .return-form .not-returned-button {
+    background-color: red;
+  }
+  
+  .remove-btn {
     background-color: #ee5050;
     color: white;
     border: none;
@@ -380,4 +399,36 @@ main.content {
     flex-direction: column;
     height: 80vh;
     padding: 20px;
+}
+
+/* pagination styling */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  position: fixed; /* Keeps it at the bottom of the viewport */
+  bottom: 40px; /* Anchors to the bottom */
+  padding: 10px 0; /* Adds padding for better appearance */
+  background-color: #ffffff; /* Background color to make it distinct */
+  z-index: 10; /* Ensures it appears above other content */
+}
+
+
+.pagination a {
+  padding: 10px 15px;
+  margin: 0 5px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  color: #007bff;
+}
+
+.pagination a.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination a:hover {
+  background-color: #ddd;
+  color: black;
 }

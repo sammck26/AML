@@ -139,6 +139,56 @@ exports.addToWishlist = async (req, res) => {
     );
   }
 };
+exports.markAsReturned = async (req, res) => {
+  const borrowedId = req.params.id; // Borrowed item ID from the URL
+  const userId = req.user._id; // User ID from the logged-in user
+
+  try {
+    // Fetch the borrowed document to get the media_id
+    const borrowedItem = await Borrowed.findById(borrowedId);
+
+    if (!borrowedItem) {
+      return res.status(404).send("Borrowed item not found");
+    }
+
+    // Update the borrowed item's date_returned field
+    borrowedItem.date_returned = new Date();
+    await borrowedItem.save();
+
+    // Update the media's quantity (increase by 1)
+    const updatedMedia = await Media.findByIdAndUpdate(
+      borrowedItem.media_id, // Use the media_id from the borrowed document
+      { $inc: { quant: 1 } }, // Increment quantity by 1
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedMedia) {
+      return res.status(404).send("Associated media not found.");
+    }
+
+    console.log("Media quantity increased:", updatedMedia);
+
+    // Remove the borrowed item from the customer's borrowed array
+    await Customer.findByIdAndUpdate(userId, {
+      $pull: { borrowed: borrowedId },
+    });
+
+    console.log("Borrowed item removed from customer's list");
+
+    // Redirect to the borrowed media page with a success message
+    res.redirect(`/user/borrowed_media?_id=${userId}&status=success&message=Media returned successfully`);
+  } catch (error) {
+    console.error("Error marking as returned:", error);
+    res.status(500).send("An error occurred while marking the media as returned");
+  }
+};
+
+
+// exports.getBorrowed = (req, res, next) => {
+//   user = req.user;
+//   req.userData = userData; // Pass data to next controller
+//   next();
+// };
 
 exports.deleteFromWishlist = async (req, res) => {
   const userId = req.user?._id || req.query._id; // Retrieve user ID
@@ -190,17 +240,31 @@ exports.deleteFromWishlist = async (req, res) => {
 };
 
 exports.borrowMedia = async (req, res) => {
-  const { media_id  } = req.body; 
-  const user_id = req.user; 
+  const { media_id } = req.body; 
+  const user = req.user; // `req.user` contains the user fetched by middleware
+
   try {
     console.log("Request body:", req.body); 
-      // Logic to handle borrowing media
-      const borrowedMedia = await Borrowed.borrowMedia(media_id, user_id);
-      
-      res.status(200).json({ success: true, message: 'Media borrowed successfully!' });
+
+    
+    const borrowedMedia = await Borrowed.borrowMedia(media_id, user._id);
+
+    // if theres no media
+    if (!borrowedMedia) {
+      return res.redirect(
+        `/user/view_media/${media_id}?_id=${user._id}&status=error&message=Unable to borrow media`
+      );
+    }
+
+    // go abck to same page with a success message
+    return res.redirect(
+      `/user/view_media/${media_id}?_id=${user._id}&status=success&message=Media borrowed successfully`
+    );
   } catch (error) {
-      console.error("Error borrowing media:", error);
-      res.status(500).json({ success: false, message: 'Failed to borrow media.' });
+    console.error("Error borrowing media:", error);
+    return res.redirect(
+      `/user/view_media/${media_id}?_id=${user._id}&status=error&message=An error occurred while borrowing media`
+    );
   }
 };
 

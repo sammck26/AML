@@ -23,18 +23,18 @@ BorrowedSchema.statics.borrowMedia = async function (media_id, user_id) {
             user_id,
             date_rented: new Date(),
             date_returned: null,
-            quant: 1,
+           // quant: 1,
         });
 
         // hetting the obj id
         const savedBorrowed = await borrowedMedia.save({ session });
-        console.log("Customer Model:", Customer);
-        console.log("Customer.findByIdAndUpdate:", typeof Customer.findByIdAndUpdate);
+        // console.log("Customer Model:", Customer);
+        // console.log("Customer.findByIdAndUpdate:", typeof Customer.findByIdAndUpdate);
         // Add the borrowed media's ObjectId to the customer's borrowed array
         await Customer.findByIdAndUpdate(user_id, {
             $push: { borrowed: savedBorrowed._id }, 
         });
-
+        
         // Decrease the quantity of the media (just by one for now)
         const updatedMedia = await Media.findByIdAndUpdate(media_id, { $inc: { quant: -1 } });
         

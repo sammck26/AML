@@ -4,39 +4,55 @@
     <link rel="stylesheet" href="/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borrowed Meda</title>
+    
 </head>
 <body>
     <!-- Include layout (header or top navigation) -->
     <%- include('../layout.ejs', { user }) %>
-
+    
     <!-- Profile Page Container with Sidebar and Main Content -->
     <div class="profile-page">
         
         <!-- Vertical Sidebar -->
         <%- include('../partials/userSideBar.ejs', {user}) %>
-
+        
         <!-- Main Content Area -->
         <main class="content">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% inventory.forEach(item => { %>
-                        <tr>
-                            <td><%= item.title %></td>
-                            <td><%= item.author %></td>
-                            <td><%= item.status %></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        </main>
+            <h1>Your Borrowing History</h1>
+            
+            <div class="card-grid">
+              <% if (items && items.length > 0) { %>
+                <% items.forEach(item => { %>
+                  <div class="card">
+                    <h2 class="media-title">Title: <%= item.media_id.media_title%></h2>
+                    <h3>Author: <%= item.media_id.author %></h3>
+                    <h3>Genre: <%= item.media_id.genre_id ? item.media_id.genre_id.genre_description : 'Unknown' %></h3>
+                    <h3>Date Borrowed: <%= item.date_rented.toDateString() %></h3>
+                    <% if (item.date_returned) { %>
+                      <h3>Date Returned: <%= item.date_returned.toDateString() %></h3>
+                    <% } else { %>
+                      <h3>Date Returned: Not Returned</h3>
+                    <% } %>
+      
+                    <!-- Return  Button -->
+                    <form action="/user/mark_returned/<%= item._id %>?_id=<%= user._id %>" method="POST" class="return-form">
+                        <button
+                          type="submit"
+                          class="<%= item.date_returned ? 'returned-button' : 'not-returned-button' %>"
+                          <% if (item.date_returned) { %> // if item is returned, disable button
+                            disabled style="background-color: green;"
+                          <% } %>
+                        >
+                          <%= item.date_returned ? 'Returned' : 'Mark as Returned' %>
+                        </button>
+                      </form>
+                  </div>
+                <% }) %>
+              <% } else { %>
+                <p>No borrowed items found! Start borrowing now!</p>
+              <% } %>
+            </div>
+          </main>
     </div>
     
     <!-- Footer -->

@@ -65,12 +65,15 @@
                                 <button type="submit">Add to Wishlist</button>
                             </form>
                             <form action="/user/borrow_media?_id=<%= user._id %>" method="POST">
-                                <!--remember need 2 seperate the hidden inputs-->
                                 <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
-                                
-                                <!--<input type="hidden" name="user_id" value="<%= user._id %>"> -->
-                                
-                                <button type="submit">Borrow Media</button>
+                                <button
+                                    type="submit"
+                                    <% if (mediaItem.quant <= 0) { %>
+                                        disabled style="background-color: grey;"
+                                    <% } %>
+                                >
+                                    Borrow Media
+                                </button>
                             </form>
                             
                         </div>
