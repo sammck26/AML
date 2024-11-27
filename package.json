@@ -4,12 +4,14 @@
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "express-ejs-layouts": "^2.5.1",
+    "expressjs": "^1.0.1",
     "mongo": "^0.1.0",
     "mongodb": "^6.10.0",
-    "mongoose": "^8.8.1",
+    "mongoose": "^8.8.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
-    "node": "^22.11.0"
+    "node": "^22.11.0",
+    "nodejs": "^0.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.9.0"
