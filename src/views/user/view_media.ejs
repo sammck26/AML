@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+     </head>
+<body>
+    <%- include('../layout.ejs', { user }) %>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const message = urlParams.get('message');
+
+            if (status && message) {
+            showPopup(message, status === 'success' ? 'green' : 'red');
+            }
+        });
+
+        function showPopup(message, color) {
+            const popup = document.getElementById('popup');
+            popup.textContent = message;
+            popup.style.backgroundColor = color;
+            popup.style.display = 'block';
+
+            setTimeout(() => {
+            popup.style.display = 'none';
+            }, 3000); // hide popups after 3 seconds
+        }
+    </script>
+
+    
+    <div class="profile-page">
+        
+        <!-- Vertical Sidebar -->
+        <%- include('../partials/userSideBar.ejs', {user}) %>
+        <!-- Main Content Area -->  
+        <main class ="content">
+            <div id="popup" style="display: none; position: fixed; top: 70px; right: 20px; padding: 10px; border-radius: 5px; color: white;"></div>
+
+            <h1><%= mediaItem.media_title %></h1>
+            <div class="container">
+                <div class="media-section">
+                    <div class="media-image">
+                        <h1>HERE WILL BE IMAGE OF MEDIA MAYBE??</h1>
+                    </div>
+                    <div class="media-details">
+                        <h2>MEDIA DESC</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,   
+        no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna   
+        aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna   
+        aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,   
+        no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                        </p>
+                        <div class="genre-tags">
+                            <span class="tag">Genr</span>
+                            <%= mediaItem.genre_id.genre_description %>
+                            </div>
+                        <div class="buttons">
+                            <form action="/user/add_to_wishlist?_id=<%= user._id %>" method="POST">
+                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
+                                <button type="submit">Add to Wishlist</button>
+                            </form>
+                            <form action="/user/borrow_media?_id=<%= user._id %>" method="POST">
+                                <input type="hidden" name="media_id" value="<%= mediaItem._id %>">
+                                <button
+                                    type="submit"
+                                    <% if (mediaItem.quant <= 0) { %>
+                                        disabled style="background-color: grey;"
+                                    <% } %>
+                                >
+                                    Borrow Media
+                                </button>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+                <button class="back-button" onclick="window.location.href='/user/inventory?_id=<%= user._id %>'">Back</button>
+
+
+            </div>
+        </main>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p class="footer-number">07477045595</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

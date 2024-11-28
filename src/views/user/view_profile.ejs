@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <%- include('../layout.ejs', { user }) %>
+    <%- include('../partials/userSideBar.ejs', {user}) %>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const message = urlParams.get('message');
+
+            if (status && message) {
+            showPopup(message, status === 'success' ? 'green' : 'red');
+            }
+        });
+
+        function showPopup(message, color) {
+            const popup = document.getElementById('popup');
+            popup.textContent = message;
+            popup.style.backgroundColor = color;
+            popup.style.display = 'block';
+
+            setTimeout(() => {
+            popup.style.display = 'none';
+            }, 3000); // hide popups after 3 seconds
+        }
+    </script>
+    <!-- Profile Page Container with Sidebar and Main Content -->
+    <main class="content">
+        <div id="popup" style="display: none; position: fixed; top: 70px; right: 20px; padding: 10px; border-radius: 5px; color: white;"></div>
+    <div class="header-container">
+        <h1>Update Profile</h1>
+    </div>
+    <div class="form-container-login">
+        <form id="profileForm" action="/user/profile/update/?_id=<%= user._id %>" method="POST">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="first_name">
+            </div>
+            <div class="form-group">
+                <label for="secondName">Second Name</label>
+                <input type="text" id="secondName" name="last_name">
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="date_of_birth">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address">
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phone_no">
+            </div>
+            <input type="hidden" name="branch_id" value="672a8c69211aef12e045691b"> <!-- Replace 1 with the actual branch ID -->
+            <input type="hidden" name="role_id" value="673c99d525991e256b992928"> <!-- Replace with actual role ID -->
+            <button type="submit">update</button>
+        </form>
+        <div id="confirmationMessage"></div>
+    </div>
+</main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-number">07477045595</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+

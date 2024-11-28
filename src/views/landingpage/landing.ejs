@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Landing Page</title>
+  <title>Landing Pag</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+  <%- include('../layout.ejs', { user}) %>
+
   <h1>Welcome to the Library System</h1>
   <p>Discover media, borrow and return easily.</p> 
-  <form action="/user/dashboard" method="GET">
-    <button type="submit">Go to Dashboard</button>
-    </form>
-      <form action="/branch_librarian/dashboard" method="GET">
-    <button type="submit">Go to Librarina Dashboard</button>
-    </form>
 
-  <!-- You can add navigation links or buttons 
-  <a href="/user/login">Login</a>
-  <a href="/media/search">Search Media</a>
--->
+  <!-- Form for User Dashboard -->
+ <form action="/user/dashboard" method="GET">
+  <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6746f827c252ba3cb36816bc' %>">
+  <button type="submit">Go to Dashboard</button>
+</form>
+
+
+  <!-- Form for Librarian Dashboard -->
+  <form action="/branch_librarian/dashboard" method="GET">
+    <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6740af5225991e256b9bcdc2' %>">
+    <button type="submit">Go to Librarian Dashboard</button>
+  </form>
 </body>
 </html>
