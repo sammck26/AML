@@ -18,9 +18,7 @@
         
         <!-- Main Content Area -->
         <main class="content">
-            <h1>Your Borrowing History</h1>
-            
-            <div class="card-grid">
+            <div class="card-grid" style="padding-top: 20px">
               <% if (items && items.length > 0) { %>
                 <% items.forEach(item => { %>
                   <div class="card">
@@ -52,6 +50,22 @@
                 <p>No borrowed items found! Start borrowing now!</p>
               <% } %>
             </div>
+            <div class="pagination">
+                <% if (currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>&_id=<%= user._id %>">Previous</a>
+                <% } %>
+
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <a href="?page=<%= i %>&limit=<%= limit %>&_id=<%= user._id %>" 
+                    class="<%= i === currentPage ? 'active' : '' %>">
+                    <%= i %>
+                    </a>
+                <% } %>
+
+                <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&_id=<%= user._id %>">Next</a>
+                <% } %>
+           </div>
           </main>
     </div>
     

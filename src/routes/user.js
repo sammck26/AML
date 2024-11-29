@@ -21,4 +21,10 @@ router.post('/add_to_wishlist', userController.addToWishlist);
 router.post('/mark_returned/:id', userController.markAsReturned);
 router.post('/remove_from_wishlist', userController.deleteFromWishlist);
 
+// Route to render the profile update form
+router.get('/profile/:id', userController.renderUpdateProfile);
+
+// Route to handle profile updates
+router.post('/profile/update', userController.updateProfile);
+
 module.exports = router;

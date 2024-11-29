@@ -7,7 +7,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // means we can pass shit through fomrs
 // Middleware: Fetch User with Role
-
+const bodyParser = require("body-parser");
+// Parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+// Parse application/json
+app.use(bodyParser.json());
 const fetchUserWithRole = async (req, res, next) => {
   try {
     const userId = req.query._id;
@@ -59,11 +63,13 @@ app.use(express.json());
 const librarianRoutes = require('./routes/branch_librarian.js');
 const landingRoutes = require('./routes/landingpage.js');
 const userRoutes = require('./routes/user.js');
+const managerRoutes = require('./routes/branch_manager.js');
 
 // Use routes
 app.use(express.urlencoded({ extended: true })); // so we can pass stuff through URL
 app.use('/', landingRoutes);
 app.use('/user', fetchUserWithRole, userRoutes); // Apply middleware for all /user routes
 app.use('/branch_librarian', fetchUserWithRole, librarianRoutes);
+app.use('/branch_manager', fetchUserWithRole, managerRoutes);
 
 module.exports = app; // Export the app setup

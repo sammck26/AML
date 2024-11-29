@@ -40,7 +40,6 @@
 
         <!-- display wishlist, no items displayed if array is empty -->
         <main class="content">
-            <h1>Your Wishlist</h1>
             <div id="popup" style="display: none; position: fixed; top: 70px; right: 20px; padding: 10px; border-radius: 5px; color: white;"></div>
             <div class="card-grid">
                 <% if (items && items.length > 0) { %>
@@ -67,6 +66,22 @@
                     <h1>Your wishlist is empty!</h1>
                 <% } %>
             </div>
+            <div class="pagination">
+                <% if (currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>&_id=<%= user._id %>">Previous</a>
+                <% } %>
+
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <a href="?page=<%= i %>&limit=<%= limit %>&_id=<%= user._id %>" 
+                    class="<%= i === currentPage ? 'active' : '' %>">
+                    <%= i %>
+                    </a>
+                <% } %>
+
+                <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&_id=<%= user._id %>">Next</a>
+                <% } %>
+           </div>
 
         </main>
     </div>

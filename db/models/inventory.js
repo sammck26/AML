@@ -13,8 +13,15 @@ const GenreSchema = new mongoose.Schema({
   genre_description: { type: String, required: true },
 });
 
+const BranchSchema = new mongoose.Schema({
+  branch_description: { type: String, required: true },
+  city: { type: String, required: true },
+  hours: { type: String, required: true },
+});
+
 const Media = mongoose.model("Media", MediaSchema);
 const Genre = mongoose.model("Genre", GenreSchema);
+const Branch = mongoose.model("Branch", BranchSchema);
 
 (async () => {
   try {
@@ -39,24 +46,25 @@ const Genre = mongoose.model("Genre", GenreSchema);
   }
 })();
 
-/* async function seedData() {
-  const genres = [
-    { genre_description: "Fantasy" },
-    { genre_description: "Romance" },
-    { genre_description: "Mystery" },
-    { genre_description: "Thriller" },
-    { genre_description: "Non-Fiction" },
-    { genre_description: "Historical Fiction" },
-    { genre_description: "Young Adult" },
+/*async function seedData() {
+  const branches = [
+    { branch_description: "South Side", city: "London", hours: "8-4" },
+    { branch_description: "North Point", city: "Manchester", hours: "9-5" },
+    { branch_description: "Central Plaza", city: "Birmingham", hours: "10-6" },
+    { branch_description: "East End", city: "Liverpool", hours: "7-3" },
+    { branch_description: "West Wing", city: "Leeds", hours: "9-5" },
+    { branch_description: "Harbor Front", city: "Bristol", hours: "8-4" },
+    { branch_description: "Park Lane", city: "Sheffield", hours: "8-4" },
   ];
 
   try {
-    await Genre.insertMany(genres);
-    console.log("Sample genres added!");
+    await Branch.insertMany(branches);
+    console.log("Sample branches added!");
   } catch (error) {
-    console.error("Error adding sample genres:", error);
+    console.error("Error adding sample branches:", error);
   }
 }
+
 
 seedData();*/
 
