@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- Include layout (header or top navigation) -->
+     <div>
+    <%- include('../layout.ejs', { user }) %>
+    </div>
+    <!-- Profile Page Container with Sidebar and Main Content -->
+    <div class="profile-page" style="margin-top: 60px;"> <!-- for some reason if margin is here it wokrs -->
+        
+        <!-- Vertical Sidebar -->
+        <%- include('../partials/userSideBar.ejs', {user}) %>
+        
+        <!-- Main Content Area -->
+        <main class="content">
+            <form action="#">
+
+                <div class="row">
+    
+                    <div class="col">
+                        <h3 class="title">
+                            Billing Address
+                        </h3>
+    
+                        <div class="inputBox">
+                            <label for="name">
+                                  Full Name:
+                              </label>
+                            <input type="text" id="name" 
+                                   placeholder="Enter your full name" 
+                                   required>
+                        </div>
+    
+                        <div class="inputBox">
+                            <label for="email">
+                                  Email:
+                              </label>
+                            <input type="text" id="email" 
+                                   placeholder="Enter email address" 
+                                   required>
+                        </div>
+    
+                        <div class="inputBox">
+                            <label for="address">
+                                  Address:
+                              </label>
+                            <input type="text" id="address" 
+                                   placeholder="Enter address" 
+                                   required>
+                        </div>
+    
+                        <div class="inputBox">
+                            <label for="city">
+                                  City:
+                              </label>
+                            <input type="text" id="city" 
+                                   placeholder="Enter city" 
+                                   required>
+                        </div>
+    
+                        <div class="flex">
+    
+                            <div class="inputBox">
+                                <label for="state">
+                                      State:
+                                  </label>
+                            </div>
+    
+                            <div class="inputBox">
+                                <label for="zip">
+                                      Zip Code:
+                                  </label>
+                                <input type="number" id="zip" 
+                                       placeholder="123 456" 
+                                       required>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                    <div class="col">
+                        <h3 class="title">Payment</h3>
+    
+                        <div class="inputBox">
+                            <label for="name">
+                                  Card Accepted:
+                              </label>
+                            <img src=
+    "https://media.geeksforgeeks.org/wp-content/uploads/20240715140014/Online-Payment-Project.webp" 
+                                 alt="credit/debit card image">
+                        </div>
+    
+                        <div class="inputBox">
+                            <label for="cardName">
+                                  Name On Card:
+                              </label>
+                            <input type="text" id="cardName" 
+                                   placeholder="Enter card name" 
+                                   required>
+                        </div>
+    
+                        <div class="inputBox">
+                            <label for="cardNum">
+                                  Credit Card Number:
+                              </label>
+                            <input type="text" id="cardNum" 
+                                   placeholder="1111-2222-3333-4444" 
+                                   maxlength="19" required>
+                        </div>
+    
+                        <div class="inputBox">
+                            <label for="">Exp Month:</label>
+                            <select name="" id="">
+                                <option value="">Choose month</option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+                            </select>
+                        </div>
+    
+    
+                        <div class="flex">
+                            <div class="inputBox">
+                                <label for="">Exp Year:</label>
+                                <select name="" id="">
+                                    <option value="">Choose Year</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
+                                </select>
+                            </div>
+    
+                            <div class="inputBox">
+                                <label for="cvv">CVV</label>
+                                <input type="number" id="cvv" 
+                                       placeholder="1234" required>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                </div>
+    
+                <input type="submit" value="Proceed to Checkout" 
+                       class="submit_btn">
+            </form>
+    
+        </div>
+         <script>
+
+            document.addEventListener('DOMContentLoaded', () => {
+            const cardNumInput = document.querySelector('#cardNum');
+
+                if (cardNumInput) {
+                    cardNumInput.addEventListener('keyup', () => {
+                        let cNumber = cardNumInput.value;
+                        cNumber = cNumber.replace(/\s/g, ""); // Remove spaces
+
+                        if (!isNaN(cNumber)) { // Ensure input is numeric
+                            cNumber = cNumber.match(/.{1,4}/g); // Split into groups of 4
+                            if (cNumber) {
+                                cNumber = cNumber.join(" "); // Join with spaces
+                                cardNumInput.value = cNumber; // Update input
+                            }
+                        }
+                    });
+                }
+            });
+
+         </script>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-number">07477045595</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

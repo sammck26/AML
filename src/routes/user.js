@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user.js');
 const viewInventoryController = require('../controllers/view_inventory.js');
+const subscriberController = require('../controllers/subscribe.js');
 const app = require('../app.js');
 
 // User-related routes
 console.log("entered routes")
 router.get('/dashboard', userController.getDashboard);  // URL: /user/dashboard
+router.get('/subscribe', subscriberController.subscribe);  // URL: /user/subscribe
 router.get('/profile', userController.getProfile);      // URL: /user/profile
 router.get('/inventory', viewInventoryController.viewInventory, viewInventoryController.searchMedia);
 router.get('/wishlist', viewInventoryController.viewWishlist);
