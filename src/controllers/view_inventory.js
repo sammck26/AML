@@ -77,27 +77,65 @@ exports.viewLibrarianInventory = async (req, res) => {
 
 exports.viewBorrowed = async (req, res) => {
   const user = req.user;
+  const { page = 1, limit = 10 } = req.query;
 
   try {
-    // Fetch all borrowed media for the current user
-    const borrowedItems = await Borrowed.find({ user_id: user._id })
+    const borrowedItems = await Borrowed.find({ user_id: user._id });
+
+    //validates ids
+    const validMediaIds = await Media.find({
+      _id: { $in: borrowedItems.map((item) => item.media_id) },
+    }).select("_id");
+
+    const validIdsSet = new Set(
+      validMediaIds.map((media) => media._id.toString())
+    );
+
+    //removes mdedia that have been deleted from the database
+    const validBorrowedItems = borrowedItems.filter((item) =>
+      validIdsSet.has(item.media_id.toString())
+    );
+
+    //removed invalids
+    const invalidBorrowedItems = borrowedItems.filter(
+      (item) => !validIdsSet.has(item.media_id.toString())
+    );
+
+    if (invalidBorrowedItems.length > 0) {
+      const invalidIds = invalidBorrowedItems.map((item) => item._id);
+      await Borrowed.deleteMany({ _id: { $in: invalidIds } });
+      console.log("Removed invalid borrowed items:", invalidIds);
+    }
+
+    const paginatedBorrowedItems = validBorrowedItems.slice(
+      (page - 1) * limit,
+      page * limit
+    );
+
+    const populatedBorrowedItems = await Borrowed.find({
+      _id: { $in: paginatedBorrowedItems.map((item) => item._id) },
+    })
       .populate({
-        path: "media_id", // Populate the media_id reference
-        select: "media_title author genre_id", // Select required fields from Media
+        path: "media_id",
+        select: "media_title author genre_id",
         populate: {
-          path: "genre_id", // Populate the genre_id reference
-          select: "genre_description", // Select genre description
+          path: "genre_id",
+          select: "genre_description",
         },
       })
       .exec();
 
-    console.log("Borrowed Items:", borrowedItems); // Debugging output
+    const totalBorrowed = validBorrowedItems.length;
+    const totalPages = Math.ceil(totalBorrowed / limit);
 
     // Render the borrowed_media view
     res.render("user/borrowed_media.ejs", {
-      items: borrowedItems,
+      items: populatedBorrowedItems,
       user,
       activePage: "borrowed_media",
+      currentPage: parseInt(page), // Current page number
+      totalPages, // Total number of pages
+      limit: parseInt(limit), // Pass limit to the view
     });
   } catch (error) {
     console.error("Error fetching borrowed items:", error);
@@ -106,33 +144,63 @@ exports.viewBorrowed = async (req, res) => {
 };
 
 
+
 exports.viewWishlist = async (req, res) => {
-  const user = req.user;
+  const user = req.user; // Assumes `req.user` contains the logged-in user data
+  const { page = 1, limit = 10 } = req.query;
 
   try {
-    // Populate the user's wishlist with media items and their genres
-    //console.log(user.wishlist);
-    await user.populate({
-      path: "wishlist",
-      populate: {
-        path: "genre_id",
-        select: "genre_description",
-      },
+    // Validate wishlist IDs by checking their existence in the Media collection
+    const validMediaIds = await Media.find({
+      _id: { $in: user.wishlist },
+    }).select("_id"); // Only fetch the IDs
+
+    const validIdsSet = new Set(
+      validMediaIds.map((media) => media._id.toString())
+    );
+
+    // Filter out invalid IDs from the wishlist
+    const validWishlist = user.wishlist.filter((id) =>
+      validIdsSet.has(id.toString())
+    );
+
+    // Update user wishlist if invalid IDs were found
+    if (validWishlist.length !== user.wishlist.length) {
+      user.wishlist = validWishlist;
+      await user.save(); // Persist the changes
+      console.log("Invalid media IDs removed from the wishlist");
+    }
+
+    const totalWishlist = validWishlist.length;
+
+    // Paginate the wishlist IDs
+    const paginatedIds = validWishlist.slice((page - 1) * limit, page * limit);
+
+    // Fetch media details for the paginated IDs and populate genres
+    const wishlistItems = await Media.find({
+      _id: { $in: paginatedIds },
+    }).populate({
+      path: "genre_id",
+      select: "genre_description",
     });
-    
-    const wishlistItems = user.wishlist;
-    
+
+    const totalPages = Math.ceil(totalWishlist / limit);
 
     res.render("user/wishlist.ejs", {
       items: wishlistItems,
       user,
       activePage: "wishlist",
+      currentPage: parseInt(page),
+      totalPages,
+      limit: parseInt(limit),
     });
   } catch (error) {
     console.error("Error fetching wishlist items:", error);
     res.status(500).send("An error occurred while fetching the wishlist");
   }
 };
+
+
 
 
 

@@ -13,6 +13,8 @@
         <%- include('partials/librariannavbar.ejs', { activePage, user }) %>
     <% } else if (user.role_id.role_description === 'customer') { %>
         <%- include('partials/usernavbar.ejs', { activePage, user }) %>
+    <% } else if (user.role_id.role_description === 'manager') { %>
+        <%- include('partials/managernavbar.ejs', { activePage, user }) %>
     <% } %>
 
 </body>

@@ -22,5 +22,12 @@
     <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6740af5225991e256b9bcdc2' %>">
     <button type="submit">Go to Librarian Dashboard</button>
   </form>
+
+  <!-- Form for Manager Dashboard -->
+ <form action="/branch_manager/dashboard" method="GET">
+  <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6749cbd903c78612cd9f6c1d' %>">
+  <button type="submit">Go to Manager Dashboard</button>
+</form>
+
 </body>
 </html>

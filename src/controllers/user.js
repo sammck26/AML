@@ -3,59 +3,7 @@ const Borrowed = require('../../db/models/borrowed.js');
 const { Customer } = require('../../db/models/customer.js');
 const bcrypt = require("bcrypt");
 //console.log("Customer Model:", Customer);
-exports.updateProfile = async (req, res) => {
-  try {
-    const user = req.user; // Assuming `req.user` contains the authenticated user
-    if (!user) {
-      return res.status(400).send("User not authenticated.");
-    }
 
-    const {
-      first_name,
-      last_name,
-      email,
-      date_of_birth,
-      address,
-      phone_no,
-    } = req.body;
-
-    // Only update fields that are provided
-    const updatedFields = {};
-    if (first_name) updatedFields.first_name = first_name;
-    if (last_name) updatedFields.last_name = last_name;
-    if (email) updatedFields.email = email;
-    if (date_of_birth) updatedFields.date_of_birth = new Date(date_of_birth);
-    if (address) updatedFields.address = address;
-    if (phone_no) updatedFields.phone_no = phone_no;
-
-    // Update the user document in the database
-    const updatedUser = await Customer.findByIdAndUpdate(
-      user._id,
-      { $set: updatedFields },
-      { new: true } // Return the updated document
-    );
-
-    console.log("User updated successfully:", updatedUser);
-
-    // Redirect to the profile page with a success message
-    res.redirect(`/user/profile?_id=${user._id}&status=success&message=Profile updated successfully`);
-  } catch (error) {
-    console.error("Error updating profile:", error);
-    res.status(500).send("An error occurred while updating the profile.");
-  }
-};
-
-exports.renderUpdateProfile = (req, res) => {
-  try {
-    const user = req.user; // Fetch the logged-in user's details
-  
-    res.render(`/user/profile`, { user, activePage: "update_profile" });
-
-  } catch (error) {
-    console.error("Error rendering update profile page:", error);
-    res.status(500).send("An error occurred while loading the profile update page.");
-  }
-}
 exports.getProfile = (req, res) => {
   //const userData = { name: "User", role: "customer" }; // Sample data
   try{
@@ -80,6 +28,57 @@ exports.getDashboard = async (req, res) => {
   } catch (error) {
     console.error("Error rendering dashboard:", error);
     res.status(500).send("An error occurred while rendering the dashboard");
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const user = req.user; // Assuming `req.user` contains the authenticated user
+    if (!user) {
+      return res.status(400).send("User not authenticated.");
+    }
+
+    const { first_name, last_name, email, date_of_birth, address, phone_no } =
+      req.body;
+
+    // Only update fields that are provided
+    const updatedFields = {};
+    if (first_name) updatedFields.first_name = first_name;
+    if (last_name) updatedFields.last_name = last_name;
+    if (email) updatedFields.email = email;
+    if (date_of_birth) updatedFields.date_of_birth = new Date(date_of_birth);
+    if (address) updatedFields.address = address;
+    if (phone_no) updatedFields.phone_no = phone_no;
+
+    // Update the user document in the database
+    const updatedUser = await Customer.findByIdAndUpdate(
+      user._id,
+      { $set: updatedFields },
+      { new: true } // Return the updated document
+    );
+
+    console.log("User updated successfully:", updatedUser);
+
+    // Redirect to the profile page with a success message
+    res.redirect(
+      `/user/profile?_id=${user._id}&status=success&message=Profile updated successfully`
+    );
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).send("An error occurred while updating the profile.");
+  }
+};
+
+exports.renderUpdateProfile = (req, res) => {
+  try {
+    const user = req.user; // Fetch the logged-in user's details
+
+    res.render(`/user/profile`, { user, activePage: "update_profile" });
+  } catch (error) {
+    console.error("Error rendering update profile page:", error);
+    res
+      .status(500)
+      .send("An error occurred while loading the profile update page.");
   }
 };
     //console.log('User dashboard data sent');
@@ -244,7 +243,7 @@ exports.borrowMedia = async (req, res) => {
   const user = req.user; // `req.user` contains the user fetched by middleware
 
   try {
-    console.log("Request body:", req.body); 
+    //console.log("Request body:", req.body); 
 
     
     const borrowedMedia = await Borrowed.borrowMedia(media_id, user._id);
