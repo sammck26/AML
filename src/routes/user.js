@@ -8,7 +8,8 @@ const app = require('../app.js');
 // User-related routes
 console.log("entered routes")
 router.get('/dashboard', userController.getDashboard);  // URL: /user/dashboard
-router.get('/subscribe', subscriberController.subscribe);  // URL: /user/subscribe
+router.get('/subscribe', subscriberController.renderSubscriptionForm);  // renders sub page
+router.post('/subscribe', subscriberController.subscribe); //handles when sub is clicked
 router.get('/profile', userController.getProfile);      // URL: /user/profile
 router.get('/inventory', viewInventoryController.viewInventory, viewInventoryController.searchMedia);
 router.get('/wishlist', viewInventoryController.viewWishlist);

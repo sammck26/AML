@@ -14,7 +14,7 @@ const CustomerSchema = new mongoose.Schema({
   role_id: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
   wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Media" }],
   borrowed: [{ type: mongoose.Schema.Types.ObjectId, ref: "Borrowed" }],
-  branch : { type: mongoose.Schema.Types.ObjectId, ref: "Branch" },
+  //branch : { type: mongoose.Schema.Types.ObjectId, ref: "Branch" },
 });
 
 const StaffSchema = new mongoose.Schema({
