@@ -10,7 +10,7 @@
     
     <div class = "show_media">
    <main class="content">
-        <div class="search-bar">
+        <div class="guest-search-bar">
             <form action="/landingpage/search" method="GET">
                 <input 
                     type="text" 
@@ -22,7 +22,7 @@
             </form>
         </div>
 
-        <div class="card-grid">
+        <div class="card-grid-guest">
             
             <% items.forEach(item => { %>
               <div class="card">
@@ -35,7 +35,7 @@
               </div>
             <% }) %>
           </div>
-          <div class="pagination">
+          <div class="pagination" style="padding-top: 20;">
                 <% if (currentPage > 1) { %>
                     <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
                 <% } %>

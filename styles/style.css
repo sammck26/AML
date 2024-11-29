@@ -262,7 +262,19 @@ button:hover {
     grid-template-columns: repeat(5, 1fr); /* 5 columns */
     grid-template-rows: repeat(2, auto);  /* 2 rows */
     gap: 20px; /* card spacing */
+    margin-bottom: 20px;
 }
+
+.card-grid-guest {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns */
+  grid-template-rows: repeat(2, auto);  /* 2 rows */
+  gap: 20px; /* card spacing */
+  margin-bottom: 60px;
+  margin-left: -100px;
+  margin-right: 100px;
+}
+
 
 .card {
     border: 1px solid #ccc; /* card border */
@@ -281,7 +293,7 @@ button:hover {
     
 }
 
-.search-bar {
+.guest-search-bar {
     margin: 20px 0;
     text-align: left;
 }
@@ -292,6 +304,15 @@ button:hover {
     align-items: center;
     gap: 10px;
 }
+
+.guest-search-bar form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-left: -130px; /* Adjust this value to control how far left it moves */
+}
+
 
 .search-input {
     width: 300px;
@@ -420,6 +441,7 @@ main.content {
   padding: 10px 0; /* Adds padding for better appearance */
   background-color: #ffffff; /* Background color to make it distinct */
   z-index: 10; /* Ensures it appears above other content */
+  margin-top: 20px;
 }
 
 
@@ -440,4 +462,102 @@ main.content {
 .pagination a:hover {
   background-color: #ddd;
   color: black;
+}
+
+.landing-header {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f8f9fa;
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+.search-section {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.search-bar input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-bar button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #0056b3;
+}
+
+.featured-media {
+  padding: 40px 20px;
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.media-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.how-it-works {
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+}
+
+.steps {
+  display: flex;
+  gap: 20px;
+}
+
+.step {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.landing-footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #343a40;
+  color: white;
+}
+
+.landing-footer nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.landing-footer nav a:hover {
+  text-decoration: underline;
 }

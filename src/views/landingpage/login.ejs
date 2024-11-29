@@ -31,6 +31,25 @@
                 </form>
                 <div id="confirmationMessage"></div>
             </div>
+             <!-- Form for User Dashboard -->
+            <form action="/user/dashboard" method="GET">
+            <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6746f827c252ba3cb36816bc' %>">
+            <button type="submit">Go to Dashboard</button>
+            </form>
+
+
+            <!-- Form for Librarian Dashboard -->
+            <form action="/branch_librarian/dashboard" method="GET">
+                <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6740af5225991e256b9bcdc2' %>">
+                <button type="submit">Go to Librarian Dashboard</button>
+            </form>
+
+            <!-- Form for Manager Dashboard -->
+            <form action="/branch_manager/dashboard" method="GET">
+            <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6749cbd903c78612cd9f6c1d' %>">
+            <button type="submit">Go to Manager Dashboard</button>
+            </form>
+
         </main>
     </div>
     
