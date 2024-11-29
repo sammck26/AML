@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+    <%- include('../layout.ejs', {user}) %>
+    
+    <div class = "show_media">
+   <main class="content">
+        <div class="search-bar">
+            <form action="/landingpage/search" method="GET">
+                <input 
+                    type="text" 
+                    name="query" 
+                    placeholder="Search for media..." 
+                    class="search-input" 
+                    value="<%= typeof query !== 'undefined' ? query : '' %>" />
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+
+        <div class="card-grid">
+            
+            <% items.forEach(item => { %>
+              <div class="card">
+                <a href="/landingpage/view_media/<%= item._id %>">
+                  <h2 class="media-title">Title: <%= item.media_title %></h2>
+                </a>
+                <h3>Author: <%= item.author %></h3>
+                <h3>Genre: <%= item.genre_id.genre_description %></h3>
+                <h3>Status: <%= item.quant > 0 ? 'Available' : 'Not Available' %></h3>
+              </div>
+            <% }) %>
+          </div>
+          <div class="pagination">
+                <% if (currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>">Previous</a>
+                <% } %>
+
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <a href="?page=<%= i %>&limit=<%= limit %>" 
+                    class="<%= i === currentPage ? 'active' : '' %>">
+                    <%= i %>
+                    </a>
+                <% } %>
+
+                <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>">Next</a>
+                <% } %>
+           </div>
+    </main>
+</div>
+    <footer>
+        <div class="footer-content">
+            <p class="footer-number">07477045595</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

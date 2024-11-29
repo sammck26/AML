@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <%- include('../layout.ejs', {user}) %>
+    <main class="content">
+        <div class="search-bar">
+            <form action="/landingpage/search" method="GET">
+                <input 
+                    type="text" 
+                    name="query" 
+                    placeholder="Search for media..." 
+                    class="search-input" 
+                    value="<%= typeof query !== 'undefined' ? query : '' %>" />
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+        <h1>Search Results for "<%= query %>"</h1>
+
+        <% if (mediaResults.length > 0) { %>
+            <div class="card-grid">
+                <% mediaResults.forEach(media => { %>
+                    <div class="card">
+                        <a href="/landingpage/view_media/<%= media._id %>"><h2 class="media-title">Title: <%= media.media_title %></h2></a>
+                        <h3>Author: <%= media.author %></h3>
+                        <h3>Genre: <%= media.genre_id.genre_description %></h3>
+                        <h3>Status: <%= media.quant > 0 ? 'Available' : 'Not Available' %></h3>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <p>No results found for "<%= query %>".</p>
+        <% } %>
+    </main>
+</body>
+</html>

@@ -8,7 +8,7 @@ const CustomerSchema = new mongoose.Schema({
   last_name: { type: String, required: true },
   date_of_birth: { type: Date, required: true },
   phone_no: { type: String, required: true },
-  active: { type: Boolean, default: true },
+  active: { type: Boolean, default: false }, //when registering a user, not subscribed by default
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role_id: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
