@@ -7,15 +7,18 @@
 </head>
 <body>
 
-    <% if (user.role_id.role_description === 'guest') { %>
-        <%- include('partials/guestnavbar.ejs', { activePage, user }) %>
-    <% } else if (user.role_id.role_description === 'librarian') { %>
-        <%- include('partials/librariannavbar.ejs', { activePage, user }) %>
-    <% } else if (user.role_id.role_description === 'customer') { %>
-        <%- include('partials/usernavbar.ejs', { activePage, user }) %>
-    <% } else if (user.role_id.role_description === 'manager') { %>
-        <%- include('partials/managernavbar.ejs', { activePage, user }) %>
-    <% } %>
+  <% if (user.role_id.role_description === 'guest') { %>
+    <%- include('partials/guestnavbar.ejs', { activePage, user }) %>
+<% } else if (user.role_id.role_description === 'librarian') { %>
+    <%- include('partials/librariannavbar.ejs', { activePage, user }) %>
+<% } else if (user.role_id.role_description === 'customer') { %>
+    <%- include('partials/usernavbar.ejs', { activePage, user }) %>
+<% } else if (user.role_id.role_description === 'manager') { %>
+    <%- include('partials/managernavbar.ejs', { activePage, user }) %>
+<% } else if (user.role_id.role_description === 'accountant') { %>
+    <%- include('partials/accountantnavbar.ejs', { activePage, user }) %>
+<% } %>
+
 
 </body>
 </html>

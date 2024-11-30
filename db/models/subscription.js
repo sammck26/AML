@@ -14,6 +14,7 @@ const SubscriptionSchema = new mongoose.Schema({
     cvv: { type: String, required: true },
     start_date: { type: Date, default: Date.now },
     end_date: { type: Date, required: true },
+    branch_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Branch', required: false }, // garbing the branch
 });
 
 // Static method to create a subscription and update customer status

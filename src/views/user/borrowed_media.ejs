@@ -11,13 +11,14 @@
     <%- include('../layout.ejs', { user }) %>
     
     <!-- Profile Page Container with Sidebar and Main Content -->
-    <div class="profile-page" style="margin-top: 90px;">
+    <div class="profile-page">
         
         <!-- Vertical Sidebar -->
         <%- include('../partials/userSideBar.ejs', {user}) %>
         
         <!-- Main Content Area -->
         <main class="content">
+            <h1>Your Borrowing History</h1>
             <div class="card-grid" style="padding-top: 20px">
               <% if (items && items.length > 0) { %>
                 <% items.forEach(item => { %>
