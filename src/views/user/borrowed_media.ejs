@@ -9,9 +9,6 @@
 <body>
     <!-- Include layout (header or top navigation) -->
     <%- include('../layout.ejs', { user }) %>
-    
-    <!-- Profile Page Container with Sidebar and Main Content -->
-    <div class="profile-page" style="margin-top: 90px;">
         
         <!-- Vertical Sidebar -->
         <%- include('../partials/userSideBar.ejs', {user}) %>
@@ -65,7 +62,6 @@
                 <% if (currentPage < totalPages) { %>
                     <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&_id=<%= user._id %>">Next</a>
                 <% } %>
-           </div>
           </main>
     </div>
     
