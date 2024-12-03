@@ -190,21 +190,21 @@ exports.markAsReturned = async (req, res) => {
 // };
 
 exports.deleteFromWishlist = async (req, res) => {
-  const userId = req.user?._id || req.query._id; // Retrieve user ID
   const { item_id: mediaId } = req.body; // Retrieve media ID from form body
 
   try {
-    if (!userId || !mediaId) {
+    const user = req.user;
+    const userId = user._id;
+
+        if (!userId || !mediaId) {
       return res.status(400).redirect(
-        `/user/wishlist?status=error&message=Invalid user or media ID`
+        `/user/wishlist?_id=${user._id}&status=error&message=Invalid user or media ID`
       );
     }
 
-    const user = req.user;
-
     if (!user) {
       return res.status(404).redirect(
-        `/user/wishlist?status=error&message=User not found`
+        `/user/wishlist?_id=${user._id}&status=error&message=User not found`
       );
     }
 
