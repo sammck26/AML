@@ -1,4 +1,4 @@
-const connectDB = require("./db.js"); // Import the connection function
+
 const mongoose = require("mongoose");
 
 const BranchSchema = new mongoose.Schema({

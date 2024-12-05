@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/user.js');
 const viewInventoryController = require('../controllers/view_inventory.js');
 const subscriberController = require('../controllers/subscribe.js');
-const app = require('../app.js');
+
 
 // User-related routes
 console.log("entered routes")

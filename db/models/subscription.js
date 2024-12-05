@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Customer } = require("./customer.js"); // Importing Customer schema to update active status
 
 const SubscriptionSchema = new mongoose.Schema({
-    user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    user_id: { type: mongoose.Schema.Types.ObjectId, ref: "Customer", required: true },
     full_name: { type: String, required: true },
     email: { type: String, required: true },
     address: { type: String, required: true },
