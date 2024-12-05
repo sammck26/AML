@@ -1,6 +1,7 @@
 const { Media, Genre } = require("../../db/models/inventory.js");
 const {Customer, Staff} = require('../../db/models/customer.js');
 const Borrowed = require('../../db/models/borrowed.js');
+const axios = require("axios"); // Use axios for HTTP requests
 
 
 // Hardcoded user data for now; should ideally come from session or authentication middleware
@@ -54,29 +55,52 @@ exports.showUpdateForm = async (req, res) => {
 
 exports.addBook = async (req, res) => {
   const user = req.user;
-    try {
-        const { media_title, author, genre_id, quant } = req.body;
-        console.log('Request Body:', req.body);
+  try {
+    const { media_title, author, genre_id, quant } = req.body;
 
-        //Console.log( media_title, author, genre_id, quant)
-
-        //new media object
-        const newMedia = new Media({
-            media_title: media_title,
-            author: author,
-            genre_id: genre_id,
-            quant: quant,
-            branch: user.branch,
-        });
-
-        await newMedia.save();
-
-        res.redirect(`/branch_librarian/librarianInventory?_id=${user._id}`);//redirect to inventory page
-    } catch (error) {
-        console.error('Error creating media:', error);
-        res.status(500).send('An error occurred while adding the media.');
+    if (!media_title || !author || !genre_id || !quant) {
+      return res.status(400).send("All fields are required.");
     }
+
+    console.log("Request Body:", req.body);
+
+    //using custom search engine and google API search for the book cover of the book added
+    const searchQuery = `${media_title} book cover`;
+    const apiKey = "AIzaSyAdU10Va7WRK4_RkEcZT0tROjrBoYYf1BE"; // Replace with your API key
+    const searchEngineId = "62d282589896349cf"; // Replace with your custom search engine ID
+    const searchUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
+      searchQuery
+    )}&searchType=image&key=${apiKey}&cx=${searchEngineId}`;
+
+    let imageUrl = "";
+    try {
+      const imageResponse = await axios.get(searchUrl);
+      imageUrl = imageResponse.data.items?.[0]?.link || ""; //takes the first image result
+      if (!imageUrl) {
+        console.warn("No image found for the book title.");
+      }
+    } catch (apiError) {
+      console.error("Error fetching image from API:", apiError.message);
+    }
+
+    const newMedia = new Media({
+      media_title: media_title,
+      author: author,
+      genre_id: genre_id,
+      quant: quant,
+      branch: user.branch,
+      image: imageUrl, //saves image adress to display
+    });
+
+    await newMedia.save();
+
+    res.redirect(`/branch_librarian/librarianInventory?_id=${user._id}`);
+  } catch (error) {
+    console.error("Error creating media:", error);
+    res.status(500).send("An error occurred while adding the media.");
+  }
 };
+
 
 exports.deleteMedia = async (req, res) => {
   const mediaId = req.params.id;

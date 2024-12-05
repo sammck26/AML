@@ -673,3 +673,7 @@ main.content {
     border-radius: 5px;
     cursor: pointer;
 }
+
+.spacing {
+  margin-bottom: 10px; /* Add spacing below each button */
+}
