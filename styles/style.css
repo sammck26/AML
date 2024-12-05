@@ -201,6 +201,8 @@ button:hover {
     padding-bottom: 120px;
 }
 
+
+
 .show_media {
     display: flex;
     flex-grow: 1;
@@ -373,7 +375,7 @@ button:hover {
 .styled-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 13px 0;
     font-size: 1em;
     font-family: Arial, sans-serif;
     text-align: left;
@@ -397,7 +399,7 @@ button:hover {
 
 .styled-table th, .styled-table td {
     border: 1px solid #dddddd;
-    padding: 12px 15px;
+    padding: 12px 10px;
 }
 
 .styled-table tbody tr {
@@ -462,6 +464,69 @@ main.content {
 .pagination a:hover {
   background-color: #ddd;
   color: black;
+}
+ /* Collapsible button styling */
+ .collapsible {
+    background-color: #6095dc;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+}
+
+.collapsible:hover {
+    background-color: #5078c2;
+}
+
+.collapsible.active {
+    background-color: #5069a5;
+}
+
+/* Collapsible content styling */
+.collapsible-content {
+    padding: 20px 25px; /* Adjust padding for better spacing */
+    display: none;
+    overflow: hidden;
+    background-color: #f9f9f9; /* Slightly lighter for better contrast */
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%; /* Ensure it stretches to match the collapsible button width */
+    box-sizing: border-box; /* Includes padding and borders in the width */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f4f4f4;
+}
+
+.payment-status {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.payment-status[style*="background-color: #d4edda"] {
+    color: #155724; /* Dark green for "Up-to-Date" */
+}
+
+.payment-status[style*="background-color: #f8d7da"] {
+    color: #721c24; /* Dark red for "Not Up-to-Date" */
 }
 
 .landing-header {

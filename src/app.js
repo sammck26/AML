@@ -64,6 +64,7 @@ const librarianRoutes = require('./routes/branch_librarian.js');
 const landingRoutes = require('./routes/landingpage.js');
 const userRoutes = require('./routes/user.js');
 const managerRoutes = require('./routes/branch_manager.js');
+const accountantRoutes = require('./routes/accountant.js');
 
 // Use routes
 app.use(express.urlencoded({ extended: true })); // so we can pass stuff through URL
@@ -71,5 +72,6 @@ app.use('/', landingRoutes);
 app.use('/user', fetchUserWithRole, userRoutes); // Apply middleware for all /user routes
 app.use('/branch_librarian', fetchUserWithRole, librarianRoutes);
 app.use('/branch_manager', fetchUserWithRole, managerRoutes);
+app.use('/accountant', fetchUserWithRole, accountantRoutes);
 
 module.exports = app; // Export the app setup

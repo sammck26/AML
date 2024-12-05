@@ -50,6 +50,12 @@
             <button type="submit">Go to Manager Dashboard</button>
             </form>
 
+            <form action="/accountant/dashboard" method="GET">
+                <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6749d44b03c78612cd9f7113' %>">
+                <button type="submit">Go to Accountant Dashboard</button>
+              </form>
+              
+
         </main>
     </div>
     

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const connectDB = require('./db.js');
 const {Media} = require('./inventory.js');
 const {Customer} = require('./customer.js');
 
