@@ -13,6 +13,7 @@
     <!-- Profile Page Container with Sidebar and Main Content -->
     <div class="profile-page">
         
+        
         <!-- Vertical Sidebar -->
         <%- include('../partials/userSideBar.ejs', {user}) %>
         
@@ -66,7 +67,6 @@
                 <% if (currentPage < totalPages) { %>
                     <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&_id=<%= user._id %>">Next</a>
                 <% } %>
-           </div>
           </main>
     </div>
     

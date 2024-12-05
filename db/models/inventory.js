@@ -7,6 +7,7 @@ const MediaSchema = new mongoose.Schema({
   genre_id: { type: mongoose.Schema.Types.ObjectId, ref: "Genre" },
   quant: { type: Number, required: true },
   branch: { type: mongoose.Schema.Types.ObjectId, ref: "Branch" },
+  image: { type: String, required: false },
 });
 
 const GenreSchema = new mongoose.Schema({

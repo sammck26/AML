@@ -1,38 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Landing Pag</title>
+  <title>Landing Page - Library Management System</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <%- include('../layout.ejs', { user}) %>
+  <%- include('../layout.ejs', { user }) %>
 
-  <h1>Welcome to the Library System</h1>
-  <p>Discover media, borrow and return easily.</p> 
+  <header class="landing-header">
+    <h1>Welcome to the Library Management System</h1>
+    <p>Your one-stop solution to discover, borrow, and manage your favorite books and media.</p>
+    <a href="landingpage/register" class="cta-button">Get Started</a>
+  </header>
 
-  <!-- Form for User Dashboard -->
- <form action="/user/dashboard" method="GET">
-  <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6746f827c252ba3cb36816bc' %>">
-  <button type="submit">Go to Dashboard</button>
-</form>
+  <section class="search-section">
+    <h2>Find Your Next Adventure</h2>
+      <a href="landingpage/inventory" class="cta-button">What we have to offer</a>
+  </section>
 
+  <section class="featured-media">
+    <h2>Featured Media</h2>
+    <div class="media-grid">
+      <div class="media-card">
+        <h3>The Great Gatsby</h3>
+        <p>Author: F. Scott Fitzgerald</p>
+        <p>Genre: Classic Fiction</p>
+      </div>
+      <div class="media-card">
+        <h3>To Kill a Mockingbird</h3>
+        <p>Author: Harper Lee</p>
+        <p>Genre: Historical Fiction</p>
+      </div>
+      <div class="media-card">
+        <h3>1984</h3>
+        <p>Author: George Orwell</p>
+        <p>Genre: Dystopian</p>
+      </div>
+      <div class="media-card">
+        <h3>Harry Potter and the Sorcerer's Stone</h3>
+        <p>Author: J.K. Rowling</p>
+        <p>Genre: Fantasy</p>
+      </div>
+    </div>
+  </section>
 
-  <!-- Form for Librarian Dashboard -->
-  <form action="/branch_librarian/dashboard" method="GET">
-    <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6740af5225991e256b9bcdc2' %>">
-    <button type="submit">Go to Librarian Dashboard</button>
-  </form>
+  <section class="how-it-works">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>1. Discover</h3>
+        <p>Search for books, movies, and other media across all genres and branches.</p>
+      </div>
+      <div class="step">
+        <h3>2. Borrow</h3>
+        <p>Log in to your account and borrow your favorite titles with just a few clicks.</p>
+      </div>
+      <div class="step">
+        <h3>3. Return</h3>
+        <p>Easily return borrowed items and explore more from our vast collection.</p>
+      </div>
+    </div>
+  </section>
 
-  <!-- Form for Manager Dashboard -->
- <form action="/branch_manager/dashboard" method="GET">
-  <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6749cbd903c78612cd9f6c1d' %>">
-  <button type="submit">Go to Manager Dashboard</button>
-</form>
-
-<form action="/accountant/dashboard" method="GET">
-  <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6749d44b03c78612cd9f7113' %>">
-  <button type="submit">Go to Accountant Dashboard</button>
-</form>
-
+  <footer>
+        <div class="footer-content">
+            <p class="footer-number">07477045595</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-xl"></i></a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
