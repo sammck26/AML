@@ -34,14 +34,24 @@
              <!-- Form for User Dashboard -->
             <form action="/user/dashboard" method="GET">
             <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6746f827c252ba3cb36816bc' %>">
-            <button type="submit">Go to Dashboard</button>
+            <button type="submit">Go to Customer Dashboard (sheffield branch)</button>
+            </form>
+
+            <form action="/user/dashboard" method="GET">
+            <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '672a90e2211aef12e04c0067' %>">
+            <button type="submit">Go to Customer Dashboard (London branch)</button>
             </form>
 
 
             <!-- Form for Librarian Dashboard -->
             <form action="/branch_librarian/dashboard" method="GET">
                 <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6740af5225991e256b9bcdc2' %>">
-                <button type="submit">Go to Librarian Dashboard</button>
+                <button type="submit">Go to Librarian Dashboard (Sheffield branch)</button>
+            </form>
+
+             <form action="/branch_librarian/dashboard" method="GET">
+                <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6751ad6f03c78612cda4600e' %>">
+                <button type="submit">Go to Librarian Dashboard (London branch)</button>
             </form>
 
             <!-- Form for Manager Dashboard -->
