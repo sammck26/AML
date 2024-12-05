@@ -1,4 +1,4 @@
-const  Customer  = require('../../db/models/customer.js');
+const  {Customer}  = require('../../db/models/customer.js');
 const Subscription = require('../../db/models/subscription.js');
 //const Branch = require('../../db/models/branch.js');
 
@@ -123,12 +123,13 @@ exports.updateSubscription = async (req, res) => {
                 { new: true }
             );
         }
+        console.log("active:", updateData.active);
 
         console.log("Subscription updated successfully:", updatedSubscription);
         return res.redirect(`/accountant/dashboard?_id=${user._id}&status=success&message=Subscription updated successfully`);
     } catch (error) {
         console.error("Error updating subscription:", error);
-        return res.redirect(`/accountant/accountant_dashboard?_id=${user._id}&status=failure&message=Failed to update subscription`);
+        return res.redirect(`/accountant/dashboard?_id=${user._id}&status=failure&message=Subscription failed to update`);
     }
 };
 

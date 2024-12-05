@@ -31,7 +31,7 @@
                 start_date: inputs[3].value,
                 end_date: inputs[4].value,
                 total_amount: inputs[5].value,
-                active: inputs[6]?.value || 'active',
+                active: document.querySelector(`#subscription-${subscriptionId} .status-select`).value,
                 
             };
             if (subscriptionId != null) {
