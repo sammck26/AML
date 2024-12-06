@@ -36,7 +36,7 @@ exports.getaccountDashboard = async (req, res) => {
                 const totalMonths =
                     (endDate.getFullYear() - startDate.getFullYear()) * 12 +
                     (endDate.getMonth() - startDate.getMonth());
-                const totalAmount = totalMonths * 10; // Assuming £10 per month
+                const totalAmount = totalMonths * 10; // sub is £10 a month
             
                 // Calculate amount paid so far
                 const monthsPaid =
@@ -104,6 +104,11 @@ exports.updateSubscription = async (req, res) => {
             return res.status(400).json({ message: "No update data provided." });
         }
 
+        // Automatically set end_date to current date if active is false
+        if (updateData.active === "false" || updateData.active === false) {
+            updateData.end_date = new Date(); // Current date
+        }
+
         // Update the subscription document
         const updatedSubscription = await Subscription.findByIdAndUpdate(
             subscriptionId,
@@ -123,7 +128,6 @@ exports.updateSubscription = async (req, res) => {
                 { new: true }
             );
         }
-        console.log("active:", updateData.active);
 
         console.log("Subscription updated successfully:", updatedSubscription);
         return res.redirect(`/accountant/dashboard?_id=${user._id}&status=success&message=Subscription updated successfully`);
