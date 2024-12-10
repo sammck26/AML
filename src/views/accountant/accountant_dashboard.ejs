@@ -18,57 +18,60 @@
             saveButton.style.display = 'inline-block';
         }
 
-    async function saveChanges(subscriptionId, userId) {
-            const row = document.getElementById(`subscription-${subscriptionId}`);
-            const inputs = row.querySelectorAll('.editable-input');
-            const editButton = row.querySelector('.edit-button');
-            const saveButton = row.querySelector('.save-button');
-            console.log('Saving changes for subscription:', subscriptionId);
-            // Collect updated values
-            const updatedData = {
-                full_name: inputs[1].value,
-                email: inputs[2].value,
-                start_date: inputs[3].value,
-                end_date: inputs[4].value,
-                total_amount: inputs[5].value,
-                active: inputs[6]?.value || 'active',
-                
-            };
-            if (subscriptionId != null) {
-                
-                try {
-                    // Send updated data to the server
-                    const response = await fetch(`/accountant/subscriptions/update/${subscriptionId}?_id=${userId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(updatedData),
-                    });
+        async function saveChanges(subscriptionId, userId) {
+    const row = document.getElementById(`subscription-${subscriptionId}`);
+    const inputs = row.querySelectorAll('.editable-input');
+    const editButton = row.querySelector('.edit-button');
+    const saveButton = row.querySelector('.save-button');
+    
+    console.log('Saving changes for subscription:', subscriptionId);
+    
+    // Collect updated values
+    const updatedData = {
+        full_name: inputs[1].value, // input feild one and so on
+        email: inputs[2].value,
+        start_date: inputs[3].value,
+        end_date: inputs[4].value,
+        total_amount: inputs[5].value, 
+        active: document.querySelector(`#subscription-${subscriptionId} .status-select`).value === "true"// will get selcted value form status dropdown also converts to bool
+    };
 
-                    if (response.ok) {
-                        alert('Subscription updated successfully!');
-                        location.reload(); // Reload the page to show updated data
-                    } else {
-                        const error = await response.text();
-                        alert(`Error updating subscription: ${error}`);
-                    }
-                } catch (err) {
-                    console.error('Error saving changes:', err);
-                    alert('An error occurred while saving changes.');
-                      }
+    // Automatically set end_date if active is set to false
+    if (!updatedData.active) {
+        updatedData.end_date = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+    }
 
-                    }
-            else {
-                alert('Subscription ID is missing');
+    if (subscriptionId != null) {
+        try {
+            // Send updated data to the server
+            const response = await fetch(`/accountant/subscriptions/update/${subscriptionId}?_id=${userId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedData),
+            });
+
+            if (response.ok) {
+                alert('Subscription updated successfully!');
+                location.reload(); // Reload the page to show updated data
+            } else {
+                const error = await response.text();
+                alert(`Error updating subscription: ${error}`);
             }
-            
-            // Disable inputs and show edit button again
-            inputs.forEach(input => input.disabled = true);
-            editButton.style.display = 'inline-block';
-            saveButton.style.display = 'none';
+        } catch (err) {
+            console.error('Error saving changes:', err);
+            alert('An error occurred while saving changes.');
         }
+    } else {
+        alert('Subscription ID is missing');
+    }
 
+    // Disable inputs and show edit button again
+    inputs.forEach(input => input.disabled = true);
+    editButton.style.display = 'inline-block';
+    saveButton.style.display = 'none';
+}
 
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
