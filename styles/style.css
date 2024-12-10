@@ -95,6 +95,7 @@ footer {
     display: flex;
     justify-content: center;
     position: relative;
+    margin-top: auto; /* Pushes the footer to the bottom */
 }
 
 .footer-content {

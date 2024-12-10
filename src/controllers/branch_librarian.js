@@ -62,12 +62,17 @@ exports.addBook = async (req, res) => {
       return res.status(400).send("All fields are required.");
     }
 
+    if (isNaN(quant) || quant < 0) {
+      return res.redirect(
+        `/branch_librarian/inventory/new?_id=${user._id}&status=error&message=Quantity has to be 0 or greater`
+      );
+    }
     console.log("Request Body:", req.body);
 
     //using custom search engine and google API search for the book cover of the book added
     const searchQuery = `${media_title} book cover`;
-    const apiKey = "AIzaSyAdU10Va7WRK4_RkEcZT0tROjrBoYYf1BE"; // Replace with your API key
-    const searchEngineId = "62d282589896349cf"; // Replace with your custom search engine ID
+    const apiKey = "AIzaSyAdU10Va7WRK4_RkEcZT0tROjrBoYYf1BE"; // google api key
+    const searchEngineId = "62d282589896349cf"; // search engine id
     const searchUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
       searchQuery
     )}&searchType=image&key=${apiKey}&cx=${searchEngineId}`;
