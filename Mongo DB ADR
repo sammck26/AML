@@ -1,0 +1,67 @@
+Title: Decision to Use MongoDB with Mongoose for Database Management
+________________________________________
+Date: November 13, 2024
+Status: Accepted
+Decision Makers: Team
+Tags: Database, MongoDB, Mongoose, NoSQL, Scalability, Flexibility, None-embedded, remote
+________________________________________
+Context and Problem Statement
+As part of the Advanced Library Management System (AML) development, the team needed to choose a database management system that would support most importantly a flexible, 
+scalable, and user-friendly approach to data storage and retrieval. This system has many functionalities it must meat, such as user management, media cataloguing, borrowing/return processes,
+and branch-specific data, which require efficient data management.
+The challenge was to select a database that is easy built using none-embedded technology, adapt to evolving requirements, 
+and support rapid development with minimal configuration. The choice also needs to align with being used for fast development and practical for a POC.
+________________________________________
+Considered Options
+1.	MongoDB with Mongoose (NoSQL)
+o	A NoSQL document database that stores data in flexible, collection style format.
+o	Mongoose is an Object Data Modelling (ODM) library for MongoDB that provides schema-based data modelling, validation, and easy-to-use querying.
+2.	MySQL (SQL)
+o	A structured SQL database that stores data in rows and columns within tables.
+o	Enforces a strict schema structure, suitable for highly relational data and rigid requirements. 
+o	Also suitable for large databases with many dependencies.
+3.	SQLite3 (SQL)
+o	An easy to use simple quick database type wit intuitive design
+o	Suitable for small applications like a POC
+o	Is embedded
+________________________________________
+Decision Outcome
+Chosen Option: MongoDB with Mongoose
+After first selecting SQLite3 as it was the type our group was most familiar with, we were further advised to change types. 
+Having still only experiences SQL and key value pair type databases we opted for mySQL. However, 
+after setting the database up and going ahead without design it appeared that there would be better database options for using none-embedded databases. 
+As mySQL involved fiddling around with various files. Finally, the team chose MongoDB with Mongoose for database management due to its flexibility, 
+scalability, and natural built-in use for remoteness it fits with the projects requirements. 
+MongoDB’s relational structure allows for easy adaptation to changing data requirements as separable collections can grow independently more easily, 
+and Mongoose adds schema validation and query features that help manage MongoDB’s dynamic nature, making it easier for our team to structure and validate data.
+________________________________________
+Consequences:
+•	Positive:
+o	Flexibility in Data Structure: allows us to be able to easy fetch data from the database in schema format meaning ease of picking specific data.
+o	Scalability: its collection setup allows specific data structures to scale independently. Meaning we do not have devote so much time to designing the database for specific scalability. 
+Meaning more time can be devoted to the front end.
+o	Rapid Development with Mongoose: Mongoose simplifies MongoDB interactions massively by enforcing schemas, making data management more reliable, 
+and providing the referencing system instead of foreign keys that speeds up development. Meaning of development meaning a better app is produced.
+o	Ease of Developing non-embedded Database: A none-embedded database like mongo db coming within built security also easily added security (.env file). 
+For example, it is more difficult to use MySQL none-embedded (Having to alter my.cnf file)
+•	Negative:
+o	Learning Curve with Mongoose and MongoDB: With our group having never used MongoDB or mongoose before this added an additional amount of time and layer of difficulty i setting up an learning how a relational
+database works.
+________________________________________
+Confirmation
+•	Upon the realization that SQLite3 was unsuitable and the difficulty of mySQLs implementation, 
+the team discussed database options and agreed that MongoDB with Mongoose would provide the right balance of flexibility, scalability, and ease of use for the AML system.
+________________________________________
+Pros and Cons of the Options
+1.	MongoDB with Mongoose (NoSQL)
+o	Pros: High flexibility, fast development, suitable formant types of data, horizontal scalability and vertical scalability, remote, secure, independent scaling. Relatively easy setup.
+o	Cons: Time spent learning MongoDB and mongoose
+2.	MySQL (SQL)
+o	Pros: Strong relational support, efficient for well-structured data and consistent data requirements, highly compatible with complex transactions.
+o	Cons: Rigid schema requirements, slower to adapt to evolving data structures, requires additional migrations for frequent changes.
+3.	SQLite3(SQL)
+o	Pros: Easy to us, Experienced, intuitive design, quick to make
+o	Cons: Not easy to scale. Not built for large scale applications
+________________________________________
+More Information
+•	MongoDB Documentation: https://www.mongodb.com/docs
