@@ -1,0 +1,66 @@
+Include one key ADR example here.   
+Architectural Decision Record (ADR)
+________________________________________
+Title: Decision to Implement MVC Architecture for Code Organization and Maintainability
+________________________________________
+Date: September 30, 2024
+Status: Accepted
+Decision Makers: Team
+Tags: Architecture, MVC, Maintainability, Organization, 3 Tier
+________________________________________
+Context and Problem Statement
+As part of the Advanced Library Management System (AML) development, our team needs to decide on an architecture style that would allow for clear code organization, 
+maintainability, and separation of concerns and appropriate for a POC. The system involves multiple functionalities like user management, media search, borrowing/return processes,
+and librarian management and so on. Without a structured approach, it would become difficult to manage the growing codebase, debug issues, and introduce new features. The challenge
+is to adopt an architecture which is organized and allows for clean separation between business logic, user interface, and data management, while keeping the codebase modular and easy to manage.
+________________________________________
+Considered Options
+1.	MVC Architecture
+o	Separation of code into Models, Views, and Controllers. Business logic resides in Models(DB), Controllers handle user requests, and Views manage presentation (UI).
+2.	Monolithic Architecture with No Clear Separation
+o	Code bundled together without strict separation between concerns. All logic in one place.
+3.	Microservice Architecture
+o	A distributed architecture where each component is broken down into individual services. Each individual service(e.g media borrowing) will
+have its own database API and structure. Great for very large scale web applications
+________________________________________
+Decision Outcome
+Chosen Option: MVC Architecture
+Finally a decision was made to implement the Model-View-Controller (MVC) architecture for AML due to its clear separation of concerns, maintainability, and scalability. 
+Each component (Model, View, Controller) will have a distinct role in handling the library management system, reducing complexity and improving code readability.
+________________________________________
+Consequences:
+•	Positive:
+o	Long-Term Maintainability and Scalability: The initial complexity in setting up an MVC means it will pay off in the long run as the system grows. There is a clear separation of concerns which 
+allows future developers to understand and update specific parts of the system without affecting others. 
+o	Modular Growth: As new features like media borrowing, user notifications, or librarian management are added, they can be implemented in their respective modules, 
+reducing the risk of breaking other parts of the system.
+o	Code Readability & Team Collaboration: With the code organized into distinct models, views, and controllers, developers can focus on their areas of expertise and make collaborative changes without confusion.
+•	Negative:
+o	Higher Setup Time: The initial setup will consume more time and effort compared to a more monolithic approach, which will delay the start of development.
+o	Risk of Poor Organization: If the team does not maintain proper naming conventions and folder structures, the file system could become cluttered and difficult to navigate, 
+particularly with the growing number of files and members.
+o	Possible Overhead for Small Features: For smaller functionalities, the strict division between models, views, 
+and controllers might seem like an overhead, as minor features require creating multiple files instead of quick fixes. This can lead to small changes being overcomplicated purely by the file structure.
+________________________________________
+Confirmation
+•	The team discussed the best options for the project structure and agreed that the MVC architecture is the most appropriate.
+•	Research on large-scale web applications shows that MVC is widely adopted and recommended for applications like the library management system, 
+where different types of user interactions (librarians, users) and dynamic content need to be managed.
+________________________________________
+Pros and Cons of the Options
+1.	MVC Architecture
+o	Pros: Clear separation of concerns, modularity, easier to scale and maintain, good for complex applications.
+o	Cons: Higher initial complexity to set up, more files and folders to manage.
+2.	Monolithic with No Clear Separation
+o	Pros: Easier to start, less initial setup required.
+o	Cons: Becomes hard to maintain and scale as the codebase grows, difficult to isolate and test components.
+3.	Microservice
+o	Pros: Offers great separation and scalability and is distributed. Also, can scale individually (user base and media scaling independently from one another).
+o	Cons: Takes a lot of setup (Our project is  only about 990days) .While being more flexible, modular and scalable. 
+It is very complicated and time consuming to set up and as we were just making a POC we thought it better to go with MVC architecture. 
+Also if scalability became a major issue needing to individually scale user borrowing and user management for example MVC could be easily evolved into Microservice architecture.
+________________________________________
+More Information
+•	Link to MVC Architecture Documentation.
+•	Using MVC in Java-Script
+________________________________________
