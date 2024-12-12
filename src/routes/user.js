@@ -26,5 +26,6 @@ router.get('/profile/:id', userController.renderUpdateProfile);
 
 // Route to handle profile updates
 router.post('/profile/update', userController.updateProfile);
-
+console.log('User Controller:', userController);
+console.log('View Inventory Controller:', viewInventoryController);
 module.exports = router;

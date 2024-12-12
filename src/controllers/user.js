@@ -254,7 +254,10 @@ exports.borrowMedia = async (req, res) => {
         `/user/view_media/${media_id}?_id=${user._id}&status=error&message=Unable to borrow media`
       );
     }
-
+    const media = await Media.findById(req.body.media_id);
+  if (!media) {
+    return res.status(404).json({ message: 'Media not found' });
+  }
     // go abck to same page with a success message
     return res.redirect(
       `/user/view_media/${media_id}?_id=${user._id}&status=success&message=Media borrowed successfully`

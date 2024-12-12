@@ -1,9 +1,7 @@
-const  {Media}  = require("../../db/models/inventory.js");
-const { Customer } = require("../../db/models/customer.js");
-const Borrowed = require("../../db/models/borrowed.js");
+
 const Subscription = require('../../db/models/subscription.js');
-const { post } = require("../app.js");
-const { start } = require("repl");
+
+const { start } = require("repl"); // for axious
 
 exports.renderSubscriptionForm = (req, res) => {
     const user = req.user; // Assuming user middleware sets this
