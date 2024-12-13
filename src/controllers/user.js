@@ -106,14 +106,13 @@ exports.viewMedia = async(req, res) => {
 // controllers/user.js
 exports.addToWishlist = async (req, res) => {
   const { media_id } = req.body;
-  
-  //console.log("Request body:", req.body);
+
   try {
     const user = req.user;
 
     if (!user) {
       return res.redirect(
-        `/user/view_media/${media_id}?_id=${user._id}&status=error&message=User not found`
+        `/user/view_media/${media_id}?_id=&status=error&message=User not found`
       );
     }
 
@@ -134,10 +133,11 @@ exports.addToWishlist = async (req, res) => {
   } catch (error) {
     console.error("Error adding to wishlist:", error);
     return res.redirect(
-      `/user/view_media/${media_id}?_id=${user._id}&status=error&message=An error occurred`
+      `/user/view_media/${media_id}?_id=&status=error&message=An error occurred`
     );
   }
 };
+
 exports.markAsReturned = async (req, res) => {
   const borrowedId = req.params.id; // Borrowed item ID from the URL
   const userId = req.user._id; // User ID from the logged-in user

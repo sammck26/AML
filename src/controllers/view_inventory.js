@@ -225,7 +225,7 @@ exports.viewBorrowed = async (req, res) => {
       activePage: "borrowed_media",
       currentPage: parseInt(page), // Current page number
       totalPages, // Total number of pages
-      limit: parseInt(limit), // Pass limit to the view
+      limit: parseInt(limit), 
     });
   } catch (error) {
     console.error("Error fetching borrowed items:", error);
@@ -236,37 +236,35 @@ exports.viewBorrowed = async (req, res) => {
 
 
 exports.viewWishlist = async (req, res) => {
-  const user = req.user; // Assumes `req.user` contains the logged-in user data
+  const user = req.user; 
   const { page = 1, limit = 10 } = req.query;
 
   try {
-    // Validate wishlist IDs by checking their existence in the Media collection
+   
     const validMediaIds = await Media.find({
       _id: { $in: user.wishlist },
-    }).select("_id"); // Only fetch the IDs
+    }).select("_id"); 
 
     const validIdsSet = new Set(
       validMediaIds.map((media) => media._id.toString())
     );
 
-    // Filter out invalid IDs from the wishlist
     const validWishlist = user.wishlist.filter((id) =>
       validIdsSet.has(id.toString())
     );
 
-    // Update user wishlist if invalid IDs were found
+    // Update user wishlist if invalid IDs were found - in the case of deleting media
     if (validWishlist.length !== user.wishlist.length) {
       user.wishlist = validWishlist;
-      await user.save(); // Persist the changes
+      await user.save();
       console.log("Invalid media IDs removed from the wishlist");
     }
 
     const totalWishlist = validWishlist.length;
 
-    // Paginate the wishlist IDs
+    //paginate wishlist IDs
     const paginatedIds = validWishlist.slice((page - 1) * limit, page * limit);
 
-    // Fetch media details for the paginated IDs and populate genres
     const wishlistItems = await Media.find({
       _id: { $in: paginatedIds },
     }).populate({
@@ -296,7 +294,7 @@ exports.viewWishlist = async (req, res) => {
 
   exports.searchMedia = async (req, res) => {
     try {
-      const query = req.query.query; // Get the search query from the request
+      const query = req.query.query;
       const user = req.user;
       const mediaResults = await Media.find({
         $or: [{ media_title: { $regex: query, $options: "i" } }],

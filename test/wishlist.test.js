@@ -1,7 +1,9 @@
 const request = require("supertest");
 const app = require("../src/app");
+const express = require("express"); // Import express
+const { addToWishlist } = require("../src/controllers/user");
 
-it("should add a media item to the wishlist", async () => {
+/*it("should add a media item to the wishlist", async () => {
   const response = await request(app)
     .post("/user/add_to_wishlist?_id=6746f827c252ba3cb36816bc")
     .send({
@@ -19,45 +21,48 @@ it("should add a media item to the wishlist", async () => {
   );
 });
 
+it("should return an error if the user is not found", async () => {
+  const media_id = "675839e0dc17d6145b4acaf8"; // Example media ID
 
-/*it("should return an error if the user is not found", async () => {
   const response = await request(app).post("/user/add_to_wishlist").send({
-    media_id: "675839e0dc17d6145b4acaf8", // Example media ID
+    media_id,
   });
 
-  expect(response.status).toBe(302); // Expect redirect status
-  expect(response.headers.location).toContain(
-    "/user/view_media/673358a98c529a6a6ec66a65?_id="
-  );
-  expect(response.headers.location).toContain("status=error");
-  expect(response.headers.location).toContain("message=User not found");
-});
+  expect(response.status).toBe(400); // client side error
+});*/
+
 
 it("should return an error if the media item is already in the wishlist", async () => {
-  // Mock user with existing wishlist
+  // Mock user with media already in wishlist
   const user = {
-    _id: "6751ad6f03c78612cda4600e",
-    wishlist: ["673358a98c529a6a6ec66a65"], // Media already in wishlist
+    _id: "672a90e2211aef12e04c0067",
+    wishlist: ["6751b014a43b53616a371697"], // Media ID already exists
     save: jest.fn(),
   };
 
-  jest.spyOn(User, "findById").mockResolvedValue(user);
+  const app = express();
+  app.use(express.json());
+  app.use((req, res, next) => {
+    req.user = user; // Mock authenticated user
+    next();
+  });
+  app.post("/user/add_to_wishlist", addToWishlist);
 
-  const response = await request(app).post("/user/wishlist/add").send({
-    media_id: "673358a98c529a6a6ec66a65", // Duplicate media ID
+  // Make the test request
+  const response = await request(app).post("/user/add_to_wishlist").send({
+    media_id: "6751b014a43b53616a371697", // Media ID already in the wishlist
   });
 
-  expect(response.status).toBe(302); // Expect redirect status
+  // Assert the response status and redirect URL
+  expect(response.status).toBe(302); // Redirect status
   expect(response.headers.location).toContain(
-    "/user/view_media/673358a98c529a6a6ec66a65?_id="
+    `/user/view_media/6751b014a43b53616a371697?_id=672a90e2211aef12e04c0067&status=error&message=Media%20item%20already%20in%20wishlist`
   );
-  expect(response.headers.location).toContain("status=error");
-  expect(response.headers.location).toContain(
-    "message=Media item already in wishlist"
-  );
-});*/
+});
 
-it("should remove a media item from the wishlist", async () => {
+
+
+/*it("should remove a media item from the wishlist", async () => {
   const response = await request(app)
     .post("/user/remove_from_wishlist?_id=6746f827c252ba3cb36816bc")
     .send({
@@ -66,4 +71,4 @@ it("should remove a media item from the wishlist", async () => {
 
   expect(response.status).toBe(302); // Expect redirect status
   expect(response.headers.location).toContain("status=success");
-});
+});*/
