@@ -1,15 +1,17 @@
 const {Media} = require("../../db/models/inventory.js");
 const Borrowed = require('../../db/models/borrowed.js');
 const { Customer } = require('../../db/models/customer.js');
+const {Branch} = require('../../db/models/branch.js');
 const bcrypt = require("bcrypt");
 //console.log("Customer Model:", Customer);
 
-exports.getProfile = (req, res) => {
+exports.getProfile = async(req, res) => {
   //const userData = { name: "User", role: "customer" }; // Sample data
   try{
   //const userId = req.params.id;
   const user = req.user;
-  res.render("user/view_profile", { user, activePage: "profile" });
+  const branches = await Branch.find();
+  res.render("user/view_profile", { user,branches, activePage: "profile" });
   } 
   catch (error) {
     console.error("Error rendering profile:", error);
@@ -38,7 +40,7 @@ exports.updateProfile = async (req, res) => {
       return res.status(400).send("User not authenticated.");
     }
 
-    const { first_name, last_name, email, date_of_birth, address, phone_no } =
+    const { first_name, last_name, email, date_of_birth, address, phone_no, branch} =
       req.body;
 
     // Only update fields that are provided
@@ -49,6 +51,7 @@ exports.updateProfile = async (req, res) => {
     if (date_of_birth) updatedFields.date_of_birth = new Date(date_of_birth);
     if (address) updatedFields.address = address;
     if (phone_no) updatedFields.phone_no = phone_no;
+    if (branch) user.branch_id = branch;
 
     // Update the user document in the database
     const updatedUser = await Customer.findByIdAndUpdate(

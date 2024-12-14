@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 const BranchSchema = new mongoose.Schema({
@@ -7,6 +6,6 @@ const BranchSchema = new mongoose.Schema({
     hours: { type: String, required: true },
   });
 
-const Branch = mongoose.model("Branch", BranchSchema);
 
+const Branch = mongoose.models.Branch || mongoose.model("Branch", BranchSchema);
 module.exports = { Branch }; // Export branch models
