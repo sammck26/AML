@@ -5,7 +5,7 @@ const Borrowed = require("../../db/models/borrowed.js");
 exports.viewInventory = async (req, res) => {
   const user = req.user; // Get the logged-in user's data from middleware
   const { page = 1, limit = 10 } = req.query; // Default page is 1, and default limit is 10 items per page
-
+  
   try {
     // Fetch total count of media items for the user's branch
     const totalItems = await Media.countDocuments({ branch: user.branch_id });
@@ -175,10 +175,10 @@ exports.viewBorrowed = async (req, res) => {
     //validates ids
     const validMediaIds = await Media.find({
       _id: { $in: borrowedItems.map((item) => item.media_id) },
-    }).select("_id");
+    }).select("_id").exec();
 
-    const validIdsSet = new Set(
-      validMediaIds.map((media) => media._id.toString())
+    const validIdsSet = new Set( 
+      validMediaIds.map((media) => media._id.toString()) 
     );
 
     //removes mdedia that have been deleted from the database
