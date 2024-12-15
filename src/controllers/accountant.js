@@ -31,7 +31,7 @@ exports.getaccountDashboard = async (req, res) => {
             const enrichedSubscriptions = subscriptions.map((subscription) => {
                 const startDate = new Date(subscription.start_date);
                 const endDate = new Date(subscription.end_date);
-            
+                
                 // Calculate total subscription amount
                 const totalMonths =
                     (endDate.getFullYear() - startDate.getFullYear()) * 12 +
@@ -39,11 +39,12 @@ exports.getaccountDashboard = async (req, res) => {
                 const totalAmount = totalMonths * 10; // sub is £10 a month
             
                 // Calculate amount paid so far
+                const effectiveEndDate = new Date(subscription.active ? currentDate : subscription.end_date);
                 const monthsPaid =
-                    (currentDate.getFullYear() - startDate.getFullYear()) * 12 +
-                    (currentDate.getMonth() - startDate.getMonth());
+                    (effectiveEndDate.getFullYear() - startDate.getFullYear()) * 12 +
+                    (effectiveEndDate.getMonth() - startDate.getMonth());
                 const monthsPaidSoFar = Math.min(monthsPaid, totalMonths); // Cap monthsPaid to totalMonths
-                const amountPaid = monthsPaidSoFar * 10;
+                const amountPaid = monthsPaidSoFar * 10; // Calculate the total paid
             
                 // Calculate outstanding balances
                 const outstandingBalances = totalAmount - amountPaid;

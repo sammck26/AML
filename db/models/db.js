@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const dotenv = require("dotenv").config({ path: path.join(__dirname, ".env") });
 
-mongoose.set("strictQuery", true); // Optional: Adjust query strictness if needed
+mongoose.set("strictQuery", true); 
 
 const connectDB = mongoose
   .connect(process.env.MONGO_URI, {

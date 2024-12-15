@@ -1,9 +1,9 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
 const { borrowMedia } = require('../../src/controllers/user'); // Correct path for user.js
-const Borrowed = require('../../models/borrowed');
-const Media = require('../../models/inventory');
-const Customer = require('../../models/customer');
+const Borrowed = require('../../db/models/borrowed');
+//const Media = require('../..db/models/inventory');
+//const Customer = require('../..db/models/customer');
 
 describe('User Controller - borrowMedia', function () {
 
