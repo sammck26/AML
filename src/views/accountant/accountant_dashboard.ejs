@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <script>
+
+
+
+    function enableEdit(subscriptionId) {
+            const row = document.getElementById(`subscription-${subscriptionId}`);
+            const inputs = row.querySelectorAll('.editable-input');
+            const editButton = row.querySelector('.edit-button');
+            const saveButton = row.querySelector('.save-button');
+
+            inputs.forEach(input => input.disabled = false); // Enable input fields
+            editButton.style.display = 'none';
+            saveButton.style.display = 'inline-block';
+        }
+
+        async function saveChanges(subscriptionId, userId) {
+    const row = document.getElementById(`subscription-${subscriptionId}`);
+    const inputs = row.querySelectorAll('.editable-input');
+    const editButton = row.querySelector('.edit-button');
+    const saveButton = row.querySelector('.save-button');
+    
+    console.log('Saving changes for subscription:', subscriptionId);
+    
+    // Collect updated values
+    const updatedData = {
+        full_name: inputs[1].value, // input feild one and so on
+        email: inputs[2].value,
+        start_date: inputs[3].value,
+        end_date: inputs[4].value,
+        total_amount: inputs[5].value, 
+        active: document.querySelector(`#subscription-${subscriptionId} .status-select`).value === "true"// will get selcted value form status dropdown also converts to bool
+    };
+
+    // Automatically set end_date if active is set to false
+    if (!updatedData.active) {
+        updatedData.end_date = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+    }
+
+    if (subscriptionId != null) {
+        try {
+            // Send updated data to the server
+            const response = await fetch(`/accountant/subscriptions/update/${subscriptionId}?_id=${userId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedData),
+            });
+
+            if (response.ok) {
+                alert('Subscription updated successfully!');
+                location.reload(); // Reload the page to show updated data
+            } else {
+                const error = await response.text();
+                alert(`Error updating subscription: ${error}`);
+            }
+        } catch (err) {
+            console.error('Error saving changes:', err);
+            alert('An error occurred while saving changes.');
+        }
+    } else {
+        alert('Subscription ID is missing');
+    }
+
+    // Disable inputs and show edit button again
+    inputs.forEach(input => input.disabled = true);
+    editButton.style.display = 'inline-block';
+    saveButton.style.display = 'none';
+}
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const message = urlParams.get('message');
+
+            if (status && message) {
+            showPopup(message, status === 'success' ? 'green' : 'red');
+            }
+        });
+
+        function showPopup(message, color) {
+            const popup = document.getElementById('popup');
+            popup.textContent = message;
+            popup.style.backgroundColor = color;
+            popup.style.display = 'block';
+
+            setTimeout(() => {
+            popup.style.display = 'none';
+            }, 3000); // hide popups after 3 seconds
+        }
+
+        function exportToCSV() {
+            const headers = [
+                'Account Name',
+                'Payee Name',
+                'Email',
+                'Start Date',
+                'End Date',
+                'Total Amount',
+                'Total Paid',
+                'Outstanding',
+                'Payment Status',
+                'Branch (City)',
+                'Status'
+            ];
+
+            const rows = Array.from(document.querySelectorAll('.styled-table tbody tr')).map(row => {
+                return Array.from(row.querySelectorAll('td')).map((cell, index) => {
+                    // Skip the actions column (index 11)
+                    if (index === 11) return null;
+
+                    if (index === 3 || index === 4) { // Start Date or End Date
+                        const dateInput = cell.querySelector('input[type="date"]');
+                        if (dateInput) {
+                            const dateValue = dateInput.value; // Get the value from the date input
+                            return dateValue || ''; // Use the date or leave it empty if not available
+                        }
+                        return cell.innerText.trim(); // Fallback to plain text
+                    }
+
+                    // Payment Status (index 8)
+                    if (index === 8) {
+                        const selectElement = cell.querySelector('select');
+                        if (selectElement) {
+                            return selectElement.value.trim(); // Use the value of the select element
+                        }
+                        return cell.innerText.trim(); // Fallback to plain text
+                    }
+
+                    // Branch (City) (index 9)
+                    if (index === 9) {
+                        const branchText = cell.innerText.trim();
+                        if (branchText.includes(',')) {
+                            return branchText.split(',')[0].trim(); // Extract city before the comma
+                        }
+                        return branchText; // Default to full text
+                    }
+
+                    // Status (index 10)
+                    if (index === 10) {
+                        const statusElement = cell.querySelector('select');
+                        if (statusElement) {
+                            return statusElement.options[statusElement.selectedIndex].text.trim(); // Get selected option text
+                        }
+                        return cell.innerText.trim(); // Fallback to plain text
+                    }
+
+                    // Handle plain text or inputs in other cells
+                    const input = cell.querySelector('input, select');
+                    if (input) {
+                        return input.value.trim(); // Use the value of the input/select
+                    }
+
+                    return cell.innerText.trim(); // Fallback to plain text
+                }).filter(cell => cell !== null); // Filter out skipped columns
+            });
+
+            // Combine headers and rows into CSV format
+            const csvContent = [headers.map(escapeCSV), ...rows]
+                .map(row => row.join(',')) // Join each row with commas
+                .join('\r\n'); // Separate rows with newlines
+
+            // Create a downloadable CSV file
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'financial_report.csv';
+            a.click();
+            URL.revokeObjectURL(url); // Clean up the URL
+        }
+
+        // Helper function to escape CSV values
+        function escapeCSV(value) {
+            if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+                return `"${value.replace(/"/g, '""')}"`; // Escape quotes and wrap in double quotes
+            }
+            return value;
+        }
+            
+    </script>
+</head>
+<body>
+    <%- include('../layout.ejs', { user }) %>
+    <div class = "profile-page">
+        
+        <!--<pre><%= JSON.stringify(subscriptions, null, 2) %></pre> -->
+        <main class="content">
+            <h2>Subscriptions</h2>
+            <button type="button" class="collapsible">View Detailed Reports</button>
+            <div class="collapsible-content">
+                <h3>Payment Summary</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Total Payments Received</th>
+                            <th>Outstanding Balances</th>
+                            <th>Payment Methods Used</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>£<%= totalPayments %></td>
+                            <td>£<%= totaloutstandingBalances %></td>
+                            <td><%= paymentMethods.join(", ") %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            
+            <div class="table-container-2">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            
+                            <th>Account name</th>
+                            <th>Payee Name</th>
+                            <th>Email</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Total Amount</th>
+                            <th>Total Paid</th>
+                            <th>Outstanding</th>
+                            <th>Payment Status</th>
+                            <th>Branch</th>
+                            <th>Status</th> 
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% subscriptions.forEach(subscription => { %>
+                            <tr id="subscription-<%= subscription._id %>">
+                                <!-- Customer Name -->
+                                
+                                <td>
+                                    <input type="text" value="<%= subscription.user_id ? subscription.user_id.first_name + ' ' + subscription.user_id.last_name : 'Customer not found' %>" 
+                                        disabled class="editable-input">
+                                </td>
+                    
+                                <!-- Full Name -->
+                                <td>
+                                    <input type="text" value="<%= subscription.full_name %>" 
+                                        disabled class="editable-input">
+                                </td>
+                    
+                                <!-- Email -->
+                                <td>
+                                    <input type="email" value="<%= subscription.email %>" 
+                                        disabled class="editable-input">
+                                </td>
+                    
+                                <!-- Start Date -->
+                                <td>
+                                    <input type="date" value="<%= subscription.start_date ? subscription.start_date.toISOString().split('T')[0] : '' %>" 
+                                        disabled class="editable-input">
+                                </td>
+                    
+                                <!-- End Date -->
+                                <td>
+                                    <input type="date" value="<%= subscription.end_date ? subscription.end_date.toISOString().split('T')[0] : '' %>" 
+                                        disabled class="editable-input">
+                                </td>
+                                
+            
+                                <!-- Total Amount -->
+                                <td>
+                                    <%= subscription.totalAmount
+                                        ? `£${subscription.totalAmount}`
+                                        : '£0' %>
+
+                                       
+                                <!-- Total Paid -->
+                                <td>
+                                    <%= subscription.amountPaid
+                                        ? `£${subscription.amountPaid}`
+                                        : '£0' %>
+
+                                <!-- Outstanding -->
+                               <td>
+                                    <%= subscription.outstandingBalances 
+                                        ? `£${subscription.outstandingBalances}`
+                                        : '£0' %>
+                                </td>
+                                <td>
+                                    <select 
+                                        class="payment-status" 
+                                        onchange="togglePaymentStatus(this)"
+                                        style="background-color: #d4edda;">
+                                        <option value="true" selected>Up-to-Date</option>
+                                        <option value="false">Not Up-to-Date</option>
+                                    </select>
+                                </td>
+                                <!-- Branch Details -->
+                                <td>
+                                    <%= subscription.branch 
+                                        ? `${subscription.branch.city}, ${subscription.branch.branch_description}` 
+                                        : 'Branch not found' %>
+                                </td>
+                    
+                                <!-- Status -->
+                                <td>
+                                    <select class="editable-input status-select">
+                                        <option value="true" <%= subscription.user_id?.active ? 'selected' : '' %>>Active</option>
+                                        <option value="false" <%= !subscription.user_id?.active ? 'selected' : '' %>>Inactive</option>
+                                    </select>
+                                </td>
+                    
+                                <!-- Actions -->
+                                <td>
+                                    <!-- Edit and Save buttons -->
+                                    <button type="button" class="edit-button" onclick="enableEdit('<%= subscription._id %>')">Edit</button>
+                                    <button type="button" class="save-button" 
+                                                    onclick="saveChanges('<%= subscription._id %>', '<%= user._id %>')" 
+                                                    style="display:none;">Save</button>
+                                    <!-- Cancel subscription button -->
+                                    
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                <button id="export-csv" onclick="exportToCSV()">Export Financial Report (CSV)</button>
+            </div>
+        </main>
+    </div>
+    <script>
+        // JavaScript to toggle collapsible content
+        document.querySelector('.collapsible').addEventListener('click', function () {
+            this.classList.toggle('active');
+            const content = document.querySelector('.collapsible-content');
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        });
+
+        function togglePaymentStatus(selectElement) {
+            // Check the selected value
+            const isUpToDate = selectElement.value === 'true';
+
+            // Update the background color based on the value
+        selectElement.style.backgroundColor = isUpToDate ? '#d4edda' : '#f8d7da';
+        }
+
+    </script>
+    <footer>
+        <div class="footer-content">
+            <p class="footer-number">07477045595</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

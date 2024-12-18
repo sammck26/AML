@@ -1,9 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
 /* Navbar Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+}
+
 .navbar {
+    position: sticky;
     background-color: #333;
     overflow: hidden;
     position: relative;
-    padding: 10px 0;
+    height: 48px;
+    min-height: 48px; /* Define the height */
+    z-index: 10; /* Keep on top */
 }
 
 .navbar a {
@@ -24,4 +44,636 @@
 .navbar a.active {
     background-color: #04AA6D;
     color: white;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    padding: 20px;
+}
+
+.content {
+    margin-left: 200px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+    padding: 20px;
+    background-color: #ffffff;
+    align-items: center;
+    padding-bottom: 100px;
+    margin-top: 48px; /* Adjust for the navbar dont change */
+    padding-top: 48px;
+
+}
+
+.form-container {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+.header-container {
+    margin-bottom: 20px; /* Add space between header and form */
+}
+
+.form-container-login {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* keep the footer at the bottom */
+footer {
+    background-color: #b3b0b0;
+    color: #fff;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; 
+}
+
+.footer-number {
+    color: black;
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-links a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer-links a:nth-child(1) i { color: rgb(203, 67, 203); } /* Instagram */
+.footer-links a:nth-child(2) i { color: #3b5998; }           /* Facebook */
+.footer-links a:nth-child(3) i { color: black; }             /* X */
+
+
+.profile-circle {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    background-color: #f2f2f2;
+}
+
+.profile-circle a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.profile-circle i {
+    color: black;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#confirmationMessage {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #28a745;
+}
+
+/* Container for the sidebar and main profile content */
+.profile-page {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    padding-bottom: 120px;
+}
+
+
+
+.show_media {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.view-media {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+}
+/* Sidebar styling */
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: #333;
+    position: fixed;
+    top: 48px;
+    left: 0;
+    height: 100vh;
+    padding-top: 60px; /* Adjust for header spacing if needed */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+.sidebar ul li a.active {
+    background-color: #04AA6D;
+    color: white;
+    font-weight: bold;
+}
+
+/* Profile content area */
+.profile-content {
+    margin-left: 220px; /* Offset by sidebar width */
+    padding: 20px;
+    background-color: #ffffff;
+    width: 100%; /* Fill remaining space */
+}
+
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    grid-template-rows: repeat(2, auto);  /* 2 rows */
+    gap: 20px; /* card spacing */
+    margin-bottom: 20px;
+}
+
+.card-grid-guest {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns */
+  grid-template-rows: repeat(2, auto);  /* 2 rows */
+  gap: 20px; /* card spacing */
+  margin-bottom: 60px;
+  margin-left: -100px;
+  margin-right: 100px;
+}
+
+
+.card {
+    border: 1px solid #ccc; /* card border */
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #f9f9f9; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    text-align: left;
+    }
+    
+    .card:hover {
+        background-color: #a2a2a2;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    
+}
+
+.guest-search-bar {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.search-bar form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.guest-search-bar form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-left: -130px; /* Adjust this value to control how far left it moves */
+}
+
+
+.search-input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for the retunr or not returned buttons */
+.return-form button {
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  
+  .return-form .returned-button {
+    background-color: green;
+  }
+  
+  
+  .return-form .not-returned-button {
+    background-color: red;
+  }
+  
+  .remove-btn {
+    background-color: #ee5050;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    right: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 12px;
+    transition: background-color 0.3s;
+}
+
+.remove-btn:hover {
+    background-color: #ff1a1a;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 13px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border: 1px solid #dddddd;
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.styled-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #009879;
+    color: white;
+    z-index: 1; /*keeps header above content */
+}
+
+.styled-table th, .styled-table td {
+    border: 1px solid #dddddd;
+    padding: 12px 10px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Scrollable Table Container */
+.table-container-2 {
+    flex-grow: 1;
+    overflow-y: auto; 
+    margin-top: 20px;
+    width: 100%;
+}
+
+main.content {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    padding: 20px;
+}
+
+/* pagination styling */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  position: fixed; /* Keeps it at the bottom of the viewport */
+  bottom: 40px; /* Anchors to the bottom */
+  padding: 10px 0; /* Adds padding for better appearance */
+  background-color: #ffffff; /* Background color to make it distinct */
+  z-index: 10; /* Ensures it appears above other content */
+  margin-top: 20px;
+}
+
+
+.pagination a {
+  padding: 10px 15px;
+  margin: 0 5px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  color: #007bff;
+}
+
+.pagination a.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination a:hover {
+  background-color: #ddd;
+  color: black;
+}
+ /* Collapsible button styling */
+ .collapsible {
+    background-color: #6095dc;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+}
+
+.collapsible:hover {
+    background-color: #5078c2;
+}
+
+.collapsible.active {
+    background-color: #5069a5;
+}
+
+/* Collapsible content styling */
+.collapsible-content {
+    padding: 20px 25px; /* Adjust padding for better spacing */
+    display: none;
+    overflow: hidden;
+    background-color: #f9f9f9; /* Slightly lighter for better contrast */
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%; /* Ensure it stretches to match the collapsible button width */
+    box-sizing: border-box; /* Includes padding and borders in the width */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f4f4f4;
+}
+
+.payment-status {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.payment-status[style*="background-color: #d4edda"] {
+    color: #155724; /* Dark green for "Up-to-Date" */
+}
+
+.payment-status[style*="background-color: #f8d7da"] {
+    color: #721c24; /* Dark red for "Not Up-to-Date" */
+}
+
+.landing-header {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f8f9fa;
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+.search-section {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.search-bar input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-bar button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #0056b3;
+}
+
+.featured-media {
+  padding: 40px 20px;
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.media-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.how-it-works {
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+}
+
+.steps {
+  display: flex;
+  gap: 20px;
+}
+
+.step {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.landing-footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #343a40;
+  color: white;
+}
+
+.landing-footer nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.landing-footer nav a:hover {
+  text-decoration: underline;
+}
+
+/* Container for the media section */
+.media-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* Styling for the media image */
+.media-image img {
+    max-width: 300px; /* Adjust the width as needed */
+    max-height: 400px; /* Adjust the height as needed */
+    object-fit: cover; /* Keeps the aspect ratio intact */
+    border-radius: 10px; /* Optional: adds rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow */
+}
+
+/* Styling for the media details */
+.media-details {
+    flex: 1; /* Take the remaining space */
+}
+
+/* Buttons styling */
+.buttons {
+    margin-top: 20px;
+}
+
+.buttons button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Back button styling */
+.back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.spacing {
+  margin-bottom: 10px; /* Add spacing below each button */
 }

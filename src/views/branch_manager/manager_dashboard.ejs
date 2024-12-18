@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard</title>
+
+</head>
+<body>
+    
+<%- include('../layout.ejs', { user }) %>
+
+<main class="content">
+    <p>Your role is: <%= user.role %></p>
+    <h1>Welcome to your board, <%= user.name %>.</h1>
+    <p>Your Library Page</p>
+    <p>Your borrowed items:</p>
+    <ul>
+        <li>Items borrowed</li>
+    </ul>
+    <a href="profile">
+        <div class="profile-circle">
+            <i class="fa-solid fa-user fa-2xl"></i>
+        </div>
+    </a>
+
+</main>
+
+<footer>
+    <div class="footer-content">
+        <p class="footer-number">07477045595</p>
+        <div class="footer-links">
+            <a href="https://instagram.com" target="_blank">
+                <i class="fa-brands fa-instagram fa-xl"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank">
+                <i class="fa-brands fa-facebook fa-xl"></i>
+            </a>
+            <a href="https://x.com" target="_blank">
+                <i class="fa-brands fa-x-twitter fa-xl"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

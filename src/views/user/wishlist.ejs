@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+<body>
+    <!-- Include layout (header or top navigation) -->
+    <%- include('../layout.ejs', { user }) %>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const message = urlParams.get('message');
+
+            if (status && message) {
+            showPopup(message, status === 'success' ? 'green' : 'red');
+            }
+        });
+
+        function showPopup(message, color) {
+            const popup = document.getElementById('popup');
+            popup.textContent = message;
+            popup.style.backgroundColor = color;
+            popup.style.display = 'block';
+
+            setTimeout(() => {
+            popup.style.display = 'none';
+            }, 3000); // hide popups after 3 seconds
+        }
+    </script>
+        
+        <!-- Vertical Sidebar -->
+        <%- include('../partials/userSideBar.ejs', {user}) %>
+
+        <!-- display wishlist, no items displayed if array is empty -->
+        <main class="content">
+            <div id="popup" style="display: none; position: fixed; top: 70px; right: 20px; padding: 10px; border-radius: 5px; color: white;"></div>
+            <div class="card-grid">
+                <% if (items && items.length > 0) { %>
+                    <% items.forEach(item => { %>
+                        <div class="card">
+                        <a href="/user/view_media/<%= item._id %>?_id=<%= user._id %>">
+                            <h2 class="media-title">Title: <%= item.media_title %></h2>
+                        </a>
+                        <h3>Author: <%= item.author %></h3>
+                        <h3>Genre: <%= item.genre_id ? item.genre_id.genre_description : 'Unknown' %></h3>
+                        <h3>Status: <%= item.quant > 0 ? 'Available' : 'Not Available' %></h3>
+                         <!-- Remove button -->
+                         <form action="/user/remove_from_wishlist?_id=<%= user._id %>" method="POST" class="remove-form">
+                            <input type="hidden" name="item_id" value="<%= item._id %>">
+                            <button type="submit" class="remove-btn">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                        
+                        
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <h1>Your wishlist is empty!</h1>
+                <% } %>
+            </div>
+            <div class="pagination">
+                <% if (currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>&_id=<%= user._id %>">Previous</a>
+                <% } %>
+
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <a href="?page=<%= i %>&limit=<%= limit %>&_id=<%= user._id %>" 
+                    class="<%= i === currentPage ? 'active' : '' %>">
+                    <%= i %>
+                    </a>
+                <% } %>
+
+                <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&_id=<%= user._id %>">Next</a>
+                <% } %>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-number">07477045595</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

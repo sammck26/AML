@@ -1,6 +1,5 @@
 <div class="navbar">
-    <a href="/branch_librarian/dashboard" class="active">Dashboard</a>
-    <a href="/user/profile">dick</a>
-    <a href="/user/borrowed-items">Borrowed Items</a>
+    <a href="/branch_librarian/dashboard?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'dashboard') ? 'active' : '' %>">Dashboard</a>
+    <a href="/branch_librarian/librarianInventory?_id=<%= user._id %>" class="<%= (typeof activePage !== 'undefined' && activePage === 'inventory') ? 'active' : '' %>">Update Media</a>
     <a href="/">Logout</a>
   </div>

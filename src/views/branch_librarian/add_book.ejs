@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book</title>
+</head>
+<body>
+    <!-- Include layout (header or top navigation) -->
+    <%- include('../layout.ejs', { user }) %>
+    <%- include('../partials/librarianSideBar.ejs', {user}) %>
+
+    <!-- Profile Page Container with Sidebar and Main Content -->
+    <div class="profile-page">
+        <!-- Main Content Area -->
+        <main class="content">
+            <div class="header-container">
+                <h1>Add Media</h1>
+            </div>
+            <div class="form-container-login">
+                <form action="/branch_librarian/inventory/new?_id=<%= user._id %>" method="POST">
+                    <label>Title:</label>
+                    <input type="text" name="media_title" required>
+                    
+                    <label>Author:</label>
+                    <input type="text" name="author" required>
+                    
+                    <label>Genre:</label>
+                    <select name="genre_id">
+                        <% genres.forEach(genre => { %>
+                            <option value="<%= genre._id %>"><%= genre.genre_description %></option>
+                        <% }) %>
+                    </select>
+                    
+                    <label>Quantity:</label>
+                    <input type="number" name="quant" required>
+                    
+                    <button type="submit">Add Book</button>
+                </form>
+
+                <div id="confirmationMessage"></div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-number">07477045595</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

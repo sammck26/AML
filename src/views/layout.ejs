@@ -1,29 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://kit.fontawesome.com/dbca9b5a6b.js" crossorigin="anonymous"></script>
   <title>Library System</title>
- 
-  
   <link rel="stylesheet" type="text/css" href="/style.css">
-  
 </head>
 <body>
-  
-    const user = <%- JSON.stringify (user) %>;
-    
+
+  <% if (user.role_id.role_description === 'guest') { %>
+    <%- include('partials/guestnavbar.ejs', { activePage, user }) %>
+<% } else if (user.role_id.role_description === 'librarian') { %>
+    <%- include('partials/librariannavbar.ejs', { activePage, user }) %>
+<% } else if (user.role_id.role_description === 'customer') { %>
+    <%- include('partials/usernavbar.ejs', { activePage, user }) %>
+<% } else if (user.role_id.role_description === 'manager') { %>
+    <%- include('partials/managernavbar.ejs', { activePage, user }) %>
+<% } else if (user.role_id.role_description === 'accountant') { %>
+    <%- include('partials/accountantnavbar.ejs', { activePage, user }) %>
+<% } %>
 
 
-    <% if (user.role === 'admin') { %>
-        <%- include('partials/navbar_admin') %>
-      <% } else if (user.role === 'librarian') { %>
-        <%- include('partials/librariannavbar.ejs') %>
-      <% } else if (user.role === 'customer') { %>
-        <%- include('partials/usernavbar.ejs') %>
-      <% } %>
-    
-    
-  <div class="content">
-     
-  </div>
 </body>
 </html>

@@ -1,8 +1,41 @@
 {
+  "name": "aml",
+  "version": "1.0.0",
+  "description": "My AML Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "mocha test/**/*.test.js --timeout 5000 --exit",
+    "test:watch": "mocha test/**/*.test.js --timeout 5000 --watch",
+    "test:coverage": "nyc mocha test/**/*.test.js --timeout 5000",
+    "lint": "eslint ."
+  },
   "dependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "axios": "^1.7.9",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.1",
-    "mongodb": "^6.9.0",
-    "mongoose": "^8.7.0"
-  }
+    "express-ejs-layouts": "^2.5.1",
+    "faker": "^6.6.6",
+    "mongo": "^0.1.0",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.3",
+    "node": "^22.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "eslint": "^9.16.0",
+    "mocha": "^11.0.1",
+    "nyc": "^17.1.0",
+    "sinon": "^19.0.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

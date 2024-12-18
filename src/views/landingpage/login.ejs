@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <!-- Include layout (header or top navigation) -->
+    <%- include('../layout.ejs', { user }) %>
+
+    <!-- Profile Page Container with Sidebar and Main Content -->
+    <div class="profile-page">
+        <!-- Main Content Area -->
+        <main class="content">
+            <div class="header-container">
+                <h1>Login</h1>
+            </div>
+            <div class="form-container-login">
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit">Enter</button>
+                </form>
+                <div id="confirmationMessage"></div>
+            </div>
+            <form action="/user/dashboard" method="GET" class="spacing">
+            <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6746f827c252ba3cb36816bc' %>">
+            <button type="submit">Go to Customer Dashboard (Sheffield branch)</button>
+            </form>
+
+            <form action="/user/dashboard" method="GET" class="spacing">
+            <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '672a90e2211aef12e04c0067' %>">
+            <button type="submit">Go to Customer Dashboard (London branch)</button>
+            </form>
+
+            <form action="/branch_librarian/dashboard" method="GET" class="spacing">
+            <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6740af5225991e256b9bcdc2' %>">
+            <button type="submit">Go to Librarian Dashboard (Sheffield branch)</button>
+            </form>
+
+            <form action="/branch_librarian/dashboard" method="GET" class="spacing">
+            <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6751ad6f03c78612cda4600e' %>">
+            <button type="submit">Go to Librarian Dashboard (London branch)</button>
+            </form>
+
+            <form action="/branch_manager/dashboard" method="GET" class="spacing">
+            <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6749cbd903c78612cd9f6c1d' %>">
+            <button type="submit">Go to Manager Dashboard</button>
+            </form>
+
+            <form action="/accountant/dashboard" method="GET" class="spacing">
+            <input type="hidden" name="_id" value="<%= user && user._id ? user._id : '6749d44b03c78612cd9f7113' %>">
+            <button type="submit">Go to Accountant Dashboard</button>
+            </form>
+
+
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-number">07477045595</p>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter fa-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
