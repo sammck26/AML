@@ -87,7 +87,7 @@ exports.viewMedia = async(req, res) => {
     //const userData = {};  // will fetch user dashboard data from database
     //const userData = { name: "User", role: "customer" };
     try {
-      const mediaItem = await Media.findById(req.params.id); // Fetch the media item by ID
+      const mediaItem = await Media.findById(req.params.id); //fetch the media item by ID
   
       if (!mediaItem) {
         return res.status(404).send("Media not found");
@@ -116,14 +116,14 @@ exports.addToWishlist = async (req, res) => {
       );
     }
 
-    // Check if the media item is already in the wishlist
+    //check if the media item is already in the wishlist
     if (user.wishlist.includes(media_id)) {
       return res.redirect(
         `/user/view_media/${media_id}?_id=${user._id}&status=error&message=Media item already in wishlist`
       );
     }
 
-    // Add the media item to the wishlist
+    //add the media item to the wishlist
     user.wishlist.push(media_id);
     await user.save();
 

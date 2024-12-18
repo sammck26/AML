@@ -71,8 +71,8 @@ exports.addBook = async (req, res) => {
 
     //using custom search engine and google API search for the book cover of the book added
     const searchQuery = `${media_title} book cover`;
-    const apiKey = "AIzaSyAdU10Va7WRK4_RkEcZT0tROjrBoYYf1BE"; // google api key
-    const searchEngineId = "62d282589896349cf"; // search engine id
+    const apiKey = ""; // google api key - removed after testing
+    const searchEngineId = ""; // search engine id - removed after testing
     const searchUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
       searchQuery
     )}&searchType=image&key=${apiKey}&cx=${searchEngineId}`;
