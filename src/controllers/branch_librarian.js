@@ -1,7 +1,8 @@
 const { Media, Genre } = require("../../db/models/inventory.js");
 const {Customer, Staff} = require('../../db/models/customer.js');
 const Borrowed = require('../../db/models/borrowed.js');
-const axios = require("axios"); // Use axios for HTTP requests
+const axios = require("axios"); 
+require('dotenv').config();
 
 
 // Hardcoded user data for now; should ideally come from session or authentication middleware
@@ -11,7 +12,7 @@ const axios = require("axios"); // Use axios for HTTP requests
 
 exports.getLibrarianDashboard = (req, res) => {
   try {
-    const user = req.user; // User is already fetched by middleware
+    const user = req.user;
     res.render("branch_librarian/librarian_dashboard", {
       user,
       activePage: "dashboard",
@@ -23,24 +24,24 @@ exports.getLibrarianDashboard = (req, res) => {
   }
 };
 
-// Show form to add a new book
+//show form to add book
 exports.showAddForm = async (req, res) => {
   const activePage = "add_book";
   try {
     const user = req.user;
-    const genres = await Genre.find(); // Fetch all genres from the database
+    const genres = await Genre.find(); //fetch genres
     res.render("branch_librarian/add_book", {
       user,
       activePage,
       genres,
-    }); // Pass genres and activePage to the view
+    }); //pass genres and active book
   } catch (error) {
     console.error("Error fetching genres:", error);
     res.status(500).send("An error occurred while fetching genres");
   }
 };
 
-// Show form to update a book
+//update book form
 exports.showUpdateForm = async (req, res) => {
   const user = req.user || { name: "Jimmy", role: "librarian" };
   const activePage = "update_book";
@@ -71,8 +72,8 @@ exports.addBook = async (req, res) => {
 
     //using custom search engine and google API search for the book cover of the book added
     const searchQuery = `${media_title} book cover`;
-    const apiKey = ""; // google api key - removed after testing
-    const searchEngineId = ""; // search engine id - removed after testing
+    const apiKey = process.env.API_KEY;
+    const searchEngineId = process.env.SEARCH_ENGINE_ID;
     const searchUrl = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(
       searchQuery
     )}&searchType=image&key=${apiKey}&cx=${searchEngineId}`;
@@ -130,20 +131,20 @@ exports.deleteMedia = async (req, res) => {
 // Handle updating a book
 exports.updateMediaQuantity = async (req, res) => {
   const mediaId = req.params.id; // Media ID passed in the URL
-  const { newQuantity } = req.body; // New quantity from the form input
+  const { newQuantity } = req.body; 
   const user = req.user;
 
   try {
-    // Validate the new quantity
+    //validate new quant
     if (isNaN(newQuantity) || newQuantity < 0) {
       return res.status(400).send("Invalid quantity value.");
     }
 
-    // Update the media quantity in the database
+    //update the media quantity
     const updatedMedia = await Media.findByIdAndUpdate(
       mediaId,
       { quant: newQuantity },
-      { new: true } // Return the updated document
+      { new: true }
     );
 
     if (!updatedMedia) {
@@ -151,7 +152,7 @@ exports.updateMediaQuantity = async (req, res) => {
     }
 
     console.log(`Media quantity updated: ${updatedMedia}`);
-    res.redirect(`/branch_librarian/librarianInventory?_id=${user._id}`); // Redirect back to inventory
+    res.redirect(`/branch_librarian/librarianInventory?_id=${user._id}`); 
   } catch (error) {
     console.error("Error updating media quantity:", error);
     res
